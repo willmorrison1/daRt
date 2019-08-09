@@ -9,7 +9,11 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "100%",
+  fig.width = 8.5,
+  fig.height = 3,
+  dpi = 250,
+  message = FALSE
 )
 ```
 # daRt
@@ -29,39 +33,65 @@ You can install the development version from [GitHub](https://github.com/) with:
 devtools::install_github("willmorrison1/daRt")
 ```
 ## Example
-
-This is a basic work in progress example:
-
-```{r directions example, fig.width = 7, fig.height = 3, dpi = 200}
+Load the package
+```{r load the package}
 library(daRt)
-library(ggplot2)
+```
+Create and modify the "SimulationFilter" object. This defines what data you want to extract
+from a DART output directory structure
+```{r simulationFilter example}
+#define SimulationFilter object - define "directions" as the product
+sF <- simulationFilter(product = "directions")
+
+#show the SimulationFilter
+sF
+
+#list the 'setters' and 'accessors'
+methods(class = "SimulationFilter")
+
+#e.g. change the 'bands', then the 'iterations'
+bands(sF) <- c("BAND0", "BAND1")
+iters(sF) <- "ITER1"
+```
+Now explore the DART output directory structure
+```{r get files example}
 #define the simulation directory
 simulationDir <- "man/sampleSimulation/cesbio"
-#define SimulationFilter object - define "directions" as the product and filter all 
-#but the first iteration ("ITER1") and two bands ("BAND1", "BAND2")
-sF <- simulationFilter(product = "directions", 
-                       iters = "ITER1", 
-                       bands = c("BAND1", "BAND2"))
-#show contents 
-sF
+
+#define the SimulationFiler as shown above (i.e. 'sF'), but in one line
+sF1 <- simulationFilter(product = "directions", 
+                       bands = c("BAND0", "BAND1"), 
+                       iters = "ITER1")
 #get simulation files based on the defined filter
-simFiles <- daRt::getFiles(x = simulationDir, sF = sF)
+simFiles <- daRt::getFiles(x = simulationDir, sF = sF1)
+
+#show these files are we happy to continue and load the data, or
+#do we want to adjust the SimulationFilter? daRt::getFiles is essentially
+#a 'dry-run' of the data extraction
+files(simFiles)
+```
+Now extract DART output data
+```{r get data example}
 #get simulation data
-simData <- daRt::getData(x = simulationDir, sF = sF)
+simData <- daRt::getData(x = simulationDir, sF = sF1)
+```
+Documentation needs updating and finishing from here
+```{r plot data example}
 #plot using ggplot2
+library(ggplot2)
 plotOut <- ggplot(simData@data) +
     geom_point(aes(x = zenith, y = value, colour = azimuth)) +
-    facet_wrap(~ band)
+    facet_wrap(~ band) +
+    theme(aspect.ratio = 1)
 plot(plotOut)
 ```
 Then alter the SimulationFilter to look at images
-```{r images example, fig.width = 8.5, fig.height = 3, dpi = 150}
-#instead, look at images
-#todo - export "products"
-sF@product <- "images"
+```{r images example}
+product(sF) <- "images"
 simData <- daRt::getData(x = simulationDir, sF = sF)
 ggplot(simData@data) + 
-    geom_raster(aes(x = Var1, y = Var2, fill = value)) +
-    facet_grid(band ~ imageNo)
+    geom_raster(aes(x = x, y = y, fill = value)) +
+    facet_grid(band ~ imageNo) +
+    theme(aspect.ratio = 1)
 ```
 

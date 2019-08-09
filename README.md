@@ -22,73 +22,94 @@ devtools::install_github("willmorrison1/daRt")
 Example
 -------
 
-This is a basic work in progress example:
+Load the package
 
 ``` r
 library(daRt)
-library(ggplot2)
-#define the simulation directory
-simulationDir <- "man/sampleSimulation/cesbio"
-#define SimulationFilter object - define "directions" as the product and filter all 
-#but the first iteration ("ITER1") and two bands ("BAND1", "BAND2")
-sF <- simulationFilter(product = "directions", 
-                       iters = "ITER1", 
-                       bands = c("BAND1", "BAND2"))
-#show contents 
+```
+
+Create and modify the "SimulationFilter" object. This defines what data you want to extract from a DART output directory structure
+
+``` r
+#define SimulationFilter object - define "directions" as the product
+sF <- simulationFilter(product = "directions")
+
+#show the SimulationFilter
 sF
 #> 'SimulationFilter' object for DART product: directions 
 #> 
-#> bands:          BAND1, BAND2 
+#> bands:          BAND0 
 #> variables:      BRF 
-#> iterations:     ITER1 
+#> iterations:     ITER1, ITERX 
 #> variablesRB3D:  Intercepted, Scattered, Emitted, Absorbed, +ZFaceExit, +ZFaceEntry 
 #> typeNums:        
 #> imageType:       
 #> imageNo:
+
+#list the 'setters' and 'accessors'
+methods(class = "SimulationFilter")
+#>  [1] bands           bands<-         getData         getFiles       
+#>  [5] imageFiles      imageNo         imageNo<-       imageType      
+#>  [9] imageType<-     iters           iters<-         product        
+#> [13] product<-       show            simdir          typeNums       
+#> [17] typeNums<-      variables       variables<-     variablesRB3D  
+#> [21] variablesRB3D<-
+#> see '?methods' for accessing help and source code
+
+#e.g. change the 'bands', then the 'iterations'
+bands(sF) <- c("BAND0", "BAND1")
+iters(sF) <- "ITER1"
+```
+
+Now explore the DART output directory structure
+
+``` r
+#define the simulation directory
+simulationDir <- "man/sampleSimulation/cesbio"
+
+#define the SimulationFiler as shown above (i.e. 'sF'), but in one line
+sF1 <- simulationFilter(product = "directions", 
+                       bands = c("BAND0", "BAND1"), 
+                       iters = "ITER1")
 #get simulation files based on the defined filter
-simFiles <- daRt::getFiles(x = simulationDir, sF = sF)
-#> Loading required package: dplyr
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
-#> Loading required package: stringr
+simFiles <- daRt::getFiles(x = simulationDir, sF = sF1)
+
+#show these files are we happy to continue and load the data, or
+#do we want to adjust the SimulationFilter? daRt::getFiles is essentially
+#a 'dry-run' of the data extraction
+files(simFiles)
+#> [1] "man/sampleSimulation/cesbio/output//BAND0/BRF/ITER1/brf"
+#> [2] "man/sampleSimulation/cesbio/output//BAND1/BRF/ITER1/brf"
+```
+
+Now extract DART output data
+
+``` r
 #get simulation data
-simData <- daRt::getData(x = simulationDir, sF = sF)
-#> Loading required package: data.table
-#> 
-#> Attaching package: 'data.table'
-#> The following objects are masked from 'package:dplyr':
-#> 
-#>     between, first, last
+simData <- daRt::getData(x = simulationDir, sF = sF1)
+```
+
+Documentation needs updating and finishing from here
+
+``` r
 #plot using ggplot2
+library(ggplot2)
 plotOut <- ggplot(simData@data) +
     geom_point(aes(x = zenith, y = value, colour = azimuth)) +
-    facet_wrap(~ band)
+    facet_wrap(~ band) +
+    theme(aspect.ratio = 1)
 plot(plotOut)
 ```
 
-<img src="man/figures/README-directions example-1.png" width="100%" /> Then alter the SimulationFilter to look at images
+<img src="man/figures/README-plot data example-1.png" width="100%" /> Then alter the SimulationFilter to look at images
 
 ``` r
-#instead, look at images
-#todo - export "products"
-sF@product <- "images"
+product(sF) <- "images"
 simData <- daRt::getData(x = simulationDir, sF = sF)
-#> Loading required package: tools
-#> Loading required package: reshape2
-#> 
-#> Attaching package: 'reshape2'
-#> The following objects are masked from 'package:data.table':
-#> 
-#>     dcast, melt
 ggplot(simData@data) + 
-    geom_raster(aes(x = Var1, y = Var2, fill = value)) +
-    facet_grid(band ~ imageNo)
+    geom_raster(aes(x = x, y = y, fill = value)) +
+    facet_grid(band ~ imageNo) +
+    theme(aspect.ratio = 1)
 ```
 
 <img src="man/figures/README-images example-1.png" width="100%" />

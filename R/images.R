@@ -36,7 +36,8 @@ setMethod(f = "images",
               filesWithoutExt <- tools::file_path_sans_ext(imagesFiles@files$fileName)
               for (i in 1:nrow(imagesData@files)) {
                   fileRow <- imagesData@files[i, ]
-                  imagesDataRaw[[i]] <- reshape2::melt(.readILWIS(filesWithoutExt[i]))
+                  imagesDataRaw[[i]] <- reshape2::melt(.readILWIS(filesWithoutExt[i]),
+                                                       varnames = c("x", "y"))
                   imagesDataRaw[[i]]$band <- fileRow$band
                   imagesDataRaw[[i]]$variable <- fileRow$variable
                   imagesDataRaw[[i]]$iter <- fileRow$iter
