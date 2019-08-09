@@ -9,7 +9,6 @@
 setMethod(f = "directions",
           signature = signature(x = "character", sF = "SimulationFilter"),
           definition = function(x, sF){
-
               directionsFiles <- getFiles(x, sF)
               directionsData <- new("Directions", simDir = x)
               directionsData@simulationFilter <- sF
