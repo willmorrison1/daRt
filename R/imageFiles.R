@@ -63,9 +63,7 @@ setMethod(f = "imageFiles",
     } else {
         stop("Unknown image file type (was not 'ima' or 'camera'")
     }
-
-
-
     imgInfoDF$fileName <- imageFile
     return(imgInfoDF)
+
 }

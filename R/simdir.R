@@ -1,9 +1,10 @@
+#' @export
 setMethod(f = "simdir", signature = "SimulationHandle",
           definition = function(x){
               x@simDir
           }
 )
-
+#' @export
 setMethod(f = "simdir", signature(x = "SimulationFilter"),
           definition = function(x){
 
