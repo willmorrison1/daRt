@@ -7,7 +7,7 @@ daRt
 <!-- badges: end -->
 This readme is very work in progress.
 
-The daRt package provides a very quick and flexible way to import data that is produced by the Discrete Anisotropic Radiative Transfer (DART) model. The data in daRt are formatted in a way that facilitates rapid data analysis. 
+The daRt package provides a very quick and flexible way to import data that is produced by the Discrete Anisotropic Radiative Transfer (DART) model. The data in daRt are formatted in a way that facilitates rapid data analysis.
 
 Installation
 ------------
@@ -26,15 +26,15 @@ This is a basic work in progress example:
 
 ``` r
 library(daRt)
+library(ggplot2)
 #define the simulation directory
 simulationDir <- "man/sampleSimulation/cesbio"
-#define SimulationFilter object using "directions" as the product to investigate
-#also, filter all but the first iteration ("ITER1") and two bands ("BAND1", "BAND2")
-#of the DART output
+#define SimulationFilter object - define "directions" as the product and filter all 
+#but the first iteration ("ITER1") and two bands ("BAND1", "BAND2")
 sF <- simulationFilter(product = "directions", 
                        iters = "ITER1", 
                        bands = c("BAND1", "BAND2"))
-#show the contents of this object
+#show contents 
 sF
 #> 'SimulationFilter' object for DART product: directions 
 #> 
@@ -56,28 +56,16 @@ simFiles <- daRt::getFiles(x = simulationDir, sF = sF)
 #> The following objects are masked from 'package:base':
 #> 
 #>     intersect, setdiff, setequal, union
-#> [1] "validating sim handle(s)"
 #> Loading required package: stringr
-#> [1] "validating directions files"
-#> [1] "validating sim handle(s)"
-#> [1] "validating directions files"
 #get simulation data
 simData <- daRt::getData(x = simulationDir, sF = sF)
-#> [1] "validating sim handle(s)"
-#> [1] "validating directions files"
-#> [1] "validating sim handle(s)"
-#> [1] "validating directions files"
 #> Loading required package: data.table
 #> 
 #> Attaching package: 'data.table'
 #> The following objects are masked from 'package:dplyr':
 #> 
 #>     between, first, last
-#> [1] "validating sim handle(s)"
-#> [1] "validating directions files"
-#> [1] "validating directions"
 #plot using ggplot2
-library(ggplot2)
 plotOut <- ggplot(simData@data) +
     geom_point(aes(x = zenith, y = value, colour = azimuth)) +
     facet_wrap(~ band)
@@ -98,12 +86,6 @@ simData <- daRt::getData(x = simulationDir, sF = sF)
 #> The following objects are masked from 'package:data.table':
 #> 
 #>     dcast, melt
-#> [1] "validating sim handle(s)"
-#> [1] "validating directions files"
-#> [1] "validating sim handle(s)"
-#> [1] "validating directions files"
-#> [1] "validating sim handle(s)"
-#> [1] "validating directions files"
 ggplot(simData@data) + 
     geom_raster(aes(x = Var1, y = Var2, fill = value)) +
     facet_grid(band ~ imageNo)

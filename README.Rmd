@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: end -->
 This readme is very work in progress.
 
-The goal of daRt is to ...
+The daRt package provides a very quick and flexible way to import data that is produced by the Discrete Anisotropic Radiative Transfer (DART) model. The data in daRt are formatted in a way that facilitates rapid data analysis. 
 
 ## Installation
 
@@ -30,10 +30,11 @@ devtools::install_github("willmorrison1/daRt")
 ```
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic work in progress example:
 
 ```{r directions example, fig.width = 7, fig.height = 3, dpi = 200}
 library(daRt)
+library(ggplot2)
 #define the simulation directory
 simulationDir <- "man/sampleSimulation/cesbio"
 #define SimulationFilter object - define "directions" as the product and filter all 
@@ -48,7 +49,6 @@ simFiles <- daRt::getFiles(x = simulationDir, sF = sF)
 #get simulation data
 simData <- daRt::getData(x = simulationDir, sF = sF)
 #plot using ggplot2
-library(ggplot2)
 plotOut <- ggplot(simData@data) +
     geom_point(aes(x = zenith, y = value, colour = azimuth)) +
     facet_wrap(~ band)

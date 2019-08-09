@@ -1,6 +1,5 @@
 .simHandleValidity <- function(object){
     errors <- character()
-    print("validating sim handle(s)")
     allPathsDF <- expand.grid(object@simDir, c("input", "output"))
     allPaths <- apply(allPathsDF, 1, function(x) file.path(x[1], x[2]))
     dirMissingBool <- sapply(allPaths, function(x) !dir.exists(x))
@@ -21,7 +20,6 @@
 .dirFilesValidity <- function(object){
 
     require(stringr)
-    print("validating directions files")
     errors <- character()
     nFiles <- nrow(object@files)
     if (length(nFiles) == 0) {
@@ -64,7 +62,6 @@
 
 
 .dirValidity <- function(object){
-    print("validating directions")
     errors <- character()
 
     if (!is.data.frame(object@data)) {
