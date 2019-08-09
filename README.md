@@ -7,7 +7,7 @@ daRt
 <!-- badges: end -->
 This readme is very work in progress.
 
-The goal of daRt is to ...
+The daRt package provides a very quick and flexible way to import data that is produced by the Discrete Anisotropic Radiative Transfer (DART) model. The data in daRt are formatted in a way that facilitates rapid data analysis. 
 
 Installation
 ------------
@@ -22,18 +22,19 @@ devtools::install_github("willmorrison1/daRt")
 Example
 -------
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic work in progress example:
 
 ``` r
 library(daRt)
 #define the simulation directory
 simulationDir <- "man/sampleSimulation/cesbio"
-#define SimulationFilter object - define "directions" as the product and filter all 
-#but the first iteration ("ITER1") and two bands ("BAND1", "BAND2")
+#define SimulationFilter object using "directions" as the product to investigate
+#also, filter all but the first iteration ("ITER1") and two bands ("BAND1", "BAND2")
+#of the DART output
 sF <- simulationFilter(product = "directions", 
                        iters = "ITER1", 
                        bands = c("BAND1", "BAND2"))
-#show contents 
+#show the contents of this object
 sF
 #> 'SimulationFilter' object for DART product: directions 
 #> 
