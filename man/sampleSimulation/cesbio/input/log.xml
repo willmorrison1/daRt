@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DartParameterExceptions>
+    <DartParameterException>
+        <Origin>
+            <Name>Atmosphere.IsAtmosphere.AtmosphericOpticalPropertyModel.ignoredGas.fillH2O.h2oDef.altitude</Name>
+            <Label>Altitude</Label>
+            <Description>Altitude</Description>
+        </Origin>
+        <Message>
+            <OriginMessage>Value '100000.0' is larger than maximum available value '1000.0'</OriginMessage>
+        </Message>
+    </DartParameterException>
+</DartParameterExceptions>

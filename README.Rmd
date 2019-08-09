@@ -16,18 +16,13 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 <!-- badges: end -->
+This readme is very work in progress.
 
 The goal of daRt is to ...
 
 ## Installation
 
-You can install the released version of daRt from [CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("daRt")
-```
-
-And the development version from [GitHub](https://github.com/) with:
+You can install the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
@@ -37,24 +32,36 @@ devtools::install_github("willmorrison1/daRt")
 
 This is a basic example which shows you how to solve a common problem:
 
-```{r example}
+```{r directions example, fig.width = 7, fig.height = 3, dpi = 200}
 library(daRt)
-## basic example code
-plot(1, 1)
+#define the simulation directory
+simulationDir <- "man/sampleSimulation/cesbio"
+#define SimulationFilter object - define "directions" as the product and filter all 
+#but the first iteration ("ITER1") and two bands ("BAND1", "BAND2")
+sF <- simulationFilter(product = "directions", 
+                       iters = "ITER1", 
+                       bands = c("BAND1", "BAND2"))
+#show contents 
+sF
+#get simulation files based on the defined filter
+simFiles <- daRt::getFiles(x = simulationDir, sF = sF)
+#get simulation data
+simData <- daRt::getData(x = simulationDir, sF = sF)
+#plot using ggplot2
+library(ggplot2)
+plotOut <- ggplot(simData@data) +
+    geom_point(aes(x = zenith, y = value, colour = azimuth)) +
+    facet_wrap(~ band)
+plot(plotOut)
+```
+Then alter the SimulationFilter to look at images
+```{r images example, fig.width = 8.5, fig.height = 3, dpi = 150}
+#instead, look at images
+#todo - export "products"
+sF@product <- "images"
+simData <- daRt::getData(x = simulationDir, sF = sF)
+ggplot(simData@data) + 
+    geom_raster(aes(x = Var1, y = Var2, fill = value)) +
+    facet_grid(band ~ imageNo)
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!

@@ -1,3 +1,4 @@
+#' @export
 setMethod(f = "imageFiles",
           signature = signature(x = "character", sF = "SimulationFilter"),
           definition = function(x, sF){

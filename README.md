@@ -5,18 +5,14 @@ daRt
 
 <!-- badges: start -->
 <!-- badges: end -->
+This readme is very work in progress.
+
 The goal of daRt is to ...
 
 Installation
 ------------
 
-You can install the released version of daRt from [CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("daRt")
-```
-
-And the development version from [GitHub](https://github.com/) with:
+You can install the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
@@ -30,29 +26,86 @@ This is a basic example which shows you how to solve a common problem:
 
 ``` r
 library(daRt)
-## basic example code
-plot(1, 1)
+#define the simulation directory
+simulationDir <- "man/sampleSimulation/cesbio"
+#define SimulationFilter object - define "directions" as the product and filter all 
+#but the first iteration ("ITER1") and two bands ("BAND1", "BAND2")
+sF <- simulationFilter(product = "directions", 
+                       iters = "ITER1", 
+                       bands = c("BAND1", "BAND2"))
+#show contents 
+sF
+#> 'SimulationFilter' object for DART product: directions 
+#> 
+#> bands:          BAND1, BAND2 
+#> variables:      BRF 
+#> iterations:     ITER1 
+#> variablesRB3D:  Intercepted, Scattered, Emitted, Absorbed, +ZFaceExit, +ZFaceEntry 
+#> typeNums:        
+#> imageType:       
+#> imageNo:
+#get simulation files based on the defined filter
+simFiles <- daRt::getFiles(x = simulationDir, sF = sF)
+#> Loading required package: dplyr
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
+#> [1] "validating sim handle(s)"
+#> Loading required package: stringr
+#> [1] "validating directions files"
+#> [1] "validating sim handle(s)"
+#> [1] "validating directions files"
+#get simulation data
+simData <- daRt::getData(x = simulationDir, sF = sF)
+#> [1] "validating sim handle(s)"
+#> [1] "validating directions files"
+#> [1] "validating sim handle(s)"
+#> [1] "validating directions files"
+#> Loading required package: data.table
+#> 
+#> Attaching package: 'data.table'
+#> The following objects are masked from 'package:dplyr':
+#> 
+#>     between, first, last
+#> [1] "validating sim handle(s)"
+#> [1] "validating directions files"
+#> [1] "validating directions"
+#plot using ggplot2
+library(ggplot2)
+plotOut <- ggplot(simData@data) +
+    geom_point(aes(x = zenith, y = value, colour = azimuth)) +
+    facet_wrap(~ band)
+plot(plotOut)
 ```
 
-<img src="man/figures/README-example-1.png" width="100%" />
-
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+<img src="man/figures/README-directions example-1.png" width="100%" /> Then alter the SimulationFilter to look at images
 
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+#instead, look at images
+#todo - export "products"
+sF@product <- "images"
+simData <- daRt::getData(x = simulationDir, sF = sF)
+#> Loading required package: tools
+#> Loading required package: reshape2
+#> 
+#> Attaching package: 'reshape2'
+#> The following objects are masked from 'package:data.table':
+#> 
+#>     dcast, melt
+#> [1] "validating sim handle(s)"
+#> [1] "validating directions files"
+#> [1] "validating sim handle(s)"
+#> [1] "validating directions files"
+#> [1] "validating sim handle(s)"
+#> [1] "validating directions files"
+ggplot(simData@data) + 
+    geom_raster(aes(x = Var1, y = Var2, fill = value)) +
+    facet_grid(band ~ imageNo)
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
-
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!
+<img src="man/figures/README-images example-1.png" width="100%" />
