@@ -10,6 +10,7 @@ setMethod(f = "directions",
           signature = signature(x = "character", sF = "SimulationFilter"),
           definition = function(x, sF){
               directionsFiles <- getFiles(x, sF)
+              #use "as" functionality
               directionsData <- new("Directions", simDir = x)
               directionsData@simulationFilter <- sF
               directionsData@files <- directionsFiles@files
