@@ -43,7 +43,7 @@ sF
 #> iterations:     ITER1, ITERX 
 #> variablesRB3D:  Intercepted, Scattered, Emitted, Absorbed, +ZFaceExit, +ZFaceEntry 
 #> typeNums:        
-#> imageType:       
+#> imageType:      ima, camera 
 #> imageNo:
 
 #list the 'setters' and 'accessors'
@@ -71,7 +71,7 @@ simulationDir <- "man/sampleSimulation/cesbio"
 sF1 <- simulationFilter(product = "directions", 
                        bands = c("BAND0", "BAND1"), 
                        iters = "ITER1")
-#get simulation files based on the defined filter
+#get simulation files based on this newly defined filter
 simFiles <- daRt::getFiles(x = simulationDir, sF = sF1)
 
 #show these files are we happy to continue and load the data, or
@@ -125,7 +125,7 @@ ggplot(simData@data) +
     theme(aspect.ratio = 1)
 ```
 
-<img src="man/figures/README-RB3D example-1.png" width="100%" /> That's a lot of data! It is important to set the "SimulationFilter" to match what data you want as the process can use a lot of memory when many large files are loaded. The below example uses the simple "dplyr" approach to work with the data. Here we look at the lowest horizontal layer of each 3D radiative budget array (i.e. Z = 1) and plot the smaller dataset.
+<img src="man/figures/README-RB3D example-1.png" width="100%" /> That's a lot of data! It is important to set the "SimulationFilter" to match what data you want so that this doesn't happen. Further the process can use a lot of memory when many large files are loaded. Therefore, try to load in only the files you want and limit the amount of data filtering. The below example uses the simple "dplyr" approach to work with the data. Here we look at the lowest horizontal layer of each 3D radiative budget array (i.e. Z = 1) rather than all layers (above plot) and plot the smaller dataset.
 
 ``` r
 library(dplyr)
