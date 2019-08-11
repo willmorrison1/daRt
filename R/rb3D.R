@@ -5,15 +5,11 @@ setMethod(f = "rb3D",
               require(reshape2)
 
               RB3DFiles <- getFiles(x, sF)
-              RB3Dd <- new("RB3D", simDir = x)
-              RB3Dd@simulationFilter <- sF
-              RB3Dd@files <- RB3DFiles@files
-              RB3Dd@isSequence <- RB3DFiles@isSequence
-              RB3Dd@sequenceInfo <- RB3DFiles@sequenceInfo
-              RB3Dd@sequenceInfoList <- RB3DFiles@sequenceInfoList
-              listData <- vector(mode = "list", length = nrow(RB3Dd@files))
-              for (i in 1:nrow(RB3Dd@files)) {
-                  fileRow <- RB3Dd@files[i, ]
+              RB3d <- as(object = RB3DFiles, Class = "RB3D",
+                                   strict = TRUE)
+              listData <- vector(mode = "list", length = nrow(RB3d@files))
+              for (i in 1:nrow(RB3d@files)) {
+                  fileRow <- RB3d@files[i, ]
                   RBdata <- .readBin3DRadiativeBudget(fileName = fileRow$fileName,
                                                        requiredVars = variablesRB3D(sF))
                   listData[[i]] <- reshape2::melt(data = RBdata)
@@ -25,10 +21,10 @@ setMethod(f = "rb3D",
                   listData[[i]]$simName <- fileRow$simName
               }
               gc()
-              RB3Dd@data <- data.table::rbindlist(listData, use.names = FALSE)
+              RB3d@data <- data.table::rbindlist(listData, use.names = FALSE)
               rm(listData); gc()
-              validObject(RB3Dd)
-              return(RB3Dd)
+              validObject(RB3d)
+              return(RB3d)
           }
 )
 

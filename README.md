@@ -112,4 +112,36 @@ ggplot(simData@data) +
     theme(aspect.ratio = 1)
 ```
 
-<img src="man/figures/README-images example-1.png" width="100%" />
+<img src="man/figures/README-images example-1.png" width="100%" /> Alter the SimulatinFilter again to look at radiative budget files
+
+``` r
+product(sF) <- "rb3D"
+simData <- daRt::getData(x = simulationDir, sF = sF)
+#> Warning in filesFun(x = x[i], sF = sF): Forcing 'RADIATIVE_BUDGET' variable
+#> in 'simulationFilter' variables.
+ggplot(simData@data) + 
+    geom_raster(aes(x = X, y = Y, fill = value)) +
+    facet_grid(band + variablesRB3D~ Z) +
+    theme(aspect.ratio = 1)
+```
+
+<img src="man/figures/README-RB3D example-1.png" width="100%" /> That's a lot of data! It is important to set the "SimulationFilter" to match what data you want as the process can use a lot of memory when many large files are loaded. The below example uses the simple "dplyr" approach to work with the data. Here we look at the lowest horizontal layer of each 3D radiative budget array (i.e. Z = 1) and plot the smaller dataset.
+
+``` r
+library(dplyr)
+simData_filtered <- simData@data %>%
+    dplyr::filter(Z == 1)
+#plot again and tweak the plot
+ggplot(simData_filtered) + 
+    geom_raster(aes(x = X, y = Y, fill = value)) +
+    facet_grid(band ~ variablesRB3D) +
+    theme(aspect.ratio = 1) +
+    theme_bw() +
+    theme(panel.spacing = unit(0, "cm"), 
+          strip.text = element_text(size = 6, 
+                                    margin = margin(0.05, 0.05, 0.05, 0.05, unit = "cm"))) +
+    theme(aspect.ratio = 1) +
+    scale_fill_distiller(palette = "Spectral")
+```
+
+<img src="man/figures/README-RB3D filter-1.png" width="100%" />

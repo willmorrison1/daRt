@@ -26,12 +26,8 @@ setMethod(f = "images",
               require(tools)
               require(reshape2)
               imagesFiles <- getFiles(x, sF)
-              imagesData <- new("Images", simDir = x)
-              imagesData@simulationFilter <- sF
-              imagesData@files <- imagesFiles@files
-              imagesData@isSequence <- imagesFiles@isSequence
-              imagesData@sequenceInfo <- imagesFiles@sequenceInfo
-              imagesData@sequenceInfoList <- imagesFiles@sequenceInfoList
+              imagesData <- as(object = imagesFiles, Class = "Images",
+                                   strict = TRUE)
               imagesDataRaw <- vector(mode = "list", length = nrow(imagesData@files))
               filesWithoutExt <- tools::file_path_sans_ext(imagesFiles@files$fileName)
               for (i in 1:nrow(imagesData@files)) {

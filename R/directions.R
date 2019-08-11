@@ -9,14 +9,11 @@
 setMethod(f = "directions",
           signature = signature(x = "character", sF = "SimulationFilter"),
           definition = function(x, sF){
+
               directionsFiles <- getFiles(x, sF)
               #use "as" functionality
-              directionsData <- new("Directions", simDir = x)
-              directionsData@simulationFilter <- sF
-              directionsData@files <- directionsFiles@files
-              directionsData@isSequence <- directionsFiles@isSequence
-              directionsData@sequenceInfo <- directionsFiles@sequenceInfo
-              directionsData@sequenceInfoList <- directionsFiles@sequenceInfoList
+              directionsData <- as(object = directionsFiles, Class = "Directions",
+                                   strict = TRUE)
               dirDataRaw <- vector(mode = "list", length = nrow(directionsData@files))
               for (i in 1:nrow(directionsData@files)) {
                   fileRow <- directionsData@files[i, ]
