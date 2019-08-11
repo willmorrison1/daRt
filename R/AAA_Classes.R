@@ -8,8 +8,11 @@
                       paste0(object@simDir[dirMissingBool], collapse = ","))
         errors <- c(errors, msg)
     }
-    #todo-check sim version is consistent
-
+    #check sim version is consistent
+    if (!nrow(object@versionInfo) != 1) {
+        errors <- c(errors, "inconsistent version info. expected one row in @versionInfo slot for
+                'SimulationHandle' type object")
+    }
     #todo-check sim version being used is compatible
     return(ifelse(test = length(errors) == 0,
                   yes = TRUE,
@@ -172,7 +175,8 @@ setClass(
     slots = list(simDir = "character",
                  simName = "character",
                  isSequence = "logical",
-                 sequenceInfo = "data.frame"))
+                 sequenceInfo = "data.frame",
+                 versionInfo = "data.frame"))
 setValidity("SimulationHandle", .simHandleValidity)
 
 #todo-error message on missing files also returns the files that exist
@@ -185,6 +189,7 @@ setValidity("SimulationHandle", .simHandleValidity)
 #' @description An S4 class to represent the files within a simulation or simulations.
 #' Created using the \code{\link{getFiles}} method. Specific files within the class are modified
 #' by the object with class \link{SimulationFilter-class}
+#'
 #' @slot simulationFilter contains \link{SimulationFilter-class} object
 #' @slot files a data.frame, with each row describing the file
 #' @slot sequenceInfoList a list, with each list element showing the variable permutation(s) within this specific simulation sequence.
