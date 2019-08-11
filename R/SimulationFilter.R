@@ -69,7 +69,7 @@ setMethod(f = "simulationFilter",
 
 .defaultImageType <- function(){
 
-    c("")
+    c("ima", "camera")
 
 }
 

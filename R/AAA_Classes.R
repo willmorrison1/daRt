@@ -39,20 +39,61 @@
 }
 
 
-#todo:simFilter() needs some basic checks e.g.
-#grepl "BAND"
-#grepl "BRF", Tapp, Radiance
-#grepl iter
-#grepl [vars3Drb hmm]
-#grepl strsplit(_) first part numeric
 .simFilterValidity <- function(object){
+    bandsPrompt <- "Set as e.g. c('BAND0', 'BAND1')"
+    itersPrompt <- "Set as e.g. c('ITER1', 'ILLUDIR')"
+    splitVarsPrompt <- "'typeNum' is invalid. Should be '[numeric]_[character]' e.g. '2_Ground'"
+    allowedVariables <- c("BRF", "RADIATIVE_BUDGET", "Tapp", "Radiance")
+    variablesPrompt <- paste("Invalid variables. Should be ONE of:",
+                             paste0(allowedVariables, collapse = ","))
     errors <- character()
+    #allowed projects
     allowedProducts <- c("directions", "rb3D", "images")
     product <- try(match.arg(arg = product(object), choices = allowedProducts,
-                         several.ok = FALSE), silent = TRUE)
+                             several.ok = FALSE), silent = TRUE)
+    #allowed products
     if (class(product) == "try-error") {
         errors <- c(errors, paste0("Product set to ", product(object), " but must
                                    be one of ", paste0(allowedProducts, collapse = ",")))
+    }
+    #allowed bands
+    if (all(object@bands == "")) errors <- c(errors, paste("Empty bands.", bandsPrompt))
+    if (any(!grepl("BAND", object@bands))) errors <- c(errors, paste("Invalid bands.", bandsPrompt))
+
+    #allowed variables
+    if (length(object@variables) > 1 || object@variables == "") {
+        errors <- c(errors, variablesPrompt)
+    }
+    if (!any(allowedVariables %in% object@variables)) {
+        errors <- c(errors, variablesPrompt)
+    }
+    #allowed iters
+    if (all(object@iters == "")) errors <- c(errors, paste("Empty iters.", itersPrompt))
+    if (any(!grepl("ITER|ILLUDIR|ILLUDIFF", object@iters))) {
+        errors <- c(errors, paste("Invalid iters.", itersPrompt))
+    }
+    #allowed RB3Dvars
+    if (all(object@variablesRB3D == "")) errors <- c(errors, "Empty RB3D.")
+    #allowed typeNums
+    if (object@typeNums != "") {
+        splitVars <- strsplit(object@typeNums, split = "_")
+        for (i in 1:length(splitVars)) {
+            if (length(splitVars[[i]]) < 2) {
+                errors <- c(errors, paste(object@typeNums[i], splitVarsPrompt))
+            }
+            if (is.na(as.numeric(splitVars[[i]][1]))) {
+                errors <- c(errors, paste(object@typeNums[i], splitVarsPrompt))
+            }
+        }
+    }
+    #allowed images
+    if (all(object@imageType == "")) errors <- c(errors, "No 'imageType'.")
+    if (any(!grepl("ima|camera", object@imageType))) {
+        errors <- c(errors, paste("Invalid imageType. Should be either/or 'ima,camera'"))
+    }
+    #allowed imageNo
+    if (any(is.na(object@imageNo))) {
+        errors <- c(errors, "imageNo contains non-numeric (NAs)")
     }
 
     return(ifelse(test = length(errors) == 0,
