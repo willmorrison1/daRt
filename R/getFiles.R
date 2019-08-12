@@ -15,6 +15,7 @@ setMethod(f = "getFiles",
               }
               sequenceInfoList <- lapply(simFilesList, function(x) x@sequenceInfo)
               uniqueSequenceInfo <- unique(lapply(simFilesList, function(x) x@sequenceInfo[-3]))
+              names(sequenceInfoList) <- sapply(simFilesList, function(x) x@simName)
               if (length(uniqueSequenceInfo) > 1) {
                   stop("When merging multiple simulations,
                        there was a sequence info mismatch between simulations
