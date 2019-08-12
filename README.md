@@ -65,7 +65,7 @@ Now explore the DART output directory structure
 
 ``` r
 #define the simulation directory
-simulationDir <- "man/sampleSimulation/cesbio"
+simulationDir <- "man/data/cesbio"
 
 #define the SimulationFiler as shown above (i.e. 'sF'), but in one line
 sF1 <- simulationFilter(product = "directions", 
@@ -78,8 +78,8 @@ simFiles <- daRt::getFiles(x = simulationDir, sF = sF1)
 #do we want to adjust the SimulationFilter? daRt::getFiles is essentially
 #a 'dry-run' of the data extraction
 files(simFiles)
-#> [1] "man/sampleSimulation/cesbio/output//BAND0/BRF/ITER1/brf"
-#> [2] "man/sampleSimulation/cesbio/output//BAND1/BRF/ITER1/brf"
+#> [1] "man/data/cesbio/output//BAND0/BRF/ITER1/brf"
+#> [2] "man/data/cesbio/output//BAND1/BRF/ITER1/brf"
 ```
 
 Now extract DART output data
