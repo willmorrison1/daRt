@@ -1,0 +1,25 @@
+[Ilwis]
+Description=Raster Map ima06_VZ=022_4_VA=270_0
+Time=0
+Type=BaseMap
+
+[BaseMap]
+CoordSystem=unknown.csy
+CoordBounds=0 -31 36 0
+Domain=value.dom
+DomainInfo=value.dom;Long;value;0;-9999999.9:9999999.9:0.1:offset=0;
+Range=-1e+300:1e+300:0.000000:offset=0
+Type=Map
+MinMax=-1:1.14525
+
+[Map]
+GeoRef=ima06_VZ=022_4_VA=270_0.grf
+Size=36 31
+Type=MapStore
+
+[MapStore]
+Data=ima06_VZ=022_4_VA=270_0.mp#
+Type=Real
+Structure=Line
+StartOffset=0
+RowLength=31

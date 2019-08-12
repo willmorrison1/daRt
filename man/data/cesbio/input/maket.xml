@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DartFile build="v1091" version="5.7.4">
+    <Maket dartZone="0" exactlyPeriodicScene="0" useRandomGenerationSeed="1">
+        <Scene>
+            <CellDimensions x="1" z="1"/>
+            <SceneDimensions x="30" y="33"/>
+        </Scene>
+        <Soil>
+            <OpticalPropertyLink ident="Ground" indexFctPhase="6" type="0"/>
+            <ThermalPropertyLink idTemperature="ThermalFunction290_310" indexTemperature="0"/>
+            <Topography presenceOfTopography="0"/>
+            <DEM_properties createTopography="0"/>
+        </Soil>
+        <LatLon altitude="0.0" latitude="43.562336" longitude="1.476674"/>
+    </Maket>
+</DartFile>
