@@ -13,11 +13,17 @@
         errors <- c(errors, "inconsistent version info. expected one row in @versionInfo slot for
                 'SimulationHandle' type object")
     }
-    #todo-check sim version being used is compatible
+    #check sim version being used is compatible
+    if (!between(x = object@versionInfo$buildNumber,
+                left = .__daRtVersion["minBuildVersion"],
+                right = .__daRtVersion["maxBuildVersion"])) {
+        errors <- c(errors, paste("DART build:", object@versionInfo$buildNo,
+                                  "is incompatible/untested with daRt package."))
+    }
 
-    return(ifelse(test = length(errors) == 0,
-                  yes = TRUE,
-                  no = errors))
+        return(ifelse(test = length(errors) == 0,
+                      yes = TRUE,
+                      no = errors))
 }
 
 
@@ -177,7 +183,8 @@ setClass(
                  simName = "character",
                  isSequence = "logical",
                  sequenceInfo = "data.frame",
-                 versionInfo = "data.frame"))
+                 versionInfo = "data.frame",
+                 softwareVersion = "character"))
 setValidity("SimulationHandle", .simHandleValidity)
 
 #todo-error message on missing files also returns the files that exist
