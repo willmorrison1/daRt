@@ -12,6 +12,5 @@ setMethod(f = "directionsFiles",
             fullFiles <- data.frame(subDirs[c("band", "variable", "iter", "typeNum")],
                                     "fileName" = fileNames, stringsAsFactors = FALSE)
             dirctnFiles@files <- fullFiles
-            validObject(dirctnFiles, complete = TRUE)
             return(dirctnFiles)
           })

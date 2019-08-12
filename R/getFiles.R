@@ -18,7 +18,7 @@ setMethod(f = "getFiles",
               if (length(uniqueSequenceInfo) > 1) {
                   stop("When merging multiple simulations,
                        there was a sequence info mismatch between simulations
-                       i.e. the sequences use different variables")
+                       i.e. the sequence elements use different variables")
               }
               sequenceInfoOut <- uniqueSequenceInfo[[1]]
               simFilesStacked <- new(Class = class(simFilesList[[1]])[1],
@@ -27,11 +27,12 @@ setMethod(f = "getFiles",
                                      sequenceInfo = sequenceInfoOut)
               simFilesStacked@sequenceInfoList <- sequenceInfoList
               simFilesStacked@simulationFilter <- simFilesList[[1]]@simulationFilter
+              simFilesStacked@versionInfo <- versionInfo(simFilesStacked)
               for (i in 1:length(simFilesList)) {
                   simFilesList[[i]]@files$simName <- simname(simFilesList[[i]])
               }
               simFilesStacked@files <- dplyr::bind_rows(lapply(simFilesList, function(x) x@files))
-              validObject(simFilesStacked)
+              validObject(simFilesStacked, complete = TRUE, test = TRUE)
 
               return(simFilesStacked)
           })

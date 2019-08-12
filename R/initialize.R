@@ -8,6 +8,7 @@ setMethod("initialize", "SimulationHandle",
             .Object@simName <- basename(simDir)
             .Object@isSequence <- isSequence
             .Object@sequenceInfo <- sequenceInfo
+            .Object@softwareVersion <- character()
 
             return(.Object)
           }
