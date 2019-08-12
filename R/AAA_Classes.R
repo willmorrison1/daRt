@@ -14,6 +14,7 @@
                 'SimulationHandle' type object")
     }
     #todo-check sim version being used is compatible
+
     return(ifelse(test = length(errors) == 0,
                   yes = TRUE,
                   no = errors))
