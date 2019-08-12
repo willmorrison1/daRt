@@ -70,6 +70,7 @@ simulationDir <- "man/data/cesbio"
 sF1 <- simulationFilter(product = "directions", 
                        bands = c("BAND0", "BAND1"), 
                        iters = "ITER1")
+
 #get simulation files based on this newly defined filter
 simFiles <- daRt::getFiles(x = simulationDir, sF = sF1)
 

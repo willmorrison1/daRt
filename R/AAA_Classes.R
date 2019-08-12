@@ -1,4 +1,5 @@
 .simHandleValidity <- function(object){
+    require(dplyr)
     errors <- character()
     allPathsDF <- expand.grid(object@simDir, c("input", "output"))
     allPaths <- apply(allPathsDF, 1, function(x) file.path(x[1], x[2]))
@@ -9,12 +10,12 @@
         errors <- c(errors, msg)
     }
     #check sim version is consistent
-    if (!nrow(object@versionInfo) != 1) {
-        errors <- c(errors, "inconsistent version info. expected one row in @versionInfo slot for
+    if (!nrow(object@versionInfo) == 1) {
+        errors <- c(errors, "Inconsistent version info. Expected one row in @versionInfo slot for
                 'SimulationHandle' type object")
     }
     #check sim version being used is compatible
-    if (!between(x = object@versionInfo$buildNumber,
+    if (!dplyr::between(x = object@versionInfo$buildNumber,
                 left = .__daRtVersion["minBuildVersion"],
                 right = .__daRtVersion["maxBuildVersion"])) {
         errors <- c(errors, paste("DART build:", object@versionInfo$buildNo,
