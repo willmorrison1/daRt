@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<DartFile build="v1091" version="5.7.4">
-    <Water waterPriorityOnPlots="0" waterPriorityOnTrees="0">
-        <Lakes/>
-        <Rivers/>
-    </Water>
-</DartFile>
