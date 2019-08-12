@@ -5,8 +5,6 @@ daRt
 
 <!-- badges: start -->
 <!-- badges: end -->
-This readme is very work in progress.
-
 The daRt package provides a very quick and flexible way to import data that is produced by the Discrete Anisotropic Radiative Transfer (DART) model. The data in daRt are formatted in a way that facilitates rapid data analysis.
 
 Installation
@@ -64,7 +62,8 @@ iters(sF) <- "ITER1"
 Now explore the DART output directory structure
 
 ``` r
-#define the simulation directory
+#define the simulation directory. For this example it is a relative directory and is one simulation.
+#if you install the package using devtools::install_github then these files will not be available automatically. Get these files from github manually or use your own 'cesbio' simulation or simlar.
 simulationDir <- "man/data/cesbio"
 
 #define the SimulationFiler as shown above (i.e. 'sF'), but in one line

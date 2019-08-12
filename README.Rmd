@@ -53,8 +53,8 @@ iters(sF) <- "ITER1"
 ```
 Now explore the DART output directory structure
 ```{r get files example}
-#define the simulation directory. For this example it is relative and is one simulation.
-#if you install the package using devtools::install_github then these files will not be available.
+#define the simulation directory. For this example it is a relative directory and is one simulation.
+#if you install the package using devtools::install_github then these files will not be available automatically. Get these files from github manually or use your own 'cesbio' simulation or simlar.
 simulationDir <- "man/data/cesbio"
 
 #define the SimulationFiler as shown above (i.e. 'sF'), but in one line
