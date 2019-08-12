@@ -187,8 +187,6 @@ setClass(
                  softwareVersion = "character"))
 setValidity("SimulationHandle", .simHandleValidity)
 
-#todo-error message on missing files also returns the files that exist
-
 
 #' SimulationFiles class
 #'
