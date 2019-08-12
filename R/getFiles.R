@@ -31,6 +31,13 @@ setMethod(f = "getFiles",
               simFilesStacked@versionInfo <- versionInfo(simFilesStacked)
               for (i in 1:length(simFilesList)) {
                   simFilesList[[i]]@files$simName <- simname(simFilesList[[i]])
+                  sequenceParamDF <- simFilesList[[i]]@sequenceInfo
+                  if (nrow(sequenceParamDF) > 0) {
+                      simFilesList[[i]]@files <- cbind(
+                          simFilesList[[i]]@files,
+                          reshape2::dcast(sequenceParamDF, .~parameterNo,
+                                          value.var = "parameterVal")[-1])
+                  }
               }
               simFilesStacked@files <- dplyr::bind_rows(lapply(simFilesList, function(x) x@files))
               validObject(simFilesStacked, complete = TRUE, test = TRUE)
