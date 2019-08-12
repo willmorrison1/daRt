@@ -6,8 +6,11 @@ setMethod(f = "versionInfo", signature = signature(x = "character"),
               require(dplyr)
               OUTlist <- vector("list", length(x))
               for (i in 1:length(x)) {
-                  xmlFile <- file.path(x[i], "input", "directions.xml")
-                  xmlData <- xml2::read_xml(xmlFile)
+                  xmlFile <- file.path(x[i], "input", c("maket.xml",
+                                                        "phase.xml", "directions.xml",
+                                                        "coeff_diff.xml"))
+                  existingXmlFile <- which(file.exists(xmlFile))[1]
+                  xmlData <- xml2::read_xml(xmlFile[existingXmlFile])
                   versionNumber <- xml2::xml_attr(xmlData, attr = "version")
                   buildFull <- xml2::xml_attr(xmlData, attr = "build")
                   buildNumber <- as.numeric(gsub("v", "", xml2::xml_attr(xmlData, attr = "build")))
