@@ -25,8 +25,8 @@ setMethod(f = "rb3DFiles",
                   allFiles <- allBinFiles[grepl("3D_", basename(allBinFiles))]
                   nonTypeNumFile <- allFiles[!grepl("TypeNum|Ground", basename(allFiles))]
                   if (length(nonTypeNumFile) != 1) {
-                      stop(paste("RB3DFiles() expected at least one RB .bin file (the non-'typeNum' file) in:\n",
-                                 fileDir[i]))
+                      stop(paste( "No radiative budget files found. RB3DFiles() expected at least one radiative 
+                                  budget .bin file (the non-'typeNum' file) in:", fileDir[i]))
                   }
                   for (j in 1:length(RBTypeNums)) {
                       for (v in 1:length(allFiles)) {
