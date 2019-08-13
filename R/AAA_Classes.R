@@ -23,7 +23,7 @@
     }
     #check if there are sequences/nonsequences together- won't work. i.e. sequenceInfo should
     #have length 1
-    if (length(object@sequenceInfo) != 1) {
+    if (length(unique(object@isSequence)) != 1) {
         errors <- c(errors, "Simulations contain 'sequence' and 'non-sequence' type simulations.
                     Can only have one or the other.")
     }
