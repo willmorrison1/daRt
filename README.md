@@ -125,7 +125,7 @@ ggplot(simData@data) +
     theme(aspect.ratio = 1)
 ```
 
-<img src="man/figures/README-RB3D example-1.png" width="100%" /> That's a lot of data! It is important to set the "SimulationFilter" to match what data you want so that this doesn't happen. Further the process can use a lot of memory when many large files are loaded. Therefore, try to load in only the files you want and limit the amount of data filtering. The below example uses the simple "dplyr" approach to work with the data. Here we look at the lowest horizontal layer of each 3D radiative budget array (i.e. Z = 1) rather than all layers (above plot) and plot the smaller dataset.
+<img src="man/figures/README-RB3D example-1.png" width="100%" /> That's a lot of data! It is important to set the "SimulationFilter" to match what data you want so that this doesn't happen. Also, the process can use a lot of memory when many large files are loaded so try to only load in the files you need in the first place. The below example uses the simple "dplyr" approach to work with the data. Here we look at the lowest horizontal layer of each 3D radiative budget array (i.e. Z = 1) rather than all layers (above plot) and plot the smaller dataset.
 
 ``` r
 library(dplyr)

@@ -21,6 +21,13 @@
         errors <- c(errors, paste("DART build:", object@versionInfo$buildNo,
                                   "is incompatible/untested with daRt package."))
     }
+    #check if there are sequences/nonsequences together- won't work. i.e. sequenceInfo should
+    #have length 1
+    if (length(object@sequenceInfo) != 1) {
+        errors <- c(errors, "Simulations contain 'sequence' and 'non-sequence' type simulations.
+                    Can only have one or the other.")
+    }
+
 
         return(ifelse(test = length(errors) == 0,
                       yes = TRUE,
