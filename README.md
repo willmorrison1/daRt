@@ -166,7 +166,7 @@ in the files you need in the first place. The below example uses the
 simple “dplyr” approach to work with the data. Here we look at the
 lowest horizontal layer of each 3D radiative budget array (i.e. Z = 1)
 rather than all layers (above plot) and plot the smaller dataset. This
-also won’t work if using cesbio simulation shipped from DART.
+also won’t work if using the cesbio simulation shipped from DART.
 
 ``` r
 library(dplyr)
