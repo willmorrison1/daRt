@@ -59,13 +59,24 @@ bands(sF) <- c("BAND0", "BAND1")
 iters(sF) <- "ITER1"
 ```
 
-Now explore the DART output directory structure
+Now explore the DART output directory structure. First define the simulation directory. For this example, 'simulationDir' is a relative directory and is one simulation.
 
 ``` r
-#define the simulation directory. For this example it is a relative directory and is one simulation.
-#if you install the package using devtools::install_github then these files will not be available automatically. Get these files from github manually or use your own 'cesbio' simulation or simlar.
 simulationDir <- "man/data/cesbio"
+```
 
+If you install the package using devtools::install\_github then these DART files will not be available automatically. To use these files, get them from github manually or use your own 'cesbio' simulation (is shipped with the DART model).
+
+The directory should be the base directory of the simulation. E.g. within 'simulationDir there should be the simulation 'input' and 'output' directories.
+
+``` r
+list.files(simulationDir)
+#> [1] "input"  "output"
+```
+
+Now we have the simulation diretory clarified, we continue by defining a simulationFilter and then explore the files
+
+``` r
 #define the SimulationFiler as shown above (i.e. 'sF'), but in one line
 sF1 <- simulationFilter(product = "directions", 
                        bands = c("BAND0", "BAND1"), 
