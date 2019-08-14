@@ -9,7 +9,7 @@
 
 The daRt package provides a very quick and flexible way to import data
 that is produced by the Discrete Anisotropic Radiative Transfer (DART)
-model. The data in daRt are formatted in a way that facilitates rapid
+model. The data in daRt are presented in R in a way that facilitates rapid
 data analysis.
 
 ## Installation
@@ -30,8 +30,8 @@ Load the package
 library(daRt)
 ```
 
-Create and modify the “SimulationFilter” object. This defines what data
-you want to extract from a DART output directory structure
+Create and modify the “SimulationFilter” object. This object describes what data
+you want to extract from a DART output directory structure.
 
 ``` r
 #define SimulationFilter object - define "directions" as the product
@@ -70,16 +70,16 @@ Now explore the DART output directory structure. First define the simulation dir
 simulationDir <- "man/data/cesbio"
 ```
 
-If you install the package using devtools::install\_github then these DART files will not be available automatically. To use these files, get them from github manually or use your own 'cesbio' simulation (is shipped with the DART model).
+If you install the package using devtools::install\_github then these DART files will not be available automatically. To use these files, get them from github manually or use your own 'cesbio' simulation (this simulation is shipped with the DART model).
 
-The directory should be the base directory of the simulation. E.g. within 'simulationDir there should be the simulation 'input' and 'output' directories.
+The directory defined as 'simulationDir' should be the base directory of the simulation. E.g. within 'simulationDir there should be the simulation 'input' and 'output' directories.
 
 ``` r
 list.files(simulationDir)
 #> [1] "input"  "output"
 ```
 
-Now we have the simulation diretory clarified, we continue by defining a simulationFilter and then explore the files
+Now we have the simulation diretory clarified, define a 'SimulationFilter' objcet using the 'simulationFilter' function and explore the files in the simulation itself.
 
 ``` r
 #define the SimulationFiler as shown above (i.e. 'sF'), but in one line
@@ -98,7 +98,7 @@ files(simFiles)
 #> [2] "man/data/cesbio/output//BAND1/BRF/ITER1/brf"
 ```
 
-Now extract DART output data
+Now extract data form these DART files.
 
 ``` r
 #get simulation data
