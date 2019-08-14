@@ -23,7 +23,6 @@ setMethod(f = "directions",
                   dirDataRaw[[i]]$iter <- fileRow$iter
                   dirDataRaw[[i]]$typeNum <- fileRow$typeNum
                   dirDataRaw[[i]]$simName <- fileRow$simName
-                  if ((i %% 50) == 0) gc()
               }
               gc()
               directionsData@data <- dplyr::bind_rows(dirDataRaw)

@@ -19,7 +19,6 @@ setMethod(f = "rb3D",
                   listData[[i]]$iter <- fileRow$iter
                   listData[[i]]$typeNum <- fileRow$typeNum
                   listData[[i]]$simName <- fileRow$simName
-                  if ((i %% 50) == 0) gc()
               }
               gc()
               RB3d@data <- data.table::rbindlist(listData, use.names = FALSE)

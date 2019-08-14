@@ -25,6 +25,7 @@ setMethod(f = "images",
 
               require(tools)
               require(reshape2)
+              require(data.table)
               imagesFiles <- getFiles(x, sF)
               imagesData <- as(object = imagesFiles, Class = "Images",
                                    strict = TRUE)
@@ -43,10 +44,9 @@ setMethod(f = "images",
                   imagesDataRaw[[i]]$VZ <- fileRow$VZ
                   imagesDataRaw[[i]]$VA <- fileRow$VA
                   imagesDataRaw[[i]]$simName <- fileRow$simName
-                  # if ((i %% 50) == 0) gc()
               }
               gc()
-              imagesData@data <- dplyr::bind_rows(imagesDataRaw)
+              imagesData@data <- data.table::rbindlist(imagesDataRaw, use.names = FALSE)
               validObject(imagesData)
 
               return(imagesData)
