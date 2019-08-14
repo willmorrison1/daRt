@@ -4,7 +4,7 @@
 \alias{getData}
 \title{Main function: get DART data}
 \usage{
-getData(x = "character", sF = "SimulationFilter")
+getData(x = "character", sF = "SimulationFilter", ...)
 }
 \arguments{
 \item{x}{simulation directory or directories (character)}
