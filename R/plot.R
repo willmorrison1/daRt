@@ -18,8 +18,8 @@ azimuthOffset <- function(input, offset){
 polarToCartesian <- function(zenith, azimuth){
     #convert polar coordinates to cartesian coordinates
 
-    x <- zenith * (cos(azimuth * (pi/180)))
-    y <- zenith * (sin(azimuth * (pi/180)))
+    x <- zenith * (cos(azimuth * (pi / 180)))
+    y <- zenith * (sin(azimuth * (pi / 180)))
     return(data.frame("x_cartesian" = x, "y_cartesian" = y))
 }
 
