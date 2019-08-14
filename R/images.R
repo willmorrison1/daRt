@@ -43,8 +43,9 @@ setMethod(f = "images",
                   imagesDataRaw[[i]]$VZ <- fileRow$VZ
                   imagesDataRaw[[i]]$VA <- fileRow$VA
                   imagesDataRaw[[i]]$simName <- fileRow$simName
-                  gc()
+                  if (i %% 10) gc()
               }
+              gc()
               imagesData@data <- dplyr::bind_rows(imagesDataRaw)
               validObject(imagesData)
 
