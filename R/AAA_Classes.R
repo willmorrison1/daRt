@@ -94,7 +94,7 @@
     if (all(object@variablesRB3D == "")) errors <- c(errors, "Empty RB3D.")
     #allowed typeNums
     for (i in 1:length(object@typeNums)) {
-        if (object@typeNums != "") next
+        if (object@typeNums[i] == "") next
         splitVars <- strsplit(object@typeNums[i], split = "_")[[1]]
         if (length(splitVars) < 2) {
             errors <- c(errors, paste(object@typeNums[i], splitVarsPrompt))
