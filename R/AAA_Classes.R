@@ -16,8 +16,8 @@
     }
     #check sim version being used is compatible
     if (!dplyr::between(x = object@versionInfo$buildNumber,
-                left = .__daRtVersion["minBuildVersion"],
-                right = .__daRtVersion["maxBuildVersion"])) {
+                        left = .__daRtVersion["minBuildVersion"],
+                        right = .__daRtVersion["maxBuildVersion"])) {
         errors <- c(errors, paste("DART build:", object@versionInfo$buildNo,
                                   "is incompatible/untested with daRt package."))
     }
@@ -29,9 +29,9 @@
     }
 
 
-        return(ifelse(test = length(errors) == 0,
-                      yes = TRUE,
-                      no = errors))
+    return(ifelse(test = length(errors) == 0,
+                  yes = TRUE,
+                  no = errors))
 }
 
 
@@ -93,15 +93,14 @@
     #allowed RB3Dvars
     if (all(object@variablesRB3D == "")) errors <- c(errors, "Empty RB3D.")
     #allowed typeNums
-    if (object@typeNums != "") {
-        splitVars <- strsplit(object@typeNums, split = "_")
-        for (i in 1:length(splitVars)) {
-            if (length(splitVars[[i]]) < 2) {
-                errors <- c(errors, paste(object@typeNums[i], splitVarsPrompt))
-            }
-            if (is.na(as.numeric(splitVars[[i]][1]))) {
-                errors <- c(errors, paste(object@typeNums[i], splitVarsPrompt))
-            }
+    for (i in 1:length(object@typeNums)) {
+        if (object@typeNums != "") next
+        splitVars <- strsplit(object@typeNums[i], split = "_")[[1]]
+        if (length(splitVars) < 2) {
+            errors <- c(errors, paste(object@typeNums[i], splitVarsPrompt))
+        }
+        if (is.na(as.numeric(splitVars[1]))) {
+            errors <- c(errors, paste(object@typeNums[i], splitVarsPrompt))
         }
     }
     #allowed images
