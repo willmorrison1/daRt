@@ -33,6 +33,7 @@ setMethod(f = "imageFiles",
               }
               imgInfoDF <- dplyr::bind_rows(imgInfoDFList)
               imageFiles@files <- imgInfoDF
+              validObject(imageFiles)
               return(imageFiles)
 
           })
