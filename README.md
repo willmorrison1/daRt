@@ -1,24 +1,28 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-daRt
-====
+
+# daRt
 
 <!-- badges: start -->
+
 <!-- badges: end -->
-The daRt package provides a very quick and flexible way to import data that is produced by the Discrete Anisotropic Radiative Transfer (DART) model. The data in daRt are formatted in a way that facilitates rapid data analysis.
 
-Installation
-------------
+The daRt package provides a very quick and flexible way to import data
+that is produced by the Discrete Anisotropic Radiative Transfer (DART)
+model. The data in daRt are formatted in a way that facilitates rapid
+data analysis.
 
-You can install the development version from [GitHub](https://github.com/) with:
+## Installation
+
+You can install the development version from
+[GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("willmorrison1/daRt")
 ```
 
-Example
--------
+## Example
 
 Load the package
 
@@ -26,7 +30,8 @@ Load the package
 library(daRt)
 ```
 
-Create and modify the "SimulationFilter" object. This defines what data you want to extract from a DART output directory structure
+Create and modify the “SimulationFilter” object. This defines what data
+you want to extract from a DART output directory structure
 
 ``` r
 #define SimulationFilter object - define "directions" as the product
@@ -101,7 +106,8 @@ plotOut <- ggplot(simData@data) +
 plot(plotOut)
 ```
 
-<img src="man/figures/README-plot data example-1.png" width="100%" /> Then alter the SimulationFilter to look at images
+<img src="man/figures/README-plot data example-1.png" width="100%" />
+Then alter the SimulationFilter to look at images
 
 ``` r
 product(sF) <- "images"
@@ -112,7 +118,8 @@ ggplot(simData@data) +
     theme(aspect.ratio = 1)
 ```
 
-<img src="man/figures/README-images example-1.png" width="100%" /> Alter the SimulatinFilter again to look at radiative budget files
+<img src="man/figures/README-images example-1.png" width="100%" /> Alter
+the SimulatinFilter again to look at radiative budget files
 
 ``` r
 product(sF) <- "rb3D"
@@ -125,7 +132,14 @@ ggplot(simData@data) +
     theme(aspect.ratio = 1)
 ```
 
-<img src="man/figures/README-RB3D example-1.png" width="100%" /> That's a lot of data! It is important to set the "SimulationFilter" to match what data you want so that this doesn't happen. Also, the process can use a lot of memory when many large files are loaded so try to only load in the files you need in the first place. The below example uses the simple "dplyr" approach to work with the data. Here we look at the lowest horizontal layer of each 3D radiative budget array (i.e. Z = 1) rather than all layers (above plot) and plot the smaller dataset.
+<img src="man/figures/README-RB3D example-1.png" width="100%" /> That’s
+a lot of data\! It is important to set the “SimulationFilter” to match
+what data you want so that this doesn’t happen. Also, the process can
+use a lot of memory when many large files are loaded so try to only load
+in the files you need in the first place. The below example uses the
+simple “dplyr” approach to work with the data. Here we look at the
+lowest horizontal layer of each 3D radiative budget array (i.e. Z = 1)
+rather than all layers (above plot) and plot the smaller dataset.
 
 ``` r
 library(dplyr)
