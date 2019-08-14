@@ -192,6 +192,7 @@ setMethod("plot", "Directions", function(x = "Directions",
 
 })
 
+#make function for less generic "directions" plot
 
 
 
