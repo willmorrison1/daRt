@@ -35,8 +35,7 @@ Load the package
 ```{r load the package}
 library(daRt)
 ```
-Create and modify the "SimulationFilter" object. This defines what data you want to extract
-from a DART output directory structure
+Create and modify the “SimulationFilter” object. This object describes what data you want to extract from a DART output directory structure.
 ```{r simulationFilter example}
 #define SimulationFilter object - define "directions" as the product
 sF <- simulationFilter(product = "directions")

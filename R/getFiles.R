@@ -28,7 +28,7 @@ setMethod(f = "getFiles",
                                      sequenceInfo = sequenceInfoOut)
               simFilesStacked@sequenceInfoList <- sequenceInfoList
               simFilesStacked@simulationFilter <- simFilesList[[1]]@simulationFilter
-              simFilesStacked@versionInfo <- versionInfo(simFilesStacked)
+              simFilesStacked@softwareVersion <- versionInfo(simFilesStacked)
               for (i in 1:length(simFilesList)) {
                   simFilesList[[i]]@files$simName <- simname(simFilesList[[i]])
                   sequenceParamDF <- simFilesList[[i]]@sequenceInfo

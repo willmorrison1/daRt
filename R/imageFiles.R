@@ -5,10 +5,8 @@ setMethod(f = "imageFiles",
 
               require(tools)
               require(dplyr)
-              imageFiles <- new("SimulationFiles",
-                                simDir = x,
-                                isSequence = isSequence(x),
-                                sequenceInfo = sequenceInfo(x))
+              simHandle <- simulationHandle(x)
+              imageFiles <- as(object = simHandle, Class = "SimulationFiles")
               imageFiles@simulationFilter <- sF
               subDirs <- simdir(sF)
               subDirs$dirName <- file.path(subDirs$dirName, "IMAGES_DART")

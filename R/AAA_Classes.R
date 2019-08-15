@@ -10,15 +10,15 @@
         errors <- c(errors, msg)
     }
     #check sim version is consistent
-    if (!nrow(object@versionInfo) == 1) {
-        errors <- c(errors, "Inconsistent version info. Expected one row in @versionInfo slot for
+    if (!nrow(object@softwareVersion) == 1) {
+        errors <- c(errors, "Inconsistent version info. Expected one row in @softwareVersion slot for
                 'SimulationHandle' type object")
     }
     #check sim version being used is compatible
-    if (!dplyr::between(x = object@versionInfo$buildNumber,
+    if (!dplyr::between(x = object@softwareVersion$buildNumber,
                         left = .__daRtVersion["minBuildVersion"],
                         right = .__daRtVersion["maxBuildVersion"])) {
-        errors <- c(errors, paste("DART build:", object@versionInfo$buildNo,
+        errors <- c(errors, paste("DART build:", object@softwareVersion$buildNo,
                                   "is incompatible/untested with daRt package."))
     }
     #check if there are sequences/nonsequences together- won't work. i.e. sequenceInfo should
@@ -190,8 +190,7 @@ setClass(
                  simName = "character",
                  isSequence = "logical",
                  sequenceInfo = "data.frame",
-                 versionInfo = "data.frame",
-                 softwareVersion = "character"))
+                 softwareVersion = "data.frame"))
 setValidity("SimulationHandle", .simHandleValidity)
 
 

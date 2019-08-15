@@ -2,10 +2,8 @@ setMethod(f = "rb3DFiles",
           signature = signature(x = "character", sF = "SimulationFilter"),
           definition = function(x, sF){
 
-              RB3DFiles <- new("SimulationFiles",
-                                simDir = x,
-                                isSequence = isSequence(x),
-                                sequenceInfo = sequenceInfo(x))
+              simHandle <- simulationHandle(x)
+              RB3DFiles <- as(object = simHandle, Class = "SimulationFiles")
               RB3DFiles@simulationFilter <- sF
               if (variables(sF) != "RADIATIVE_BUDGET") {
                   warning("Forcing 'RADIATIVE_BUDGET' variable in 'simulationFilter' variables.")
