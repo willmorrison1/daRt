@@ -2,7 +2,7 @@
 output: github_document
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- README.md is generated from README.Rmd. Please edit and run README.Rmd file to regenerate README.md -->
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
@@ -76,7 +76,7 @@ simFiles <- daRt::getFiles(x = simulationDir, sF = sF1)
 #a 'dry-run' of the data extraction
 files(simFiles)
 ```
-Now extract DART output data
+Now extract DART output data using the 'getData' method
 ```{r get data example}
 #get simulation data
 simData <- daRt::getData(x = simulationDir, sF = sF1)

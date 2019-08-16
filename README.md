@@ -1,5 +1,5 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+<!-- README.md is generated from README.Rmd. Please edit and run README.Rmd file to regenerate README.md -->
 
 # daRt
 
@@ -97,6 +97,7 @@ sF1 <- simulationFilter(product = "directions",
 
 #get simulation files based on this newly defined filter
 simFiles <- daRt::getFiles(x = simulationDir, sF = sF1)
+#> Warning: package 'xml2' was built under R version 3.6.1
 
 #show these files are we happy to continue and load the data, or
 #do we want to adjust the SimulationFilter? daRt::getFiles is essentially
@@ -111,6 +112,7 @@ Now extract DART output data
 ``` r
 #get simulation data
 simData <- daRt::getData(x = simulationDir, sF = sF1)
+#> Warning: package 'data.table' was built under R version 3.6.1
 ```
 
 Documentation needs updating and finishing from here
@@ -131,6 +133,7 @@ Then alter the SimulationFilter to look at images
 ``` r
 product(sF) <- "images"
 simData <- daRt::getData(x = simulationDir, sF = sF)
+#> Warning: package 'reshape2' was built under R version 3.6.1
 ggplot(simData@data) + 
     geom_raster(aes(x = x, y = y, fill = value)) +
     facet_grid(band ~ imageNo) +
