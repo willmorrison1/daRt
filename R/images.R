@@ -47,7 +47,6 @@ setMethod(f = "images",
               }
               gc()
               imagesData@data <- data.table::rbindlist(imagesDataRaw, use.names = FALSE)
-              validObject(imagesData)
 
               return(imagesData)
           }

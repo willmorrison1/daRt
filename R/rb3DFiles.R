@@ -58,7 +58,6 @@ setMethod(f = "rb3DFiles",
                               "variablesRB3D found: '", paste0(variablesRB3DFound, collapse = ","), "'\n
                              Use this information to adjust your 'simulationFilter'"))
               }
-              validObject(RB3DFiles)
               return(RB3DFiles)
           })
 
