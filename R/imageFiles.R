@@ -37,8 +37,9 @@ setMethod(f = "imageFiles",
           })
 
 .imgInfo <- function(imageFile) {
+
     if (!file.exists(imageFile)) {
-        stop(".imgInfo() file doesn't exist - needs full path")
+        stop(paste(".imgInfo() file missing:", imageFile))
     }
 
     imageFileName <- tools::file_path_sans_ext(basename(imageFile))
@@ -59,7 +60,8 @@ setMethod(f = "imageFiles",
         imgInfoDF$VZ <- as.numeric(paste0(gsub("VZ=", "", imageFileSplit[3]), ".", imageFileSplit[4]))
         imgInfoDF$VA <- as.numeric(paste0(gsub("VA=", "", imageFileSplit[5]), ".", imageFileSplit[6]))
     } else {
-        stop("Unknown image file type (was not 'ima' or 'camera'")
+        stop(paste("Unknown image filename (does not start with 'ima' or 'camera'):",
+                   imageFileName))
     }
     imgInfoDF$fileName <- imageFile
     return(imgInfoDF)
