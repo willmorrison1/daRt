@@ -6,8 +6,10 @@
     dirMissingBool <- sapply(allPaths, function(x) !dir.exists(x))
     if (any(dirMissingBool)) {
         msg <- paste0("Directory doesn't exist: ",
-                      paste0(object@simDir[dirMissingBool], collapse = ","))
-        errors <- c(errors, msg)
+                      paste0(allPaths[dirMissingBool], collapse = ",  "))
+       #first and most important check - if this fails then all else will fail
+        #so return error message here
+        return(msg)
     }
     #check sim version is consistent
     if (!nrow(object@softwareVersion) == 1) {
