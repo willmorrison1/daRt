@@ -101,30 +101,30 @@ setGeneric(name = "getFiles", def = function(x = "character", sF = "SimulationFi
 #' Main function to get data from DART simulation outputs in a friendly 'long' data format that is part of
 #' an object that extends a \link{SimulationData-class} type object
 #' @name getData
-#' @param x simulation directory or directories (character)
-#' @param sF \link{SimulationFilter-class} object
-#'
+#' @param x simulation directory or directories (character) or \link{SimulationFiles-class} object
+#' @param sF \link{SimulationFilter-class} if x = \code{character}
 #'
 #' @return
 #' @export
 #'
 #' @examples
-setGeneric(name = "getData", def = function(x = "character", sF = "SimulationFilter", ...)
+setGeneric(name = "getData", signature = c("x", "sF"), def = function(x, sF)
     standardGeneric("getData"))
+
 #' @export
 setGeneric(name = "versionInfo", def = function(x) standardGeneric("versionInfo"))
 
-setGeneric(name = "directions", def = function(x = "character", sF = "SimulationFilter")
+setGeneric(name = "directions", def = function(x = "character")
     standardGeneric("directions"))
 setGeneric(name = "directionsFiles", def = function(x = "character", sF = "SimulationFilter")
     standardGeneric("directionsFiles"))
-setGeneric(name = "images", def = function(x = "character", sF = "SimulationFilter")
+setGeneric(name = "images", def = function(x = "character")
     standardGeneric("images"))
 setGeneric(name = "imageFiles", def = function(x = "character", sF = "SimulationFilter")
     standardGeneric("imageFiles"))
+setGeneric(name = "rb3D",  def = function(x = "character")
+    standardGeneric("rb3D"))
 setGeneric(name = "rb3DFiles", def = function(x = "character", sF = "SimulationFilter")
     standardGeneric("rb3DFiles"))
-setGeneric(name = "rb3D",  def = function(x = "character", sF = "SimulationFilter")
-    standardGeneric("rb3D"))
 setGeneric(name = "simulationHandle",  def = function(x = "character")
     standardGeneric("simulationHandle"))

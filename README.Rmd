@@ -80,6 +80,10 @@ Now extract DART output data using the 'getData' method
 ```{r get data example}
 #get simulation data
 simData <- daRt::getData(x = simulationDir, sF = sF1)
+#also can do this using simFiles object
+simData_fromFiles <- daRt::getData(x = simFiles)
+
+identical(simData_fromFiles, simData)
 ```
 Documentation needs updating and finishing from here
 ```{r plot data example}
@@ -133,4 +137,12 @@ ggplot(simData_filtered) +
           strip.text = element_text(size = 6, 
                                     margin = margin(0.05, 0.05, 0.05, 0.05, unit = "cm"))) +
     scale_fill_distiller(palette = "Spectral")
+```
+All data are loaded to memory which is problematic when loading many files. In these cases it is assumed that some processing is to occur on each product. Load all radiative budget products at once into memory and take the mean of each horizontal layer. 
+```{r RB3D load all}
+sF1 <- simulationFilter(product = "rb3D", 
+                       bands = c("BAND0", "BAND1", "BAND2"), 
+                       iters = "ITER1", "ITER2", "ILLUDIFF", "ILLUDIR",
+                       typeNums = c("2_Ground", "14_PlotSurface", "101_Default_Object", ""))
+
 ```

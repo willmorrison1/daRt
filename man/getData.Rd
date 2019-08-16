@@ -4,12 +4,12 @@
 \alias{getData}
 \title{Main function: get DART data}
 \usage{
-getData(x = "character", sF = "SimulationFilter", ...)
+getData(x, sF)
 }
 \arguments{
-\item{x}{simulation directory or directories (character)}
+\item{x}{simulation directory or directories (character) or \link{SimulationFiles-class} object}
 
-\item{sF}{\link{SimulationFilter-class} object}
+\item{sF}{\link{SimulationFilter-class} if x = \code{character}}
 }
 \description{
 Main function to get data from DART simulation outputs in a friendly 'long' data format that is part of

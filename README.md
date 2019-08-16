@@ -97,22 +97,29 @@ sF1 <- simulationFilter(product = "directions",
 
 #get simulation files based on this newly defined filter
 simFiles <- daRt::getFiles(x = simulationDir, sF = sF1)
-#> Warning: package 'xml2' was built under R version 3.6.1
 
 #show these files are we happy to continue and load the data, or
 #do we want to adjust the SimulationFilter? daRt::getFiles is essentially
 #a 'dry-run' of the data extraction
 files(simFiles)
-#> [1] "man/data/cesbio/output//BAND0/BRF/ITER1/brf"
-#> [2] "man/data/cesbio/output//BAND1/BRF/ITER1/brf"
+#>    band variable  iter typeNum                                    fileName
+#> 1 BAND0      BRF ITER1         man/data/cesbio/output//BAND0/BRF/ITER1/brf
+#> 2 BAND1      BRF ITER1         man/data/cesbio/output//BAND1/BRF/ITER1/brf
+#>   simName
+#> 1  cesbio
+#> 2  cesbio
 ```
 
-Now extract DART output data
+Now extract DART output data using the ‘getData’ method
 
 ``` r
 #get simulation data
 simData <- daRt::getData(x = simulationDir, sF = sF1)
-#> Warning: package 'data.table' was built under R version 3.6.1
+#also can do this using simFiles object
+simData_fromFiles <- daRt::getData(x = simFiles)
+
+identical(simData_fromFiles, simData)
+#> [1] TRUE
 ```
 
 Documentation needs updating and finishing from here
@@ -133,7 +140,6 @@ Then alter the SimulationFilter to look at images
 ``` r
 product(sF) <- "images"
 simData <- daRt::getData(x = simulationDir, sF = sF)
-#> Warning: package 'reshape2' was built under R version 3.6.1
 ggplot(simData@data) + 
     geom_raster(aes(x = x, y = y, fill = value)) +
     facet_grid(band ~ imageNo) +
@@ -198,5 +204,15 @@ ggplot(simData_filtered) +
     scale_fill_distiller(palette = "Spectral")
 ```
 
-<img src="man/figures/README-RB3D filter-1.png" width="100%" /> Look at
-a vertical slice of the 3D radiative budget
+<img src="man/figures/README-RB3D filter-1.png" width="100%" /> All data
+are loaded to memory which is problematic when loading many files. In
+these cases it is assumed that some processing is to occur on each
+product. Load all radiative budget products at once into memory and take
+the mean of each horizontal layer.
+
+``` r
+sF1 <- simulationFilter(product = "rb3D", 
+                       bands = c("BAND0", "BAND1", "BAND2"), 
+                       iters = "ITER1", "ITER2", "ILLUDIFF", "ILLUDIR",
+                       typeNums = c("2_Ground", "14_PlotSurface", "101_Default_Object", ""))
+```

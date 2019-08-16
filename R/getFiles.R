@@ -4,7 +4,6 @@ setMethod(f = "getFiles",
           definition = function(x, sF){
 
               require(dplyr)
-
               if (product(sF) == "directions") filesFun <- directionsFiles
               if (product(sF) == "rb3D") filesFun <- rb3DFiles
               if (product(sF) == "images") filesFun <- imageFiles

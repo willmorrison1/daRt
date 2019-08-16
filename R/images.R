@@ -20,21 +20,20 @@
 
 
 setMethod(f = "images",
-          signature = signature(x = "character"),
-          definition = function(x, sF = simFilter()){
+          signature = signature(x = "SimulationFiles"),
+          definition = function(x){
 
               require(tools)
               require(reshape2)
               require(data.table)
-              imagesFiles <- getFiles(x, sF)
-              imagesData <- as(object = imagesFiles, Class = "Images",
-                                   strict = TRUE)
+              imagesData <- as(object = x, Class = "Images",
+                               strict = TRUE)
               imagesDataRaw <- vector(mode = "list", length = nrow(imagesData@files))
-              filesWithoutExt <- tools::file_path_sans_ext(imagesFiles@files$fileName)
+              filesWithoutExt <- tools::file_path_sans_ext(imagesData@files$fileName)
               for (i in 1:nrow(imagesData@files)) {
                   fileRow <- imagesData@files[i, ]
-                  imagesDataRaw[[i]] <- reshape2::melt(.readILWIS(filesWithoutExt[i]),
-                                                       varnames = c("x", "y"))
+                  rawData <- .readILWIS(filesWithoutExt[i])
+                  imagesDataRaw[[i]] <- reshape2::melt(rawData, varnames = c("x", "y"))
                   imagesDataRaw[[i]]$band <- fileRow$band
                   imagesDataRaw[[i]]$variable <- fileRow$variable
                   imagesDataRaw[[i]]$iter <- fileRow$iter

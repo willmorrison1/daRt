@@ -1,11 +1,10 @@
 setMethod(f = "rb3D",
-          signature = signature(x = "character", sF = "SimulationFilter"),
-          definition = function(x, sF){
+          signature = signature(x = "SimulationFiles"),
+          definition = function(x){
               require(data.table)
               require(reshape2)
 
-              RB3DFiles <- getFiles(x, sF)
-              RB3d <- as(object = RB3DFiles, Class = "RB3D",
+              RB3d <- as(object = x, Class = "RB3D",
                                    strict = TRUE)
               listData <- vector(mode = "list", length = nrow(RB3d@files))
               for (i in 1:nrow(RB3d@files)) {

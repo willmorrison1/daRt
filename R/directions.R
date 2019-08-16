@@ -7,12 +7,11 @@
 }
 
 setMethod(f = "directions",
-          signature = signature(x = "character", sF = "SimulationFilter"),
-          definition = function(x, sF){
+          signature = signature(x = "SimulationFiles"),
+          definition = function(x){
 
-              directionsFiles <- getFiles(x, sF)
               #use "as" functionality
-              directionsData <- as(object = directionsFiles, Class = "Directions",
+              directionsData <- as(object = x, Class = "Directions",
                                    strict = TRUE)
               dirDataRaw <- vector(mode = "list", length = nrow(directionsData@files))
               for (i in 1:nrow(directionsData@files)) {
