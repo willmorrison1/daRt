@@ -38,10 +38,6 @@ setMethod(f = "imageFiles",
 
 .imgInfo <- function(imageFile) {
 
-    if (!file.exists(imageFile)) {
-        stop(paste(".imgInfo() file missing:", imageFile))
-    }
-
     imageFileName <- tools::file_path_sans_ext(basename(imageFile))
     imageFileSplit <- strsplit(imageFileName, "_")[[1]]
     imgInfoDF <- data.frame("imgType" = character(1),
