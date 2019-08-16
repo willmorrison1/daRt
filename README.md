@@ -138,25 +138,44 @@ ggplot(simData@data) +
 ```
 
 <img src="man/figures/README-images example-1.png" width="100%" /> Alter
-the SimulatinFilter again to look at radiative budget files
+the SimulationFilter again to now look at radiative budget files
 
 ``` r
 product(sF) <- "rb3D"
 simData <- daRt::getData(x = simulationDir, sF = sF)
 #> Warning in filesFun(x = x[i], sF = sF): Forcing 'RADIATIVE_BUDGET' variable
 #> in 'simulationFilter' variables.
+```
+
+The 3D radiative budget data are stored with the X, Y and Z location fo
+each cell stored in 3 columns
+
+``` r
+head(simData@data)
+#>    X Y Z    value variablesRB3D  band  iter typeNum simName
+#> 1: 1 1 1 1.008458   Intercepted BAND0 ITER1          cesbio
+#> 2: 2 1 1 1.018114   Intercepted BAND0 ITER1          cesbio
+#> 3: 3 1 1 1.011255   Intercepted BAND0 ITER1          cesbio
+#> 4: 4 1 1 1.017987   Intercepted BAND0 ITER1          cesbio
+#> 5: 5 1 1 1.019860   Intercepted BAND0 ITER1          cesbio
+#> 6: 6 1 1 1.016943   Intercepted BAND0 ITER1          cesbio
+```
+
+Now plot the a slice of the radiative budget data
+
+``` r
 ggplot(simData@data) + 
     geom_raster(aes(x = X, y = Y, fill = value)) +
     facet_grid(band + variablesRB3D~ Z) +
     theme(aspect.ratio = 1)
 ```
 
-<img src="man/figures/README-RB3D example-1.png" width="100%" /> That’s
-a lot of data\! It is important to set the “SimulationFilter” to match
-what data you want so that this doesn’t happen. Also, the process can
-use a lot of memory when many large files are loaded so try to only load
-in the files you need in the first place. The below example uses the
-simple “dplyr” approach to work with the data. Here we look at the
+<img src="man/figures/README-RB3D plot example-1.png" width="100%" />
+That’s a lot of data\! It is important to set the “SimulationFilter” to
+match what data you want so that this doesn’t happen. Also, the process
+can use a lot of memory when many large files are loaded so try to only
+load in the files you need in the first place. The below example uses
+the simple “dplyr” approach to work with the data. Here we look at the
 lowest horizontal layer of each 3D radiative budget array (i.e. Z = 1)
 rather than all layers (above plot) and plot the smaller dataset.
 
@@ -176,4 +195,5 @@ ggplot(simData_filtered) +
     scale_fill_distiller(palette = "Spectral")
 ```
 
-<img src="man/figures/README-RB3D filter-1.png" width="100%" />
+<img src="man/figures/README-RB3D filter-1.png" width="100%" /> Look at
+a vertical slice of the 3D radiative budget

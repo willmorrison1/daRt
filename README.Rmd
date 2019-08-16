@@ -100,10 +100,18 @@ ggplot(simData@data) +
     facet_grid(band ~ imageNo) +
     theme(aspect.ratio = 1)
 ```
-Alter the SimulatinFilter again to look at radiative budget files
+Alter the SimulationFilter again to now look at radiative budget files
 ```{r RB3D example}
 product(sF) <- "rb3D"
 simData <- daRt::getData(x = simulationDir, sF = sF)
+```
+The 3D radiative budget data are stored with the X, Y and Z location fo each cell stored in 3 columns
+```{r RB3D data example}
+head(simData@data)
+```
+
+Now plot the a slice of the radiative budget data
+```{r RB3D plot example}
 ggplot(simData@data) + 
     geom_raster(aes(x = X, y = Y, fill = value)) +
     facet_grid(band + variablesRB3D~ Z) +
