@@ -140,9 +140,69 @@ ggplot(simData_filtered) +
 ```
 All data are loaded to memory which is problematic when loading many files. In these cases it is assumed that some processing is to occur on each product. Load all radiative budget products at once into memory and take the mean of each horizontal layer. 
 ```{r RB3D load all}
-sF1 <- simulationFilter(product = "rb3D", 
+sF2 <- simulationFilter(product = "rb3D", 
                        bands = c("BAND0", "BAND1", "BAND2"), 
                        iters = "ITER1", "ITER2", "ILLUDIFF", "ILLUDIR",
-                       typeNums = c("2_Ground", "14_PlotSurface", "101_Default_Object", ""))
+                       typeNums = "")
+simFiles <- daRt::getFiles(simulationDir, sF = sF2)
 
 ```
+There are three files each with 6 variables - i.e. quite a lot of data
+```{r}
+files(simFiles)
+```
+Load in the data all at once - relatively memory intensive
+```{r}
+simData <- daRt::getData(x = simFiles)
+
+```
+With a relatively large array of data
+```{r}
+head(simData@data)
+dim(simData@data)
+```
+Get the mean of non-zero values across each vertical layer of each variable, band, etc
+```{r}
+statVals <- simData@data %>%
+    dplyr::group_by(X, Y, variablesRB3D, band, iter, typeNum, simName) %>%
+    dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
+```
+Then plot these values
+```{r, fig.height = 5}
+ggplot(statVals) +
+    geom_raster(aes(x = X, y = Y, fill = meanVal)) +
+    facet_grid(iter + band ~ variablesRB3D) +
+    theme(strip.text = element_text(size = 5, margin = margin(0.1, 0.1, 0.1, 0.1))) +
+    theme(aspect.ratio = 1)
+```
+Do the same analysis, but iterate over each band and load data for each band sequentially to save on memory usage
+```{r}
+sF2 <- simulationFilter(product = "rb3D", 
+                       bands = c("BAND0", "BAND1", "BAND2"), 
+                       iters = "ITER1", "ITER2", "ILLUDIFF", "ILLUDIR",
+                       typeNums = "",
+                       variables = "RADIATIVE_BUDGET")
+allBands <- bands(simData)
+allBands
+simDataList <- vector(mode = "list", length = length(allBands))
+for (i in 1:length(allBands)) {
+    bands(sF2) <- allBands[i]
+    simFiles <- daRt::getFiles(simulationDir, sF = sF2)
+    simDataList[[i]] <- daRt::getData(x = simFiles)
+}
+```
+Now put together the list of data ***wip*** (not giving equal results yet)
+```{r, fig.height = 6}
+simDataDF <- dplyr::bind_rows(lapply(simDataList, function(x) x@data))
+
+statVals1 <- simDataDF %>%
+    dplyr::group_by(X, Y, variablesRB3D, band, iter, typeNum, simName) %>%
+    dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
+
+```
+Both approaches give the same results
+```{r}
+all.equal(statVals1, statVals)
+```
+but by processing in parts, the latter has a smaller memory footprint.
+

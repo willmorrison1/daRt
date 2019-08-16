@@ -211,8 +211,112 @@ product. Load all radiative budget products at once into memory and take
 the mean of each horizontal layer.
 
 ``` r
-sF1 <- simulationFilter(product = "rb3D", 
+sF2 <- simulationFilter(product = "rb3D", 
                        bands = c("BAND0", "BAND1", "BAND2"), 
                        iters = "ITER1", "ITER2", "ILLUDIFF", "ILLUDIR",
-                       typeNums = c("2_Ground", "14_PlotSurface", "101_Default_Object", ""))
+                       typeNums = "")
+simFiles <- daRt::getFiles(simulationDir, sF = sF2)
+#> Warning in filesFun(x = x[i], sF = sF): Forcing 'RADIATIVE_BUDGET' variable
+#> in 'simulationFilter' variables.
 ```
+
+There are three files each with 6 variables - i.e. quite a lot of data
+
+``` r
+files(simFiles)
+#>    band         variable  iter typeNum
+#> 1 BAND0 RADIATIVE_BUDGET ITER1        
+#> 2 BAND1 RADIATIVE_BUDGET ITER1        
+#> 3 BAND2 RADIATIVE_BUDGET ITER1        
+#>                                                                                                                             fileName
+#> 1 man/data/cesbio/output//BAND0/RADIATIVE_BUDGET/ITER1/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
+#> 2 man/data/cesbio/output//BAND1/RADIATIVE_BUDGET/ITER1/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
+#> 3 man/data/cesbio/output//BAND2/RADIATIVE_BUDGET/ITER1/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
+#>   simName
+#> 1  cesbio
+#> 2  cesbio
+#> 3  cesbio
+```
+
+Load in the data all at once - relatively memory intensive
+
+``` r
+simData <- daRt::getData(x = simFiles)
+```
+
+With a relatively large array of data
+
+``` r
+head(simData@data)
+#>    X Y Z    value variablesRB3D  band  iter typeNum simName
+#> 1: 1 1 1 1.008458   Intercepted BAND0 ITER1          cesbio
+#> 2: 2 1 1 1.018114   Intercepted BAND0 ITER1          cesbio
+#> 3: 3 1 1 1.011255   Intercepted BAND0 ITER1          cesbio
+#> 4: 4 1 1 1.017987   Intercepted BAND0 ITER1          cesbio
+#> 5: 5 1 1 1.019860   Intercepted BAND0 ITER1          cesbio
+#> 6: 6 1 1 1.016943   Intercepted BAND0 ITER1          cesbio
+dim(simData@data)
+#> [1] 196020      9
+```
+
+Get the mean of non-zero values across each vertical layer of each
+variable, band, etc
+
+``` r
+statVals <- simData@data %>%
+    dplyr::group_by(X, Y, variablesRB3D, band, iter, typeNum, simName) %>%
+    dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
+#> Warning: The `printer` argument is deprecated as of rlang 0.3.0.
+#> This warning is displayed once per session.
+```
+
+Then plot these values
+
+``` r
+ggplot(statVals) +
+    geom_raster(aes(x = X, y = Y, fill = meanVal)) +
+    facet_grid(iter + band ~ variablesRB3D) +
+    theme(strip.text = element_text(size = 5, margin = margin(0.1, 0.1, 0.1, 0.1))) +
+    theme(aspect.ratio = 1)
+```
+
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" /> Do
+the same analysis, but iterate over each band and load data for each
+band sequentially to save on memory usage
+
+``` r
+sF2 <- simulationFilter(product = "rb3D", 
+                       bands = c("BAND0", "BAND1", "BAND2"), 
+                       iters = "ITER1", "ITER2", "ILLUDIFF", "ILLUDIR",
+                       typeNums = "",
+                       variables = "RADIATIVE_BUDGET")
+allBands <- bands(simData)
+allBands
+#> [1] "BAND0" "BAND1" "BAND2"
+simDataList <- vector(mode = "list", length = length(allBands))
+for (i in 1:length(allBands)) {
+    bands(sF2) <- allBands[i]
+    simFiles <- daRt::getFiles(simulationDir, sF = sF2)
+    simDataList[[i]] <- daRt::getData(x = simFiles)
+}
+```
+
+Now put together the list of data ***wip*** (not giving equal results
+yet)
+
+``` r
+simDataDF <- dplyr::bind_rows(lapply(simDataList, function(x) x@data))
+
+statVals1 <- simDataDF %>%
+    dplyr::group_by(X, Y, variablesRB3D, band, iter, typeNum, simName) %>%
+    dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
+```
+
+Both approaches give the same results
+
+``` r
+all.equal(statVals1, statVals)
+#> [1] TRUE
+```
+
+but by processing in parts, the latter has a smaller memory footprint.
