@@ -221,12 +221,12 @@ simData_filtered <- simData@data %>%
 ggplot(simData_filtered) + 
     geom_raster(aes(x = X, y = Y, fill = value)) +
     facet_grid(band ~ variablesRB3D) +
-    theme(aspect.ratio = 1) +
     theme_bw() +
     theme(panel.spacing = unit(0, "cm"), 
           strip.text = element_text(size = 6, 
                                     margin = margin(0.05, 0.05, 0.05, 0.05, unit = "cm"))) +
-    scale_fill_distiller(palette = "Spectral")
+    scale_fill_distiller(palette = "Spectral") +
+       theme(aspect.ratio = 1)
 ```
 
 <img src="man/figures/README-unnamed-chunk-15-1.png" width="100%" />
