@@ -209,7 +209,7 @@ ggplot(statVals) +
 ```
 
 ####Option 2: Load data in sections and process each section
-Do the same analysis as when loading all data at once, but process each band separately to save on memory usage.
+Do the same analysis as when loading all data at once (Option 1), but process each band separately to save on memory usage.
 ```{r}
 sF <- simulationFilter(product = "rb3D", 
                        bands = c("BAND0", "BAND1", "BAND2"), 
