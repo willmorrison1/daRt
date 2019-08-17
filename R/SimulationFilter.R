@@ -49,7 +49,7 @@ setMethod(f = "simulationFilter",
 
 .defaultIters <- function(){
 
-    c("ITER1", "ITERX")
+    c("ITER1", "ITER2")
 
 }
 
