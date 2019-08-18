@@ -31,8 +31,9 @@ library(daRt)
 ## Overview
 
 This section demonstrates the most basic use of daRt to load the
-“directions” data for the default “cesbio” simulation provided in this
-respository. Determine the type of files you want to load
+“directions” `product` data for the default “cesbio” simulation
+provided in this respository. Determine the type of files you want to
+load
 
 ``` r
 sF <- simulationFilter(product = "directions")
@@ -64,7 +65,7 @@ head(simData@data, n = 3)
 
 The “SimulationFilter” object describes what data you want to extract
 from a DART output directory structure. Show the current configuration
-of the SimulationFilter
+of the `SimulationFilter`
 
 ``` r
 sF
@@ -92,8 +93,8 @@ methods(class = "SimulationFilter")
 #> see '?methods' for accessing help and source code
 ```
 
-Use these methods to edit the SimulationFilter object e.g. the “bands”
-or “iterations” that you want to load
+Use these methods to edit the `SimulationFilter` object e.g. the `bands`
+or `iters` (iterations) that you want to load
 
 ``` r
 bands(sF) <- c("BAND0", "BAND1")
@@ -103,9 +104,9 @@ iters(sF) <- "ITER1"
 ### SimulationFiles
 
 The “SimulationFiles” object contains all information on the files that
-will be loaded, based on the provided “SimulationFilter”. It is used to
+will be loaded, based on the provided `SimulationFilter`. It is used to
 explore the DART output directory structure. First define the simulation
-directory. For this example, ‘simulationDir’ is a relative directory
+directory. For this example, `simulationDir` is a relative directory
 (based on the github data provided) and consists of one simulation.
 
 ``` r
@@ -119,7 +120,7 @@ these files, get them from github manually or use your own ‘cesbio’
 simulation which is shipped with the DART model by default.
 
 The simulation directory should be the base directory of the simulation.
-E.g. within ‘simulationDir’ there should be the simulation ‘input’ and
+E.g. within `simulationDir` there should be the simulation ‘input’ and
 ‘output’ directories.
 
 ``` r
@@ -135,7 +136,7 @@ simFiles <- daRt::getFiles(x = simulationDir, sF = sF)
 ```
 
 Explore the output of this to check we happy to continue and load the
-data. daRt::getFiles is essentially a ‘dry-run’ of the data extraction
+data. `getFiles()` is essentially a ‘dry-run’ of the data extraction
 
 ``` r
 files(simFiles)
@@ -149,9 +150,9 @@ files(simFiles)
 
 ### SimulationData
 
-The “SimulationData” object contains all data for the given
-“SimulationFilter”. Do the following to extract DART output data using
-the ‘getData’ method
+The `SimulationData` object contains all data for the given
+`SimulationFilter`. Do the following to extract DART output data using
+the `getData()` method
 
 ``` r
 simData <- daRt::getData(x = simulationDir, sF = sF)
@@ -184,8 +185,9 @@ This section provides further misc examples and guidance for reference.
 
 ### SimulationFilter editing
 
-To look at images for Bands 0, 1 and 2; iterations 1 and 2, and images 5
-and 7, create the relevant SimulationFilter then load the data
+To look at images for `bands` 0, 1 and 2; `iters` (iterations) 1 and 2,
+and `ima` (images) 5 and 7, create the relevant SimulationFilter then
+load the data
 
 ``` r
 #create SimulationFilter
@@ -204,8 +206,12 @@ ggplot(simData@data) +
     theme(aspect.ratio = 1)
 ```
 
-<img src="man/figures/README-images example-1.png" width="100%" /> Alter
-the SimulationFilter again to now look at radiative budget files
+<img src="man/figures/README-images example-1.png" width="100%" />
+
+### Radiative budget
+
+Alter the `SimulationFilter` again to now look at files for the
+radiative budget `product`
 
 ``` r
 product(sF) <- "rb3D"
@@ -213,8 +219,6 @@ simData <- daRt::getData(x = simulationDir, sF = sF)
 #> Warning in filesFun(x = x[i], sF = sF): Forcing 'RADIATIVE_BUDGET' variable
 #> in 'simulationFilter' variables.
 ```
-
-### Radiative budget
 
 The 3D radiative budget data are stored with the X, Y and Z location of
 each cell, stored in 3 columns
@@ -237,19 +241,20 @@ ggplot(simData@data) +
 ```
 
 <img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" />
-That’s a lot of data\! It is important to set the “SimulationFilter” to
-match what data you want so that this doesn’t happen. Also, the process
-can use a lot of memory when many large files are loaded so try to only
-load in the files you need in the first place. Further guidance on meory
-management are given elsewhere. The below example uses the simple
-“dplyr” approach to work with the data. Here we look at the lowest
-horizontal layer of each 3D radiative budget array (i.e. Z = 1) rather
-than all layers (above plot) and plot the smaller dataset.
+This outputs lots of data. It’s important that `SimulationFilter`
+matches only the data you actually want.
+
+The below example uses the simple “dplyr” approach to work with this
+data. Here we look at the lowest horizontal layer of each 3D radiative
+budget array (i.e. Z = 1) rather than all layers (above plot) and plot
+the smaller dataset.
 
 ``` r
 library(dplyr)
+
 simData_filtered <- simData@data %>%
     dplyr::filter(Z == 1)
+
 #plot again and tweak the plot
 ggplot(simData_filtered) + 
     geom_raster(aes(x = X, y = Y, fill = value)) +
@@ -266,12 +271,12 @@ ggplot(simData_filtered) +
 
 ### Memory management
 
-‘getData()’ loads all data to memory which is problematic when loading
-many large files. This section demonstrates memory management when
-loading a relatively large set of files. The files are loaded in two
-ways: Option 1 uses the default ‘getData()’ to load all data at once,
-whereas Option 2 offers a solution to process data with a much smaller
-memory footprint.
+`getData()` loads all data to memory which is problematic when loading
+many large files (e.g. Radiative Budget). This section demonstrates
+memory management when loading a relatively large set of files. The
+files are loaded in two ways: Option 1 uses the default `getData()` to
+load all data at once, whereas Option 2 offers a solution to process
+data with a much smaller memory footprint.
 
 #### Option 1: Load data all at once
 
