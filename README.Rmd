@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
     message = FALSE
 )
 ```
+
 # daRt
 
 <!-- badges: start -->
@@ -34,6 +35,7 @@ Load the package
 ```{r load the package}
 library(daRt)
 ```
+
 ## Overview
 This section demonstrates the most basic use of daRt to load the "directions" data for the default "cesbio" simulation provided in this respository.
 Determine the type of files you want to load
@@ -52,6 +54,7 @@ Use the data in the given "long" format
 ```{r}
 head(simData@data, n = 3)
 ```
+
 ### SimulationFilter
 The "SimulationFilter" object describes what data you want to extract from a DART output directory structure.
 Show the current configuration of the SimulationFilter
@@ -67,7 +70,8 @@ Use these methods to edit the SimulationFilter object e.g. the "bands" or "itera
 bands(sF) <- c("BAND0", "BAND1")
 iters(sF) <- "ITER1"
 ```
-###SimulationFiles
+
+### SimulationFiles
 The "SimulationFiles" object contains all information on the files that will be loaded, based on the provided "SimulationFilter". It is used to explore the DART output directory structure. 
 First define the simulation directory. For this example, 'simulationDir' is a relative directory (based on the github data provided) and consists of one simulation.
 ```{r}
@@ -88,7 +92,8 @@ Explore the output of this to check we happy to continue and load the data. daRt
 ```{r}
 files(simFiles)
 ```
-###SimulationData
+
+### SimulationData
 The "SimulationData" object contains all data for the given "SimulationFilter". Do the following to extract DART output data using the 'getData' method
 ```{r}
 simData <- daRt::getData(x = simulationDir, sF = sF)
@@ -96,7 +101,8 @@ simData <- daRt::getData(x = simulationDir, sF = sF)
 simData_fromFiles <- daRt::getData(x = simFiles)
 identical(simData_fromFiles, simData)
 ```
-###Simple plotting
+
+### Simple plotting
 By having data in a "long" format, it is easy to perform analysis on the data.
 ```{r plot data example}
 #plot using ggplot2
@@ -108,10 +114,10 @@ plotOut <- ggplot(simData@data) +
 plot(plotOut)
 ```
 
-##Further examples
+## Further examples
 This section provides further misc examples and guidance for reference.
 
-###SimulationFilter editing
+### SimulationFilter editing
 To look at images for Bands 0, 1 and 2; iterations 1 and 2, and images 5 and 7, create the relevant SimulationFilter then load the data 
 ```{r images example}
 #create SimulationFilter
@@ -129,13 +135,14 @@ ggplot(simData@data) +
     facet_grid(band ~ imageNo + iter) +
     theme(aspect.ratio = 1)
 ```
+
+### Radiative budget
 Alter the SimulationFilter again to now look at radiative budget files
 ```{r RB3D example}
 product(sF) <- "rb3D"
 simData <- daRt::getData(x = simulationDir, sF = sF)
 ```
 
-###Radiative budget
 The 3D radiative budget data are stored with the X, Y and Z location of each cell, stored in 3 columns
 ```{r RB3D data example}
 head(simData@data, n = 3)
@@ -165,10 +172,10 @@ ggplot(simData_filtered) +
        theme(aspect.ratio = 1)
 ```
 
-###Memory management
-'getData()' loads all data to memory which is problematic when loading many files. In this section, a relatively large dataset is loaded in two ways. Option one uses the default 'getData()' to load all data at once, whereas Option 2 offers a solution to process data with a much smaller memory footprint. 
+### Memory management
+'getData()' loads all data to memory which is problematic when loading many large files. This section demonstrates memory management when loading a relatively large set of files. The files are loaded in two ways: Option 1 uses the default 'getData()' to load all data at once, whereas Option 2 offers a solution to process data with a much smaller memory footprint. 
 
-####Option 1: Load data all at once
+#### Option 1: Load data all at once
 Load all radiative budget products at once into memory and take the mean of each horizontal layer. 
 ```{r}
 sF <- simulationFilter(product = "rb3D", 
@@ -193,7 +200,7 @@ and gives a relatively large array of data
 head(simData@data, n = 3)
 dim(simData@data)
 ```
-Get the mean of non-zero values across each vertical layer of each variable, band, etc
+Do some analysis on the data. Get the mean of non-zero values across each vertical layer of each variable, band, etc
 ```{r}
 statVals <- simData@data %>%
     dplyr::group_by(X, Y, variablesRB3D, band, iter, typeNum, simName) %>%
@@ -208,8 +215,8 @@ ggplot(statVals) +
     theme(aspect.ratio = 1)
 ```
 
-####Option 2: Load data in sections and process each section
-Do the same analysis as when loading all data at once (Option 1), but process each band separately to save on memory usage.
+#### Option 2: Load data in sections and process each section
+Do Option 1 analysis but with data processed for each band separately to save on memory usage.
 ```{r}
 sF <- simulationFilter(product = "rb3D", 
                        bands = c("BAND0", "BAND1", "BAND2"), 
