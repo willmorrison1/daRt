@@ -11,6 +11,7 @@ setMethod(f = "versionInfo", signature = signature(x = "character"),
                                                         "phase.xml", "directions.xml",
                                                         "coeff_diff.xml"))
                   existingXmlFile <- which(file.exists(xmlFile))[1]
+                  if (is.na(existingXmlFile)) return(data.frame())
                   xmlData <- xml2::read_xml(xmlFile[existingXmlFile])
                   versionNumber <- xml2::xml_attr(xmlData, attr = "version")
                   buildFull <- xml2::xml_attr(xmlData, attr = "build")
