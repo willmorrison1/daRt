@@ -5,14 +5,13 @@
     toRead <- file(paste(fullDir, ".mp#", sep = ""), "rb")
     ReadFile <- readBin(toRead, double(), n = rSizeNumeric[1] * rSizeNumeric[2])
     close(toRead)
-    
-    return(matrix(ReadFile, nrow = rSizeNumeric[1], byrow = TRUE))
+    return(array(ReadFile, dim = c(rSizeNumeric[1], rSizeNumeric[2])))
 }
 
 
 .getILWISsize <- function(fullDir){
 
-    rSize <- readLines(paste(fullDir, ".mpr", sep = ""))[17]
+    rSize <- readLines(paste(fullDir, ".mpr", sep = ""), n = 17)[17]
     rSizeNumeric <- as.numeric(strsplit(gsub("Size=", "", rSize), " ")[[1]])
 
     return(rSizeNumeric)
