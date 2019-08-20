@@ -114,6 +114,9 @@ setGeneric(name = "getData", def = function(x = "character", sF = "SimulationFil
 #' @export
 setGeneric(name = "versionInfo", def = function(x) standardGeneric("versionInfo"))
 
+#' @export
+setGeneric(name = "imagesToDirections", def = function(x, fun) standardGeneric("imagesToDirections"))
+
 setGeneric(name = "directions", def = function(x = "character", sF = "SimulationFilter")
     standardGeneric("directions"))
 setGeneric(name = "directionsFiles", def = function(x = "character", sF = "SimulationFilter")

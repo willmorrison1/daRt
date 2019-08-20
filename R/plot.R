@@ -148,7 +148,6 @@ directionsObjToCartesian <- function(x, azimuthOffsetVal, outerRadius) {
         DARTdirectionPoints$zenith,
         DARTdirectionPoints$azimuth))
     colnames(DARTdirectionPoints) <- paste(colnames(DARTdirectionPoints), "dirPoints", sep = "_")
-
     OUTfull <- cbind(OUT, DARTdirectionPoints)
 
     return(OUTfull)
@@ -163,8 +162,8 @@ setMethod("plot", "Directions", function(x = "Directions",
                                          zenithLabPch = 20,
                                          zenithLabCol = "darkgrey",
                                          zenithLabCex = 1,
-                                         brks = seq(min(datDF$value),
-                                                    max(datDF$value), length.out = 10),
+                                         brks = seq(min(x@data$value),
+                                                    max(x@data$value), length.out = 10),
                                          cols =  c("dark grey",
                                                    colorRampPalette(c("purple",
                                                                       "blue3",
