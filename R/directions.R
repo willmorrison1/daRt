@@ -10,20 +10,27 @@ setMethod(f = "directions",
           signature = signature(x = "SimulationFiles"),
           definition = function(x, nCores = 1){
 
+              require(foreach)
+              require(parallel)
+              require(doParallel)
+              cl <- parallel::makeCluster(nCores)
+              doParallel::registerDoParallel(cl)
               #use "as" functionality
               directionsData <- as(object = x, Class = "Directions",
                                    strict = TRUE)
-              dirDataRaw <- vector(mode = "list", length = nrow(directionsData@files))
-              for (i in 1:nrow(directionsData@files)) {
-                  fileRow <- directionsData@files[i, ]
-                  dirDataRaw[[i]] <- .readOutputDirections(fileRow$fileName)
-                  dirDataRaw[[i]]$band <- fileRow$band
-                  dirDataRaw[[i]]$variable <- fileRow$variable
-                  dirDataRaw[[i]]$iter <- fileRow$iter
-                  dirDataRaw[[i]]$typeNum <- fileRow$typeNum
-                  dirDataRaw[[i]]$simName <- fileRow$simName
-              }
+              dirDataRaw <- foreach(i = 1:nrow(directionsData@files), .export = ".readOutputDirections",
+                      .packages = "data.table") %dopar% {
+                          fileRow <- directionsData@files[i, ]
+                          dirDataRaw <- .readOutputDirections(fileRow$fileName)
+                          dirDataRaw$band <- fileRow$band
+                          dirDataRaw$variable <- fileRow$variable
+                          dirDataRaw$iter <- fileRow$iter
+                          dirDataRaw$typeNum <- fileRow$typeNum
+                          dirDataRaw$simName <- fileRow$simName
+                          return(dirDataRaw)
+                      }
               gc()
+              stopCluster(cl)
               directionsData@data <- dplyr::bind_rows(dirDataRaw)
               validObject(directionsData)
               return(directionsData)

@@ -197,8 +197,10 @@ sF <- simulationFilter(product = "images",
                        variables = "BRF",
                        imageNo = c(5, 7),
                        imageType = "ima")
-#load data
-simData <- daRt::getData(x = simulationDir, sF = sF)
+#load data - 'nCores' allows parallel processing of files.
+#It is useful for access to drives that have optimised paralell I/O.
+#here load data using 2 cores.
+simData <- daRt::getData(x = simulationDir, sF = sF, nCores = 1)
 #simple plot of data
 ggplot(simData@data) + 
     geom_raster(aes(x = x, y = y, fill = value)) +
@@ -286,35 +288,65 @@ of each horizontal layer.
 ``` r
 sF <- simulationFilter(product = "rb3D", 
                        bands = c("BAND0", "BAND1", "BAND2"), 
-                       iters = "ITER1", "ITER2", "ILLUDIFF", "ILLUDIR",
+                       iters = c("ITER1", "ITER2", "ILLUDIFF", "ILLUDIR"),
                        typeNums = "",
                        variables = "RADIATIVE_BUDGET")
 simFiles <- daRt::getFiles(simulationDir, sF = sF)
 ```
 
-There are three files each with 6 variables and each as a 3D array -
+There are twelve files each with 6 variables and each as a 3D array -
 i.e. quite a lot of data
 
 ``` r
 files(simFiles)
-#>    band         variable  iter typeNum
-#> 1 BAND0 RADIATIVE_BUDGET ITER1        
-#> 2 BAND1 RADIATIVE_BUDGET ITER1        
-#> 3 BAND2 RADIATIVE_BUDGET ITER1        
-#>                                                                                                                             fileName
-#> 1 man/data/cesbio/output//BAND0/RADIATIVE_BUDGET/ITER1/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
-#> 2 man/data/cesbio/output//BAND1/RADIATIVE_BUDGET/ITER1/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
-#> 3 man/data/cesbio/output//BAND2/RADIATIVE_BUDGET/ITER1/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
-#>   simName
-#> 1  cesbio
-#> 2  cesbio
-#> 3  cesbio
+#>     band         variable     iter typeNum
+#> 1  BAND0 RADIATIVE_BUDGET    ITER1        
+#> 2  BAND0 RADIATIVE_BUDGET    ITER2        
+#> 3  BAND0 RADIATIVE_BUDGET ILLUDIFF        
+#> 4  BAND0 RADIATIVE_BUDGET  ILLUDIR        
+#> 5  BAND1 RADIATIVE_BUDGET    ITER1        
+#> 6  BAND1 RADIATIVE_BUDGET    ITER2        
+#> 7  BAND1 RADIATIVE_BUDGET ILLUDIFF        
+#> 8  BAND1 RADIATIVE_BUDGET  ILLUDIR        
+#> 9  BAND2 RADIATIVE_BUDGET    ITER1        
+#> 10 BAND2 RADIATIVE_BUDGET    ITER2        
+#> 11 BAND2 RADIATIVE_BUDGET ILLUDIFF        
+#> 12 BAND2 RADIATIVE_BUDGET  ILLUDIR        
+#>                                                                                                                                 fileName
+#> 1     man/data/cesbio/output//BAND0/RADIATIVE_BUDGET/ITER1/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
+#> 2     man/data/cesbio/output//BAND0/RADIATIVE_BUDGET/ITER2/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
+#> 3  man/data/cesbio/output//BAND0/RADIATIVE_BUDGET/ILLUDIFF/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
+#> 4   man/data/cesbio/output//BAND0/RADIATIVE_BUDGET/ILLUDIR/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
+#> 5     man/data/cesbio/output//BAND1/RADIATIVE_BUDGET/ITER1/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
+#> 6     man/data/cesbio/output//BAND1/RADIATIVE_BUDGET/ITER2/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
+#> 7  man/data/cesbio/output//BAND1/RADIATIVE_BUDGET/ILLUDIFF/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
+#> 8   man/data/cesbio/output//BAND1/RADIATIVE_BUDGET/ILLUDIR/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
+#> 9     man/data/cesbio/output//BAND2/RADIATIVE_BUDGET/ITER1/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
+#> 10    man/data/cesbio/output//BAND2/RADIATIVE_BUDGET/ITER2/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
+#> 11 man/data/cesbio/output//BAND2/RADIATIVE_BUDGET/ILLUDIFF/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
+#> 12  man/data/cesbio/output//BAND2/RADIATIVE_BUDGET/ILLUDIR/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
+#>    simName
+#> 1   cesbio
+#> 2   cesbio
+#> 3   cesbio
+#> 4   cesbio
+#> 5   cesbio
+#> 6   cesbio
+#> 7   cesbio
+#> 8   cesbio
+#> 9   cesbio
+#> 10  cesbio
+#> 11  cesbio
+#> 12  cesbio
 ```
 
 Load in the data all at once. It is relatively memory intensive
 
 ``` r
-simData <- daRt::getData(x = simFiles)
+t1=Sys.time()
+simData <- daRt::getData(x = simFiles, nCores = 1)
+Sys.time() - t1
+#> Time difference of 1.962402 secs
 ```
 
 and gives a relatively large array of data
@@ -326,7 +358,7 @@ head(simData@data, n = 3)
 #> 2: 2 1 1 1.018114   Intercepted BAND0 ITER1          cesbio
 #> 3: 3 1 1 1.011255   Intercepted BAND0 ITER1          cesbio
 dim(simData@data)
-#> [1] 196020      9
+#> [1] 784080      9
 ```
 
 Do some analysis on the data. Get the mean of non-zero values across
@@ -393,7 +425,7 @@ Both approaches give the same results
 
 ``` r
 all.equal(statVals, statVals1)
-#> [1] TRUE
+#> [1] "Different number of rows"
 ```
 
 but by processing in parts, the latter (Option 2) - produced by

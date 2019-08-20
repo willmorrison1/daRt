@@ -16,12 +16,12 @@ setMethod(f = "getData",
 
 setMethod(f = "getData",
           signature = signature(x = "SimulationFiles", sF = "missing"),
-          definition = function(x, sF){
+          definition = function(x, sF, nCores = 1){
 
               if (product(x) == "directions") dataFun <- directions
               if (product(x) == "rb3D") dataFun <- rb3D
               if (product(x) == "images") dataFun <- images
-              simData <- dataFun(x = x)
+              simData <- dataFun(x = x, nCores = nCores)
 
               return(simData)
 

@@ -127,8 +127,10 @@ sF <- simulationFilter(product = "images",
                        variables = "BRF",
                        imageNo = c(5, 7),
                        imageType = "ima")
-#load data
-simData <- daRt::getData(x = simulationDir, sF = sF)
+#load data - 'nCores' allows parallel processing of files.
+#It is useful for access to drives that have optimised paralell I/O.
+#here load data using 2 cores.
+simData <- daRt::getData(x = simulationDir, sF = sF, nCores = 1)
 #simple plot of data
 ggplot(simData@data) + 
     geom_raster(aes(x = x, y = y, fill = value)) +
@@ -183,20 +185,21 @@ Load all radiative budget products at once into memory and take the mean of each
 ```{r}
 sF <- simulationFilter(product = "rb3D", 
                        bands = c("BAND0", "BAND1", "BAND2"), 
-                       iters = "ITER1", "ITER2", "ILLUDIFF", "ILLUDIR",
+                       iters = c("ITER1", "ITER2", "ILLUDIFF", "ILLUDIR"),
                        typeNums = "",
                        variables = "RADIATIVE_BUDGET")
 simFiles <- daRt::getFiles(simulationDir, sF = sF)
 
 ```
-There are three files each with 6 variables and each as a 3D array - i.e. quite a lot of data
+There are twelve files each with 6 variables and each as a 3D array - i.e. quite a lot of data
 ```{r}
 files(simFiles)
 ```
 Load in the data all at once. It is relatively memory intensive
 ```{r}
-simData <- daRt::getData(x = simFiles)
-
+t1=Sys.time()
+simData <- daRt::getData(x = simFiles, nCores = 1)
+Sys.time() - t1
 ```
 and gives a relatively large array of data
 ```{r}

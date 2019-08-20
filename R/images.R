@@ -5,7 +5,7 @@
     toRead <- file(paste(fullDir, ".mp#", sep = ""), "rb")
     ReadFile <- readBin(toRead, double(), n = rSizeNumeric[1] * rSizeNumeric[2])
     close(toRead)
-    return(array(ReadFile, dim = c(rSizeNumeric[1], rSizeNumeric[2])))
+    return(matrix(ReadFile, nrow = rSizeNumeric[1], byrow = TRUE))
 }
 
 

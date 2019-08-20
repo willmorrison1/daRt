@@ -5,20 +5,26 @@ setMethod(f = "rb3D",
               require(reshape2)
 
               RB3d <- as(object = x, Class = "RB3D",
-                                   strict = TRUE)
-              listData <- vector(mode = "list", length = nrow(RB3d@files))
-              for (i in 1:nrow(RB3d@files)) {
-                  fileRow <- RB3d@files[i, ]
-                  RBdata <- .readBin3DRadiativeBudget(fileName = fileRow$fileName,
-                                                       requiredVars = variablesRB3D(sF))
-                  listData[[i]] <- reshape2::melt(data = RBdata)
-                  rm(RBdata); gc()
-                  colnames(listData[[i]]) <- c("X", "Y", "Z", "value", "variablesRB3D")
-                  listData[[i]]$band <- fileRow$band
-                  listData[[i]]$iter <- fileRow$iter
-                  listData[[i]]$typeNum <- fileRow$typeNum
-                  listData[[i]]$simName <- fileRow$simName
-              }
+                         strict = TRUE)
+              cl <- parallel::makeCluster(nCores)
+              doParallel::registerDoParallel(cl)
+              listData <- foreach(i = 1:nrow(RB3d@files),
+                                  .export = ".readBin3DRadiativeBudget") %dopar% {
+
+                                      fileRow <- RB3d@files[i, ]
+                                      sF <- RB3d@simulationFilter
+                                      RBdata <- .readBin3DRadiativeBudget(fileName = fileRow$fileName,
+                                                                          requiredVars = variablesRB3D(sF))
+                                      RBdata_melted <- reshape2::melt(data = RBdata)
+                                      rm(RBdata); gc()
+                                      colnames(RBdata_melted) <- c("X", "Y", "Z", "value", "variablesRB3D")
+                                      RBdata_melted$band <- fileRow$band
+                                      RBdata_melted$iter <- fileRow$iter
+                                      RBdata_melted$typeNum <- fileRow$typeNum
+                                      RBdata_melted$simName <- fileRow$simName
+                                      return(RBdata_melted)
+                                  }
+              stopCluster(cl)
               gc()
               RB3d@data <- data.table::rbindlist(listData, use.names = FALSE)
               rm(listData); gc()
