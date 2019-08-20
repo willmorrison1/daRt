@@ -132,9 +132,9 @@ polarImageInterpolate <- function(x, y, z, outer.radius = 1,
 }
 
 
-directionsObjToCartesian <- function(x, azimuthOffsetVal, outerRadius) {
+directionsObjToCartesian <- function(azimuth, zenith, value, azimuthOffsetVal, outerRadius) {
 
-    OUT <- x@data
+    OUT <- data.frame("zenith" = zenith, "azimuth" = azimuth, "value" = value)
     OUT$azimuth <- 360 - OUT$azimuth    #turn azimuth angles clockwise
     OUT$azimuth <- azimuthOffset(OUT$azimuth, 90 + azimuthOffsetVal)    #add the DART scene azimuth offset
     OUT$azimuth <- azimuthOffset(OUT$azimuth, 90) #make north up - trig "north" is grid "east"
@@ -144,6 +144,7 @@ directionsObjToCartesian <- function(x, azimuthOffsetVal, outerRadius) {
     DARTdirectionPoints$azimuth <- azimuthOffset(DARTdirectionPoints$azimuth, 90 + azimuthOffsetVal)
     #filter out points with zenith angles greater than the given threshold
     DARTdirectionPoints$zenith[DARTdirectionPoints$zenith > outerRadius] <- NA
+    #to do - error if outerradius gives no vals
     DARTdirectionPoints <- cbind(DARTdirectionPoints, polarToCartesian(
         DARTdirectionPoints$zenith,
         DARTdirectionPoints$azimuth))
@@ -154,25 +155,24 @@ directionsObjToCartesian <- function(x, azimuthOffsetVal, outerRadius) {
 }
 
 
-
 #' @export
-setMethod("plot", "Directions", function(x = "Directions",
-                                         azimuthOffsetVal = 0,
-                                         outerRadius = 90,
-                                         zenithLabPch = 20,
-                                         zenithLabCol = "darkgrey",
-                                         zenithLabCex = 1,
-                                         brks = seq(min(x@data$value),
-                                                    max(x@data$value), length.out = 10),
-                                         cols =  c("dark grey",
-                                                   colorRampPalette(c("purple",
-                                                                      "blue3",
-                                                                      "yellow",
-                                                                      "red"))(length(brks) - 3),
-                                                   "firebrick4"),
-                                         ...){
+plot.directions <- function(azimuth, zenith, value,
+                            azimuthOffsetVal = 0,
+                            outerRadius = max(zenith) + max(zenith) * 0.01,
+                            zenithLabPch = 20,
+                            zenithLabCol = "darkgrey",
+                            zenithLabCex = 1,
+                            brks = seq(min(value),
+                                       max(value), length.out = 10),
+                            cols =  c("dark grey",
+                                      colorRampPalette(c("purple",
+                                                         "blue3",
+                                                         "yellow",
+                                                         "red"))(length(brks) - 3),
+                                      "firebrick4"),
+                            ...){
 
-    datDF <- directionsObjToCartesian(x, azimuthOffsetVal, outerRadius)
+    datDF <- directionsObjToCartesian(azimuth, zenith, value, azimuthOffsetVal, outerRadius)
 
     polarImageInterpolate(x = datDF$x_cartesian,
                           y = datDF$y_cartesian,
@@ -190,5 +190,5 @@ setMethod("plot", "Directions", function(x = "Directions",
     outPlot <- recordPlot()
     return(outPlot)
 
-})
+}
 

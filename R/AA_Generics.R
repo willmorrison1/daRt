@@ -112,7 +112,7 @@ setGeneric(name = "getData", signature = c("x", "sF"), def = function(x, sF)
     standardGeneric("getData"))
 
 #' @export
-setGeneric(name = "imagesToDirections", def = function(x, fun) standardGeneric("imagesToDirections"))
+setGeneric(name = "imagesToDirectionsDF", def = function(x, fun) standardGeneric("imagesToDirectionsDF"))
 
 #' @export
 setGeneric(name = "versionInfo", def = function(x) standardGeneric("versionInfo"))

@@ -1,4 +1,4 @@
-#' imagesToDirections
+#' imagesToDirectionsDF
 #' @description Convert an {Images-class} object to a {Directions-class} object
 #'
 #' @param \link{Images-class} object
@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples
-setMethod("imagesToDirections", signature = signature(x = "Images", fun = "function"),
+setMethod("imagesToDirectionsDF", signature = signature(x = "Images", fun = "function"),
           definition = function(x, fun = function(x) mean(x[x != -1])){
 
               require(dplyr)
@@ -22,11 +22,9 @@ setMethod("imagesToDirections", signature = signature(x = "Images", fun = "funct
                   ungroup() %>%
                   as.data.frame()
 
-              outObj <- as(object = x, Class = "Directions")
-              outObj@data <- aggData
-              outObj@data$azimuth <- outObj@data$VA
-              outObj@data$zenith <- outObj@data$VZ
+              aggData$azimuth <- aggData$VA
+              aggData$zenith <- aggData$VZ
 
-              return(outObj)
+              return(aggData)
           }
 )
