@@ -4,7 +4,7 @@
 \alias{getData}
 \title{Main function: get DART data}
 \usage{
-getData(x, sF)
+getData(x, sF, ...)
 }
 \arguments{
 \item{x}{simulation directory or directories (character) or \link{SimulationFiles-class} object}

@@ -1,13 +1,13 @@
 #' @export
 setMethod(f = "getData",
           signature = signature(x = "character", sF = "SimulationFilter"),
-          definition = function(x, sF){
+          definition = function(x, sF, nCores = 1){
               fileObj <- getFiles(x = x, sF = sF)
 
               if (product(sF) == "directions") dataFun <- directions
               if (product(sF) == "rb3D") dataFun <- rb3D
               if (product(sF) == "images") dataFun <- images
-              simData <- dataFun(x = fileObj)
+              simData <- dataFun(x = fileObj, nCores = nCores)
 
               return(simData)
 

@@ -8,7 +8,7 @@
 
 setMethod(f = "directions",
           signature = signature(x = "SimulationFiles"),
-          definition = function(x){
+          definition = function(x, nCores = 1){
 
               #use "as" functionality
               directionsData <- as(object = x, Class = "Directions",

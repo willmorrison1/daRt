@@ -108,7 +108,7 @@ setGeneric(name = "getFiles", def = function(x = "character", sF = "SimulationFi
 #' @export
 #'
 #' @examples
-setGeneric(name = "getData", signature = c("x", "sF"), def = function(x, sF)
+setGeneric(name = "getData", signature = c("x", "sF"), def = function(x, sF, ...)
     standardGeneric("getData"))
 
 #' @export
@@ -117,15 +117,15 @@ setGeneric(name = "imagesToDirectionsDF", def = function(x, fun) standardGeneric
 #' @export
 setGeneric(name = "versionInfo", def = function(x) standardGeneric("versionInfo"))
 
-setGeneric(name = "directions", def = function(x = "character")
+setGeneric(name = "directions", def = function(x = "character", ...)
     standardGeneric("directions"))
 setGeneric(name = "directionsFiles", def = function(x = "character", sF = "SimulationFilter")
     standardGeneric("directionsFiles"))
-setGeneric(name = "images", def = function(x = "character")
+setGeneric(name = "images", def = function(x = "character", ...)
     standardGeneric("images"))
 setGeneric(name = "imageFiles", def = function(x = "character", sF = "SimulationFilter")
     standardGeneric("imageFiles"))
-setGeneric(name = "rb3D",  def = function(x = "character")
+setGeneric(name = "rb3D",  def = function(x = "character", ...)
     standardGeneric("rb3D"))
 setGeneric(name = "rb3DFiles", def = function(x = "character", sF = "SimulationFilter")
     standardGeneric("rb3DFiles"))

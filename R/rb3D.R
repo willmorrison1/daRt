@@ -1,6 +1,6 @@
 setMethod(f = "rb3D",
           signature = signature(x = "SimulationFiles"),
-          definition = function(x){
+          definition = function(x, nCores = 1){
               require(data.table)
               require(reshape2)
 

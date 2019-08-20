@@ -21,30 +21,38 @@
 
 setMethod(f = "images",
           signature = signature(x = "SimulationFiles"),
-          definition = function(x){
+          definition = function(x, nCores = 1){
 
+              require(foreach)
+              require(parallel)
+              require(doParallel)
               require(tools)
               require(reshape2)
               require(data.table)
               imagesData <- as(object = x, Class = "Images",
                                strict = TRUE)
-              imagesDataRaw <- vector(mode = "list", length = nrow(imagesData@files))
               filesWithoutExt <- tools::file_path_sans_ext(imagesData@files$fileName)
-              for (i in 1:nrow(imagesData@files)) {
-                  fileRow <- imagesData@files[i, ]
-                  rawData <- .readILWIS(filesWithoutExt[i])
-                  imagesDataRaw[[i]] <- reshape2::melt(rawData, varnames = c("x", "y"))
-                  imagesDataRaw[[i]]$band <- fileRow$band
-                  imagesDataRaw[[i]]$variable <- fileRow$variable
-                  imagesDataRaw[[i]]$iter <- fileRow$iter
-                  imagesDataRaw[[i]]$typeNum <- fileRow$typeNum
-                  imagesDataRaw[[i]]$imgType <- fileRow$imgType
-                  imagesDataRaw[[i]]$imageNo <- fileRow$imageNo
-                  imagesDataRaw[[i]]$VZ <- fileRow$VZ
-                  imagesDataRaw[[i]]$VA <- fileRow$VA
-                  imagesDataRaw[[i]]$simName <- fileRow$simName
-              }
+              cl <- parallel::makeCluster(nCores)
+              doParallel::registerDoParallel(cl)
+              imagesDataRaw <- foreach(i = 1:nrow(imagesData@files), .export = c(".readILWIS", ".getILWISsize"),
+                                       .packages = "reshape2") %dopar% {
+                                           imgDat <- reshape2::melt(.readILWIS(filesWithoutExt[i]), varnames = c("x", "y"))
+                                           nrowsData <- nrow(imgDat)
+                                           fileRow <- imagesData@files[i, ]
+                                           metaDF <- data.frame("band" = rep(fileRow$band, nrowsData),
+                                                                "variable" = rep(fileRow$variable, nrowsData),
+                                                                "iter" = rep(fileRow$iter, nrowsData),
+                                                                "typeNum" = rep(fileRow$typeNum, nrowsData),
+                                                                "imgType" = rep(fileRow$imgType, nrowsData),
+                                                                "imageNo" = rep(fileRow$imageNo, nrowsData),
+                                                                "VZ" = rep(fileRow$VZ, nrowsData),
+                                                                "VA" = rep(fileRow$VA, nrowsData),
+                                                                "simName" = rep(fileRow$simName, nrowsData))
+                                           imgDat <- cbind(imgDat, metaDF)
+                                           return(imgDat)
+                                       }
               gc()
+              stopCluster(cl)
               imagesData@data <- data.table::rbindlist(imagesDataRaw, use.names = FALSE)
 
               return(imagesData)
