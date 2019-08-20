@@ -88,7 +88,7 @@ setGeneric(name = "simulationFilter", def = function(product = "character", ...)
 #'
 #' @param x simulation directory or directories (character)
 #' @param sF \link{SimulationFilter-class} object
-#'
+#' @param ... Optional arguments of: \code{nCores}: number of cores to use when loading data.
 #' @return
 #' @export
 #'

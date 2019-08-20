@@ -10,6 +10,8 @@ getFiles(x = "character", sF = "SimulationFilter")
 \item{x}{simulation directory or directories (character)}
 
 \item{sF}{\link{SimulationFilter-class} object}
+
+\item{...}{Optional arguments of: \code{nCores}: number of cores to use when loading data.}
 }
 \description{
 Get DART output filenames
