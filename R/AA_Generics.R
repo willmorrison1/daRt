@@ -140,3 +140,4 @@ setGeneric(name = "rb3DFiles", def = function(x = "character", sF = "SimulationF
     standardGeneric("rb3DFiles"))
 setGeneric(name = "simulationHandle",  def = function(x = "character")
     standardGeneric("simulationHandle"))
+# setGeneric(name = "as_tibble",  def = function(x, ...) standardGeneric("as_tibble"))

@@ -52,7 +52,8 @@ simData <- daRt::getData(x = simulationDir, sF = sF)
 ```
 Use the data in the given "long" format
 ```{r}
-head(simData@data, n = 3)
+DF <- as.data.frame(simData)
+head(DF, n = 3)
 ```
 
 ### SimulationFilter
@@ -107,7 +108,7 @@ By having data in a "long" format, it is easy to perform analysis on the data.
 ```{r plot data example}
 #plot using ggplot2
 library(ggplot2)
-plotOut <- ggplot(simData@data) +
+plotOut <- ggplot(as.data.frame(simData)) +
     geom_point(aes(x = zenith, y = value, colour = azimuth)) +
     facet_wrap(~ band) +
     theme(aspect.ratio = 1)
@@ -132,7 +133,7 @@ sF <- simulationFilter(product = "images",
 #here load data using 2 cores.
 simData <- daRt::getData(x = simulationDir, sF = sF, nCores = 1)
 #simple plot of data
-ggplot(simData@data) + 
+ggplot(as.data.frame(simData)) + 
     geom_raster(aes(x = x, y = y, fill = value)) +
     facet_grid(band ~ imageNo + iter) +
     theme(aspect.ratio = 1)
@@ -147,11 +148,11 @@ simData <- daRt::getData(x = simulationDir, sF = sF)
 
 The 3D radiative budget data are stored with the X, Y and Z location of each cell, stored in 3 columns
 ```{r RB3D data example}
-head(simData@data, n = 3)
+head(as.data.frame(simData), n = 3)
 ```
 Plot a horizontal slice of the radiative budget data
 ```{r}
-ggplot(simData@data) + 
+ggplot(as.data.frame(simData)) + 
     geom_raster(aes(x = X, y = Y, fill = value)) +
     facet_grid(band + variablesRB3D~ Z) +
     theme(aspect.ratio = 1)
@@ -162,7 +163,7 @@ The below example uses the simple "dplyr" approach to work with this data. Here 
 ```{r}
 library(dplyr)
 
-simData_filtered <- simData@data %>%
+simData_filtered <- as.data.frame(simData) %>%
     dplyr::filter(Z == 1)
 
 #plot again and tweak the plot
@@ -197,19 +198,18 @@ files(simFiles)
 ```
 Load in the data all at once. It is relatively memory intensive
 ```{r}
-t1=Sys.time()
 simData <- daRt::getData(x = simFiles, nCores = 1)
-Sys.time() - t1
 ```
 and gives a relatively large array of data
 ```{r}
-head(simData@data, n = 3)
-dim(simData@data)
+DFdata <- as.data.frame(simData)
+head(DFdata, n = 3)
+dim(DFdata)
 ```
 Do some analysis on the data. Get the mean of non-zero values across each vertical layer of each variable, band, etc
 ```{r}
-statVals <- simData@data %>%
-    dplyr::group_by(X, Y, variablesRB3D, band, iter, typeNum, simName) %>%
+statVals <- DFdata %>%
+    dplyr::group_by(X, Y, variablesRB3D, add = TRUE) %>%
     dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
 ```
 Then plot these values
@@ -235,8 +235,8 @@ simDataList <- vector(mode = "list", length = length(allBands))
 for (i in 1:length(allBands)) {
     bands(sF) <- allBands[i]
     simDataPiece  <- daRt::getData(x = simulationDir, sF = sF)
-    simDataList[[i]] <- simDataPiece@data %>%
-        dplyr::group_by(X, Y, variablesRB3D, band, iter, typeNum, simName) %>%
+    simDataList[[i]] <- as.data.frame(simDataPiece) %>%
+        dplyr::group_by(X, Y, variablesRB3D, add = TRUE) %>%
         dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
 }
 ```

@@ -52,7 +52,7 @@ setMethod(f = "images",
                                        }
               gc()
               stopCluster(cl)
-              imagesData@data <- data.table::rbindlist(imagesDataRaw, use.names = FALSE)
+              imagesData@data <- as.data.frame(data.table::rbindlist(imagesDataRaw, use.names = FALSE))
 
               return(imagesData)
           }

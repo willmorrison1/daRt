@@ -14,4 +14,6 @@ imagesToDirectionsDF(x, fun)
 \description{
 Convert an {Images-class} object to a {Directions-class} object
 }
-\keyword{hello}
+\details{
+Aggregate images to single values
+}
