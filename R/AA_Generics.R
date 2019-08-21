@@ -111,7 +111,16 @@ setGeneric(name = "getFiles", def = function(x = "character", sF = "SimulationFi
 setGeneric(name = "getData", signature = c("x", "sF"), def = function(x, sF, ...)
     standardGeneric("getData"))
 
+#' Aggregate images to single values
+#' @title imagesToDirectionsDF
+#' @description Convert an {Images-class} object to a {Directions-class} object
+#'
+#' @param x \link{Images-class} object
+#' @param fun Function to apply across each image.
+#'
+#' @return
 #' @export
+#'
 setGeneric(name = "imagesToDirectionsDF", def = function(x, fun) standardGeneric("imagesToDirectionsDF"))
 
 #' @export
