@@ -154,7 +154,7 @@ directionsObjToCartesian <- function(azimuth, zenith, value, azimuthOffsetVal, o
     return(OUTfull)
 }
 
-#' @title plot.directions
+#' @title plotDirections
 #' @description Plot directions data as polar plot.
 #' @param azimuth Numeric. Azimuth angle with DART conventions
 #' @param zenith Numeric. Zenith angle with DART conventions
@@ -168,8 +168,16 @@ directionsObjToCartesian <- function(azimuth, zenith, value, azimuthOffsetVal, o
 #' @param cols Character. Colours for given breaks. Optional.
 #' @param ... Additional options passed to points() when drawing directions points.
 #'
+#' @examples
+#' #Inputs are DART oriented directions (as seen in the DART files and \link{Directions-class})
+#' plotDirections(azimuth = rep(225, 10),
+#'                zenith = seq(0, 90, length.out = 10),
+#'                value = 1:10)
+#' #Output plot uses 'upward' directions from ground, where e.g.:
+#'   0deg (270deg) azimuth faces north (west)
+#'   0deg (90deg) zenith faces upward (horizon)
 #' @export
-plot.directions <- function(azimuth, zenith, value,
+plotDirections <- function(azimuth, zenith, value,
                             azimuthOffsetVal = 0,
                             outerRadius = max(zenith) + max(zenith) * 0.01,
                             zenithLabPch = 20,
