@@ -2,7 +2,6 @@
 setMethod(f = "imageFiles",
           signature = signature(x = "character", sF = "SimulationFilter"),
           definition = function(x, sF){
-
               require(tools)
               require(dplyr)
               simHandle <- simulationHandle(x)
@@ -23,6 +22,9 @@ setMethod(f = "imageFiles",
                   if (length(sF@imageNo) != 0) {
                       imgInfoDFList[[i]] <- imgInfoDFList[[i]] %>%
                           dplyr::filter(imageNo %in% sF@imageNo)
+                  }
+                  if (nrow(imgInfoDFList[[i]]) == 0) {
+                      stop("No images found after 'imageNo' filter applied")
                   }
                   imgInfoDFList[[i]]$band <- subDirs$band[i]
                   imgInfoDFList[[i]]$variable <- subDirs$variable[i]

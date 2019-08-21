@@ -4,7 +4,7 @@ setMethod(f = "versionInfo", signature = signature(x = "character"),
 
               require(xml2)
               require(dplyr)
-              if (!dir.exists(x)) return(data.frame())
+              if (any(!dir.exists(x))) return(data.frame())
               OUTlist <- vector("list", length(x))
               for (i in 1:length(x)) {
                   xmlFile <- file.path(x[i], "input", c("maket.xml",
