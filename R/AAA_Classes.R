@@ -7,7 +7,7 @@
     if (any(dirMissingBool)) {
         msg <- paste0("Directory doesn't exist: ",
                       paste0(allPaths[dirMissingBool], collapse = ",  "))
-       #first and most important check - if this fails then all else will fail
+        #first and most important check - if this fails then all else will fail
         #so return error message here
         return(msg)
     }
@@ -46,7 +46,15 @@
         msg <- "No files found."
         errors <- c(errors, msg)
     }
-    filesMissing <- sapply(object@files$fileName, function(x) !file.exists(x))
+    if (Sys.info()["sysname"] == "Windows") {
+        lenDirs <- nchar(object@files$fileName)
+        if (any(lenDirs > 259)) {
+            msg <- "Files with paths longer than 259 found. Not compatible with windows."
+            errors <- c(errors, msg)
+        }
+    }
+
+    filesMissing <- !file.exists(object@files$fileName)
     if (any(filesMissing)) {
         msg <- paste("Missing files:",
                      paste0(
