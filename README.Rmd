@@ -131,7 +131,7 @@ sF <- simulationFilter(product = "images",
 #load data - 'nCores' allows parallel processing of files.
 #It is useful for access to drives that have optimised paralell I/O.
 #here load data using 2 cores.
-simData <- daRt::getData(x = simulationDir, sF = sF, nCores = 1)
+simData <- daRt::getData(x = simulationDir, sF = sF, nCores = 2)
 #simple plot of data
 ggplot(as.data.frame(simData)) + 
     geom_raster(aes(x = x, y = y, fill = value)) +
@@ -179,7 +179,7 @@ ggplot(simData_filtered) +
 ```
 
 ### Memory management
-`getData()` loads all data to memory which is problematic when loading many large files (e.g. Radiative Budget). This section demonstrates memory management when loading a relatively large set of files. The files are loaded in two ways: Option 1 uses the default `getData()` to load all data at once, whereas Option 2 offers a solution to process data with a much smaller memory footprint. 
+`getData()` loads all data to memory which is problematic when loading many large files (e.g. Radiative Budget). It is assumed that the user will perform some analysis on subsets of the raw data in a way that reduces the overall size of the data, e.g. aggregating data in some way. This section demonstrates memory management when performing analysis on a relatively large set of files. The files are loaded in two ways: Option 1 uses the default `getData()` to load and then analyse all data at once, whereas Option 2 offers a solution to analyse the data in pieces, which has a much smaller memory footprint. 
 
 #### Option 1: Load data all at once
 Load all radiative budget products at once into memory and take the mean of each horizontal layer. 
@@ -198,7 +198,7 @@ files(simFiles)
 ```
 Load in the data all at once. It is relatively memory intensive
 ```{r}
-simData <- daRt::getData(x = simFiles, nCores = 1)
+simData <- daRt::getData(x = simFiles, nCores = 2)
 ```
 and gives a relatively large array of data
 ```{r}

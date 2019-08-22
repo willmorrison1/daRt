@@ -1,16 +1,21 @@
 
 <!-- README.md is generated from README.Rmd. Please edit and run README.Rmd file to regenerate README.md -->
-daRt
-====
+
+# daRt
 
 <!-- badges: start -->
+
 <!-- badges: end -->
-The daRt package provides a very quick and flexible way to import data that is produced by the Discrete Anisotropic Radiative Transfer (DART) model. The data in daRt are formatted in a way that facilitates rapid data analysis.
 
-Installation
-------------
+The daRt package provides a very quick and flexible way to import data
+that is produced by the Discrete Anisotropic Radiative Transfer (DART)
+model. The data in daRt are formatted in a way that facilitates rapid
+data analysis.
 
-You can install the development version from [GitHub](https://github.com/) with:
+## Installation
+
+You can install the development version from
+[GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
@@ -23,10 +28,12 @@ Load the package
 library(daRt)
 ```
 
-Overview
---------
+## Overview
 
-This section demonstrates the most basic use of daRt to load the "directions" `product` data for the default "cesbio" simulation provided in this respository. Determine the type of files you want to load
+This section demonstrates the most basic use of daRt to load the
+“directions” `product` data for the default “cesbio” simulation
+provided in this respository. Determine the type of files you want to
+load
 
 ``` r
 sF <- simulationFilter(product = "directions")
@@ -44,10 +51,12 @@ Load data for the given simulation using the predetermined file types
 simData <- daRt::getData(x = simulationDir, sF = sF)
 ```
 
-Use the data in the given "long" format
+Use the data in the given “long” format
 
 ``` r
 DF <- as.data.frame(simData)
+#> Warning: The `printer` argument is deprecated as of rlang 0.3.0.
+#> This warning is displayed once per session.
 head(DF, n = 3)
 #> # A tibble: 3 x 8
 #> # Groups:   band, iter, typeNum, simName [1]
@@ -60,7 +69,9 @@ head(DF, n = 3)
 
 ### SimulationFilter
 
-The "SimulationFilter" object describes what data you want to extract from a DART output directory structure. Show the current configuration of the `SimulationFilter`
+The “SimulationFilter” object describes what data you want to extract
+from a DART output directory structure. Show the current configuration
+of the `SimulationFilter`
 
 ``` r
 sF
@@ -75,7 +86,7 @@ sF
 #> imageNo:
 ```
 
-List the 'setter' and 'accessor' methods available
+List the ‘setter’ and ‘accessor’ methods available
 
 ``` r
 methods(class = "SimulationFilter")
@@ -88,7 +99,8 @@ methods(class = "SimulationFilter")
 #> see '?methods' for accessing help and source code
 ```
 
-Use these methods to edit the `SimulationFilter` object e.g. the `bands` or `iters` (iterations) that you want to load
+Use these methods to edit the `SimulationFilter` object e.g. the `bands`
+or `iters` (iterations) that you want to load
 
 ``` r
 bands(sF) <- c("BAND0", "BAND1")
@@ -97,29 +109,40 @@ iters(sF) <- "ITER1"
 
 ### SimulationFiles
 
-The "SimulationFiles" object contains all information on the files that will be loaded, based on the provided `SimulationFilter`. It is used to explore the DART output directory structure. First define the simulation directory. For this example, `simulationDir` is a relative directory (based on the github data provided) and consists of one simulation.
+The “SimulationFiles” object contains all information on the files that
+will be loaded, based on the provided `SimulationFilter`. It is used to
+explore the DART output directory structure. First define the simulation
+directory. For this example, `simulationDir` is a relative directory
+(based on the github data provided) and consists of one simulation.
 
 ``` r
 #define the simulation directory
 simulationDir <- "man/data/cesbio"
 ```
 
-If you install the package using devtools::install\_github then the "cesbio" simulation files will not be available automatically. To use these files, get them from github manually or use your own 'cesbio' simulation which is shipped with the DART model by default.
+If you install the package using devtools::install\_github then the
+“cesbio” simulation files will not be available automatically. To use
+these files, get them from github manually or use your own ‘cesbio’
+simulation which is shipped with the DART model by default.
 
-The simulation directory should be the base directory of the simulation. E.g. within `simulationDir` there should be the simulation 'input' and 'output' directories.
+The simulation directory should be the base directory of the simulation.
+E.g. within `simulationDir` there should be the simulation ‘input’ and
+‘output’ directories.
 
 ``` r
 list.files(simulationDir)
 #> [1] "input"  "output"
 ```
 
-Now we have the simulation directory clarified, explore the files in the simulation that correspond to this filter
+Now we have the simulation directory clarified, explore the files in the
+simulation that correspond to this filter
 
 ``` r
 simFiles <- daRt::getFiles(x = simulationDir, sF = sF)
 ```
 
-Explore the output of this to check we happy to continue and load the data. `getFiles()` is essentially a 'dry-run' of the data extraction
+Explore the output of this to check we happy to continue and load the
+data. `getFiles()` is essentially a ‘dry-run’ of the data extraction
 
 ``` r
 files(simFiles)
@@ -133,7 +156,9 @@ files(simFiles)
 
 ### SimulationData
 
-The `SimulationData` object contains all data for the given `SimulationFilter`. Do the following to extract DART output data using the `getData()` method
+The `SimulationData` object contains all data for the given
+`SimulationFilter`. Do the following to extract DART output data using
+the `getData()` method
 
 ``` r
 simData <- daRt::getData(x = simulationDir, sF = sF)
@@ -145,7 +170,8 @@ identical(simData_fromFiles, simData)
 
 ### Simple plotting
 
-By having data in a "long" format, it is easy to perform analysis on the data.
+By having data in a “long” format, it is easy to perform analysis on the
+data.
 
 ``` r
 #plot using ggplot2
@@ -159,14 +185,15 @@ plot(plotOut)
 
 <img src="man/figures/README-plot data example-1.png" width="100%" />
 
-Further examples
-----------------
+## Further examples
 
 This section provides further misc examples and guidance for reference.
 
 ### SimulationFilter editing
 
-To look at images for `bands` 0, 1 and 2; `iters` (iterations) 1 and 2, and `ima` (images) 5 and 7, create the relevant SimulationFilter then load the data
+To look at images for `bands` 0, 1 and 2; `iters` (iterations) 1 and 2,
+and `ima` (images) 5 and 7, create the relevant SimulationFilter then
+load the data
 
 ``` r
 #create SimulationFilter
@@ -179,7 +206,7 @@ sF <- simulationFilter(product = "images",
 #load data - 'nCores' allows parallel processing of files.
 #It is useful for access to drives that have optimised paralell I/O.
 #here load data using 2 cores.
-simData <- daRt::getData(x = simulationDir, sF = sF, nCores = 1)
+simData <- daRt::getData(x = simulationDir, sF = sF, nCores = 2)
 #simple plot of data
 ggplot(as.data.frame(simData)) + 
     geom_raster(aes(x = x, y = y, fill = value)) +
@@ -191,7 +218,8 @@ ggplot(as.data.frame(simData)) +
 
 ### Radiative budget
 
-Alter the `SimulationFilter` again to now look at files for the radiative budget `product`
+Alter the `SimulationFilter` again to now look at files for the
+radiative budget `product`
 
 ``` r
 product(sF) <- "rb3D"
@@ -200,7 +228,8 @@ simData <- daRt::getData(x = simulationDir, sF = sF)
 #> in 'simulationFilter' variables.
 ```
 
-The 3D radiative budget data are stored with the X, Y and Z location of each cell, stored in 3 columns
+The 3D radiative budget data are stored with the X, Y and Z location of
+each cell, stored in 3 columns
 
 ``` r
 head(as.data.frame(simData), n = 3)
@@ -222,9 +251,14 @@ ggplot(as.data.frame(simData)) +
     theme(aspect.ratio = 1)
 ```
 
-<img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" /> This outputs lots of data. It's important that `SimulationFilter` matches only the data you actually want.
+<img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" />
+This outputs lots of data. It’s important that `SimulationFilter`
+matches only the data you actually want.
 
-The below example uses the simple "dplyr" approach to work with this data. Here we look at the lowest horizontal layer of each 3D radiative budget array (i.e. Z = 1) rather than all layers (above plot) and plot the smaller dataset.
+The below example uses the simple “dplyr” approach to work with this
+data. Here we look at the lowest horizontal layer of each 3D radiative
+budget array (i.e. Z = 1) rather than all layers (above plot) and plot
+the smaller dataset.
 
 ``` r
 library(dplyr)
@@ -248,11 +282,20 @@ ggplot(simData_filtered) +
 
 ### Memory management
 
-`getData()` loads all data to memory which is problematic when loading many large files (e.g. Radiative Budget). This section demonstrates memory management when loading a relatively large set of files. The files are loaded in two ways: Option 1 uses the default `getData()` to load all data at once, whereas Option 2 offers a solution to process data with a much smaller memory footprint.
+`getData()` loads all data to memory which is problematic when loading
+many large files (e.g. Radiative Budget). It is assumed that the user
+will perform some analysis on subsets of the raw data in a way that
+reduces the overall size of the data, e.g. aggregating data in some way.
+This section demonstrates memory management when performing analysis on
+a relatively large set of files. The files are loaded in two ways:
+Option 1 uses the default `getData()` to load and then analyse all data
+at once, whereas Option 2 offers a solution to analyse the data in
+pieces, which has a much smaller memory footprint.
 
 #### Option 1: Load data all at once
 
-Load all radiative budget products at once into memory and take the mean of each horizontal layer.
+Load all radiative budget products at once into memory and take the mean
+of each horizontal layer.
 
 ``` r
 sF <- simulationFilter(product = "rb3D", 
@@ -263,7 +306,8 @@ sF <- simulationFilter(product = "rb3D",
 simFiles <- daRt::getFiles(simulationDir, sF = sF)
 ```
 
-There are twelve files each with 6 variables and each as a 3D array - i.e. quite a lot of data
+There are twelve files each with 6 variables and each as a 3D array -
+i.e. quite a lot of data
 
 ``` r
 files(simFiles)
@@ -311,7 +355,7 @@ files(simFiles)
 Load in the data all at once. It is relatively memory intensive
 
 ``` r
-simData <- daRt::getData(x = simFiles, nCores = 1)
+simData <- daRt::getData(x = simFiles, nCores = 2)
 ```
 
 and gives a relatively large array of data
@@ -330,7 +374,8 @@ dim(DFdata)
 #> [1] 784080      9
 ```
 
-Do some analysis on the data. Get the mean of non-zero values across each vertical layer of each variable, band, etc
+Do some analysis on the data. Get the mean of non-zero values across
+each vertical layer of each variable, band, etc
 
 ``` r
 statVals <- DFdata %>%
@@ -352,7 +397,8 @@ ggplot(statVals) +
 
 #### Option 2: Load data in sections and process each section
 
-Do Option 1 analysis but with data processed for each band separately to save on memory usage.
+Do Option 1 analysis but with data processed for each band separately to
+save on memory usage.
 
 ``` r
 sF <- simulationFilter(product = "rb3D", 
@@ -373,7 +419,12 @@ for (i in 1:length(allBands)) {
 }
 ```
 
-Now put together the list of data. As each list element is a summary of the raw data, it has a much smaller memory footprint. As the summary was performed on one band at a time, the amount of data loaded at once is less than if getFiles() was executed for all bands at once (Option 1). By loading one band at a time as opposed to all three at once, the memory footprint is around 1/3 comparsed to Option 1.
+Now put together the list of data. As each list element is a summary of
+the raw data, it has a much smaller memory footprint. As the summary was
+performed on one band at a time, the amount of data loaded at once is
+less than if getFiles() was executed for all bands at once (Option 1).
+By loading one band at a time as opposed to all three at once, the
+memory footprint is around 1/3 comparsed to Option 1.
 
 ``` r
 simDataDF <- dplyr::bind_rows(simDataList)
@@ -388,4 +439,8 @@ all.equal(statVals, statVals1)
 #> [1] "Different number of rows"
 ```
 
-but by processing in parts, the latter (Option 2) - produced by 'statVals1' - has a smaller memory footprint as the stats are calculated for each band separately. When inter-band stats are required, the example can be adapted to iterate over e.g. 'iters' or 'variablesRB3D'.
+but by processing in parts, the latter (Option 2) - produced by
+‘statVals1’ - has a smaller memory footprint as the stats are
+calculated for each band separately. When inter-band stats are required,
+the example can be adapted to iterate over e.g. ‘iters’ or
+‘variablesRB3D’.
