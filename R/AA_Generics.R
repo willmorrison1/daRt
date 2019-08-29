@@ -61,6 +61,7 @@ setGeneric(name = "imageType", def = function(x) standardGeneric("imageType"))
 #' @rdname accessors
 setGeneric(name = "imageNo", def = function(x) standardGeneric("imageNo"))
 
+
 #' @rdname SimulationFiles-class
 setGeneric(name = "simdir", def = function(x) standardGeneric("simdir"))
 
@@ -113,7 +114,7 @@ setGeneric(name = "getData", signature = c("x", "sF"), def = function(x, sF, ...
 
 #' Aggregate images to single values
 #' @title imagesToDirectionsDF
-#' @description Convert an {Images-class} object to a {Directions-class} object
+#' @description Convert an \link{Images-class} object to a {Directions-class} object
 #'
 #' @param x \link{Images-class} object
 #' @param fun Function to apply across each image.
@@ -125,6 +126,23 @@ setGeneric(name = "imagesToDirectionsDF", def = function(x, fun) standardGeneric
 
 #' @export
 setGeneric(name = "versionInfo", def = function(x) standardGeneric("versionInfo"))
+
+
+#' Get data frame of all sequence parameters
+#' @title sequenceParameters
+#' @description return a data frame. A row describes the parameters (parametre*) for a simulation (simName).
+#' @param   \link{SimulationFiles-class} or \link{SimulationData-class} class object
+#'
+#' @return
+#' @export
+#'
+#' @examples
+setGeneric(name = "sequenceParameters", def = function(x) standardGeneric("sequenceParameters"))
+
+
+
+
+
 
 setGeneric(name = "directions", def = function(x = "character", ...)
     standardGeneric("directions"))

@@ -12,7 +12,7 @@ imagesToDirectionsDF(x, fun)
 \item{fun}{Function to apply across each image.}
 }
 \description{
-Convert an {Images-class} object to a {Directions-class} object
+Convert an \link{Images-class} object to a {Directions-class} object
 }
 \details{
 Aggregate images to single values
