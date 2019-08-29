@@ -97,7 +97,7 @@
     }
     #allowed iters
     if (all(object@iters == "")) errors <- c(errors, paste("Empty iters.", itersPrompt))
-    if (any(!grepl("ITER|ILLUDIR|ILLUDIFF", object@iters))) {
+    if (any(!grepl("ITER|ILLUDIR|ILLUDIFF|ORDER", object@iters))) {
         errors <- c(errors, paste("Invalid iters.", itersPrompt))
     }
     #allowed RB3Dvars
