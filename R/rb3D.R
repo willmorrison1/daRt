@@ -3,6 +3,9 @@ setMethod(f = "rb3D",
           definition = function(x, nCores = 1){
               require(data.table)
               require(reshape2)
+              require(foreach)
+              require(parallel)
+              require(doParallel)
 
               RB3d <- as(object = x, Class = "RB3D",
                          strict = TRUE)
