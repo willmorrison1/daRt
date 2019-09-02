@@ -124,9 +124,17 @@ setGeneric(name = "getData", signature = c("x", "sF"), def = function(x, sF, ...
 #'
 setGeneric(name = "imagesToDirectionsDF", def = function(x, fun) standardGeneric("imagesToDirectionsDF"))
 
+#' Return resource use
+#' @title ResourceUse
+#' @description Return a data frame with information on the resource use for a \link{SimulationFiles-class} type object
+#' @param x \link{SimulationFiles-class} type object
 #' @export
 setGeneric(name = "versionInfo", def = function(x) standardGeneric("versionInfo"))
 
+#' @param x
+#'
+#' @export
+setGeneric(name = "resourceUse", def = function(x = "SimulationFiles") standardGeneric("resourceUse"))
 
 #' Get data frame of all sequence parameters
 #' @title sequenceParameters
@@ -138,12 +146,6 @@ setGeneric(name = "versionInfo", def = function(x) standardGeneric("versionInfo"
 #'
 #' @examples
 setGeneric(name = "sequenceParameters", def = function(x) standardGeneric("sequenceParameters"))
-
-
-
-
-
-
 setGeneric(name = "directions", def = function(x = "character", ...)
     standardGeneric("directions"))
 setGeneric(name = "directionsFiles", def = function(x = "character", sF = "SimulationFilter")
