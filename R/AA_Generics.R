@@ -31,7 +31,7 @@ setGeneric(name = "imageNo<-", def = function(x, value) standardGeneric("imageNo
 #' \dontrun{
 #' #access information within SimulationFiles object
 #' #define the simulation directory
-#' simDir <- "C:/Users/.../DART/user_data/simulations/cesbio/
+#' simDir <- "C:/Users/<Username>/DART/user_data/simulations/cesbio/
 #' simFiles <- getFiles(simDir)
 #' #show bands that are selected
 #' bands(simFiles)
@@ -146,6 +146,21 @@ setGeneric(name = "resourceUse", def = function(x = "SimulationFiles") standardG
 #'
 #' @examples
 setGeneric(name = "sequenceParameters", def = function(x) standardGeneric("sequenceParameters"))
+
+#' Remove underlying orography
+#' @title removeRelief
+#' @description Remove underlying orography from a \Link{RB3D-class} dataset using a digital elevation
+#' model (DEM) of class \code{RasterLayer} that is georeferenced to \Link{RB3D-class}.
+#'
+#' @param x \Link{RB3D-class} type object.
+#' @param DSM \code{RasterLayer} type object with height above ground level (m) and - preferably - a finer
+#' horizontal reoslution than that of the radiative budget cells in x. The center of the DSM must be georeferenced
+#' to the center of the radiarive budget data in x. The DSM can have a larger extent than x.
+#' @return
+#' @export
+#'
+setGeneric(name = "removeRelief", def = function(x = "RB3D", DEM = "RasterLayer")
+    standardGeneric("removeRelief"))
 setGeneric(name = "directions", def = function(x = "character", ...)
     standardGeneric("directions"))
 setGeneric(name = "directionsFiles", def = function(x = "character", sF = "SimulationFilter")
