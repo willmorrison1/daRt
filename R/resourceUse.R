@@ -6,7 +6,7 @@
 # simFiles <- daRt::getFiles(x = simDir, sF = sF)
 # x <- daRt::getData(simFiles)
 # resourceUse(x)
-#
+#remove these comments when you have finished debugging
 #
 
 #' @export
