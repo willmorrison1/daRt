@@ -4,7 +4,7 @@ getSimulationProperty <- function(x, strSearch) {
 
     outList <- lapply(simulationPropertiesFileNames, function(x) .returnSimProperties(x, strSearch))
 
-    names(outList) <- simname(f)
+    names(outList) <- simname(x)
     return(outList)
 }
 
