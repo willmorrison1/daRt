@@ -1,9 +1,7 @@
 #' @export
-#' @import raster
 setMethod(f = "removeRelief",
           signature = signature(x = "RB3D", DEM = "RasterLayer"),
           definition = function(x, DEM) {
-              require(raster)
 
               xSize_simProperty <- getSimulationProperty(x, "cell.size.x")
               zSize_simProperty <- getSimulationProperty(x, "cell.size.z")
@@ -58,23 +56,23 @@ setMethod(f = "removeRelief",
                       dplyr::mutate(Z = Z - z) %>%
                       dplyr::select(-z)
                   rm(simind); gc()
-                  }
+              }
 
               maxHorizontal <- d@data %>%
                   dplyr::group_by(X, Y, band, iter, typeNum, simName) %>%
-                  dplyr::summarise(maxZ = max(Z[!is.na(value)])) %>%
+                  dplyr::summarise(maxZ = max(Z)) %>%
                   dplyr::group_by(band, iter, typeNum, simName) %>%
                   dplyr::summarise(minZ_perArray = min(maxZ))
 
               d@data <- d@data %>%
                   dplyr::filter(Z >= -1)
+
               gc()
 
               d@data <- d@data %>%
-                  dplyr::left_join(maxHorizontal) %>%
-                  dplyr::group_by(X, Y, variablesRB3D, band, iter, typeNum, simName) %>%
-                  dplyr::mutate(value = ifelse(Z == minZ_perArray, value[Z == max(Z)], value)) %>%
-                  dplyr::filter(Z <= minZ_perArray)
+                  dplyr::left_join(maxHorizontal, by = c("band", "iter", "typeNum", "simName")) %>%
+                  dplyr::filter(Z <= minZ_perArray) %>%
+                  dplyr::select(-minZ_perArray)
 
               return(d)
           }

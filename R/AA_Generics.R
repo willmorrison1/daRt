@@ -149,10 +149,10 @@ setGeneric(name = "sequenceParameters", def = function(x) standardGeneric("seque
 
 #' Remove underlying orography
 #' @title removeRelief
-#' @description Remove underlying orography from a \Link{RB3D-class} dataset using a digital elevation
-#' model (DEM) of class \code{RasterLayer} that is georeferenced to \Link{RB3D-class}.
+#' @description Remove underlying orography from a \link{RB3D-class} dataset using a digital elevation
+#' model (DEM) of class \code{RasterLayer} that is georeferenced to \link{RB3D-class}.
 #'
-#' @param x \Link{RB3D-class} type object.
+#' @param x \link{RB3D-class} type object.
 #' @param DSM \code{RasterLayer} type object with height above ground level (m) and - preferably - a finer
 #' horizontal reoslution than that of the radiative budget cells in x. The center of the DSM must be georeferenced
 #' to the center of the radiarive budget data in x. The DSM can have a larger extent than x.
@@ -175,4 +175,3 @@ setGeneric(name = "rb3DFiles", def = function(x = "character", sF = "SimulationF
     standardGeneric("rb3DFiles"))
 setGeneric(name = "simulationHandle",  def = function(x = "character")
     standardGeneric("simulationHandle"))
-# setGeneric(name = "as_tibble",  def = function(x, ...) standardGeneric("as_tibble"))
