@@ -2,7 +2,7 @@
 setMethod(f = "sequenceParameters", signature(x = "SimulationFiles"),
           definition = function(x){
 
-              if (!x@isSequence) return(NULL)
+              if (any(!x@isSequence)) return(NULL)
 
               seqList <- x@sequenceInfoList
 

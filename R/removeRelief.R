@@ -43,7 +43,7 @@ setMethod(f = "removeRelief",
                   #using the resolution of the RB3D
                   heightDiffRaster <- mround(DEMr - raster::cellStats(DEMr, min), Zsize) / Zsize
                   #convert from raster to data frame
-                  heightDiffDF <- reshape2::melt(as.matrix(heightDiffRaster), varnames = c("X", "Y"),
+                  heightDiffDF <- reshape2::melt(raster::as.matrix(heightDiffRaster), varnames = c("X", "Y"),
                                                  value.name = "z") %>%
                       dplyr::mutate(z = as.integer(z))
 
