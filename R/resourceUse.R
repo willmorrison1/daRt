@@ -19,6 +19,8 @@ setMethod("resourceUse", "SimulationFiles",
     for (i in 1:length(dartTxtFiles)) {
         rawFileDATA <- readLines(dartTxtFiles[i], warn = FALSE)
         timeTaken <- searchDartTxtVal(rawFileDATA, searchQuote = "Processing time")
+        timeTaken <- as.ITime(as.POSIXct(timeTaken, format = '%H %M %S'))
+        memUsed <- as.numeric(memUsed)
         memUsed <- searchDartTxtVal(rawFileDATA, searchQuote = "Memory usage")
         #KB: format "timeTaken" as POSIXct
         outList[[i]] <- data.frame("simName" = simNames[i],
