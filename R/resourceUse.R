@@ -13,13 +13,14 @@
 setMethod("resourceUse", "SimulationFiles",
           function(x){
     require(dplyr)
+    require(data.table)
     dartTxtFiles <- getDartTxtFileName(x)
     outList <- vector("list", length = length(dartTxtFiles))
     simNames <- simname(x)
     for (i in 1:length(dartTxtFiles)) {
         rawFileDATA <- readLines(dartTxtFiles[i], warn = FALSE)
         timeTaken <- searchDartTxtVal(rawFileDATA, searchQuote = "Processing time")
-        timeTaken <- as.ITime(as.POSIXct(timeTaken, format = '%H %M %S'))
+        timeTaken <- as.POSIXct(timeTaken, format = '%H %M %S')
         memUsed <- searchDartTxtVal(rawFileDATA, searchQuote = "Memory usage")
         memUsed <- as.numeric(memUsed)
         #KB: format "timeTaken" as POSIXct
