@@ -13,17 +13,23 @@
 setMethod("resourceUse", "SimulationFiles",
           function(x){
     require(dplyr)
-    require(data.table)
+    require(chron)
     dartTxtFiles <- getDartTxtFileName(x)
     outList <- vector("list", length = length(dartTxtFiles))
     simNames <- simname(x)
     for (i in 1:length(dartTxtFiles)) {
         rawFileDATA <- readLines(dartTxtFiles[i], warn = FALSE)
         timeTaken <- searchDartTxtVal(rawFileDATA, searchQuote = "Processing time")
-        timeTaken <- as.POSIXct(timeTaken, format = '%H %M %S')
+
+        #creates a time class
+        timeTaken <- unlist(lapply(timeTaken, function(x){paste0(strsplit(x, split = ' ')[[1]], collapse = ':')}))
+        timeTaken <- chron(times = timeTaken)
+
+        #if posixct preferred but time is preeded by date
+        #timeTaken <- as.POSIXct(timeTaken, format = '%H %M %S')
+
         memUsed <- searchDartTxtVal(rawFileDATA, searchQuote = "Memory usage")
         memUsed <- as.numeric(memUsed)
-        #KB: format "timeTaken" as POSIXct
         outList[[i]] <- data.frame("simName" = simNames[i],
                                    "timeTaken" = timeTaken,
                                    "memUsage" = memUsed,
@@ -43,6 +49,3 @@ searchDartTxtVal <- function(rawFileData, searchQuote) {
     }
     return(rawVal)
 }
-
-
-
