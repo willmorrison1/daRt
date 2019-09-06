@@ -18,3 +18,4 @@ setMethod(f = "sequenceParameters", signature(x = "SimulationFiles"),
               return(seqCast)
           }
 )
+
