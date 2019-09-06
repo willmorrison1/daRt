@@ -23,7 +23,7 @@ setMethod("resourceUse", "SimulationFiles",
 
         #creates a time class
         timeTaken <- unlist(lapply(timeTaken, function(x){paste0(strsplit(x, split = ' ')[[1]], collapse = ':')}))
-        timeTaken <- chron(times = timeTaken)
+        timeTaken <- chron(times = timeTaken, format = '%H:%M:%S')
 
         #if posixct preferred but time is preeded by date
         #timeTaken <- as.POSIXct(timeTaken, format = '%H %M %S')
