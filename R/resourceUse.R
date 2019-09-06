@@ -22,8 +22,8 @@ setMethod("resourceUse", "SimulationFiles",
         timeTaken <- searchDartTxtVal(rawFileDATA, searchQuote = "Processing time")
 
         #creates a time class
-        timeTaken <- unlist(lapply(timeTaken, function(x){paste0(strsplit(x, split = ' ')[[1]], collapse = ':')}))
-        timeTaken <- chron(times = timeTaken, format = 'h:m:s')
+        #timeTaken <- unlist(lapply(timeTaken, function(x){paste0(strsplit(x, split = ' ')[[1]], collapse = ':')}))
+        #timeTaken <- chron(times = timeTaken, format = 'h:m:s')
 
         #if posixct preferred but time is preeded by date
         #timeTaken <- as.POSIXct(timeTaken, format = '%H %M %S')
