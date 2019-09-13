@@ -140,33 +140,25 @@ ggplot(as.data.frame(simData)) +
 ```
 
 ### Radiative budget {#RB}
-Alter the `SimulationFilter` again to now look at files for the radiative budget `product` 
+Alter the `SimulationFilter` again to now look at files for the radiative budget `product`.
 ```{r RB3D example}
 product(sF) <- "rb3D"
 simData <- daRt::getData(x = simulationDir, sF = sF)
 ```
 
-The 3D radiative budget data are stored with the X, Y and Z location of each cell, stored in 3 columns
+The 3D radiative budget data are stored with the X, Y and Z location of each cell, stored in 3 columns.
 ```{r RB3D data example}
 head(as.data.frame(simData), n = 3)
 ```
-Plot a horizontal slice of the radiative budget data
-```{r}
-ggplot(as.data.frame(simData)) + 
-    geom_raster(aes(x = X, y = Y, fill = value)) +
-    facet_grid(band + variablesRB3D~ Z) +
-    theme(aspect.ratio = 1)
-```
-This outputs lots of data. It's important that `SimulationFilter` matches only the data you actually want.
+It's important that `SimulationFilter` matches only the data you actually want.
 
-The below example uses the simple "dplyr" approach to work with this data. Here we look at the lowest horizontal layer of each 3D radiative budget array (i.e. Z = 1) rather than all layers (above plot) and plot the smaller dataset.
+The below example uses "dplyr" to work with this data. Here we look at the lowest horizontal layer of each 3D radiative budget array (i.e. Z = 1).
 ```{r}
 library(dplyr)
 
 simData_filtered <- as.data.frame(simData) %>%
     dplyr::filter(Z == 1)
 
-#plot again and tweak the plot
 ggplot(simData_filtered) + 
     geom_raster(aes(x = X, y = Y, fill = value)) +
     facet_grid(band ~ variablesRB3D) +
@@ -179,7 +171,7 @@ ggplot(simData_filtered) +
 ```
 
 ### Memory management
-`getData()` loads all data to memory which is problematic when loading many large files (e.g. Radiative Budget). It is assumed that the user will perform some analysis on subsets of the raw data in a way that reduces the overall size of the data, e.g. aggregating data in some way. This section demonstrates memory management when performing analysis on a relatively large set of files. The files are loaded in two ways: Option 1 uses the default `getData()` to load and then analyse all data at once, whereas Option 2 offers a solution to analyse the data in pieces, which has a much smaller memory footprint. 
+This section demonstrates memory management when performing analysis on a relatively large set of files. `getData()` loads all data to memory which is problematic when loading many large files (e.g. Radiative Budget). It is assumed that the user will perform some analysis on subsets of the raw data in a way that reduces the overall size of the data. Files here are loaded in two ways: option 1 uses the default `getData()` to load and then analyse all data at once. Option 2 loads and analyses the data in pieces, which has a much smaller memory footprint (but may be slower). Both options give the same result.
 
 #### Option 1: Load data all at once
 Load all radiative budget products at once into memory and take the mean of each horizontal layer. 

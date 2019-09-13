@@ -219,7 +219,7 @@ ggplot(as.data.frame(simData)) +
 ### Radiative budget
 
 Alter the `SimulationFilter` again to now look at files for the
-radiative budget `product`
+radiative budget `product`.
 
 ``` r
 product(sF) <- "rb3D"
@@ -229,7 +229,7 @@ simData <- daRt::getData(x = simulationDir, sF = sF)
 ```
 
 The 3D radiative budget data are stored with the X, Y and Z location of
-each cell, stored in 3 columns
+each cell, stored in 3 columns.
 
 ``` r
 head(as.data.frame(simData), n = 3)
@@ -242,23 +242,12 @@ head(as.data.frame(simData), n = 3)
 #> 3     3     1     1  1.01 Intercepted   BAND0 ITER1 ""      cesbio
 ```
 
-Plot a horizontal slice of the radiative budget data
+It’s important that `SimulationFilter` matches only the data you
+actually want.
 
-``` r
-ggplot(as.data.frame(simData)) + 
-    geom_raster(aes(x = X, y = Y, fill = value)) +
-    facet_grid(band + variablesRB3D~ Z) +
-    theme(aspect.ratio = 1)
-```
-
-<img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" />
-This outputs lots of data. It’s important that `SimulationFilter`
-matches only the data you actually want.
-
-The below example uses the simple “dplyr” approach to work with this
-data. Here we look at the lowest horizontal layer of each 3D radiative
-budget array (i.e. Z = 1) rather than all layers (above plot) and plot
-the smaller dataset.
+The below example uses “dplyr” to work with this data. Here we look at
+the lowest horizontal layer of each 3D radiative budget array (i.e. Z =
+1).
 
 ``` r
 library(dplyr)
@@ -266,7 +255,6 @@ library(dplyr)
 simData_filtered <- as.data.frame(simData) %>%
     dplyr::filter(Z == 1)
 
-#plot again and tweak the plot
 ggplot(simData_filtered) + 
     geom_raster(aes(x = X, y = Y, fill = value)) +
     facet_grid(band ~ variablesRB3D) +
@@ -278,19 +266,19 @@ ggplot(simData_filtered) +
        theme(aspect.ratio = 1)
 ```
 
-<img src="man/figures/README-unnamed-chunk-15-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" />
 
 ### Memory management
 
-`getData()` loads all data to memory which is problematic when loading
-many large files (e.g. Radiative Budget). It is assumed that the user
-will perform some analysis on subsets of the raw data in a way that
-reduces the overall size of the data, e.g. aggregating data in some way.
 This section demonstrates memory management when performing analysis on
-a relatively large set of files. The files are loaded in two ways:
-Option 1 uses the default `getData()` to load and then analyse all data
-at once, whereas Option 2 offers a solution to analyse the data in
-pieces, which has a much smaller memory footprint.
+a relatively large set of files. `getData()` loads all data to memory
+which is problematic when loading many large files (e.g. Radiative
+Budget). It is assumed that the user will perform some analysis on
+subsets of the raw data in a way that reduces the overall size of the
+data. Files here are loaded in two ways: option 1 uses the default
+`getData()` to load and then analyse all data at once. Option 2 loads
+and analyses the data in pieces, which has a much smaller memory
+footprint (but may be slower). Both options give the same result.
 
 #### Option 1: Load data all at once
 
@@ -393,7 +381,7 @@ ggplot(statVals) +
     theme(aspect.ratio = 1)
 ```
 
-<img src="man/figures/README-unnamed-chunk-21-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-20-1.png" width="100%" />
 
 #### Option 2: Load data in sections and process each section
 
