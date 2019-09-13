@@ -295,52 +295,8 @@ simFiles <- daRt::getFiles(simulationDir, sF = sF)
 ```
 
 There are twelve files each with 6 variables and each as a 3D array -
-i.e. quite a lot of data
-
-``` r
-files(simFiles)
-#>     band         variable     iter typeNum
-#> 1  BAND0 RADIATIVE_BUDGET    ITER1        
-#> 2  BAND0 RADIATIVE_BUDGET    ITER2        
-#> 3  BAND0 RADIATIVE_BUDGET ILLUDIFF        
-#> 4  BAND0 RADIATIVE_BUDGET  ILLUDIR        
-#> 5  BAND1 RADIATIVE_BUDGET    ITER1        
-#> 6  BAND1 RADIATIVE_BUDGET    ITER2        
-#> 7  BAND1 RADIATIVE_BUDGET ILLUDIFF        
-#> 8  BAND1 RADIATIVE_BUDGET  ILLUDIR        
-#> 9  BAND2 RADIATIVE_BUDGET    ITER1        
-#> 10 BAND2 RADIATIVE_BUDGET    ITER2        
-#> 11 BAND2 RADIATIVE_BUDGET ILLUDIFF        
-#> 12 BAND2 RADIATIVE_BUDGET  ILLUDIR        
-#>                                                                                                                                 fileName
-#> 1     man/data/cesbio/output//BAND0/RADIATIVE_BUDGET/ITER1/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
-#> 2     man/data/cesbio/output//BAND0/RADIATIVE_BUDGET/ITER2/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
-#> 3  man/data/cesbio/output//BAND0/RADIATIVE_BUDGET/ILLUDIFF/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
-#> 4   man/data/cesbio/output//BAND0/RADIATIVE_BUDGET/ILLUDIR/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
-#> 5     man/data/cesbio/output//BAND1/RADIATIVE_BUDGET/ITER1/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
-#> 6     man/data/cesbio/output//BAND1/RADIATIVE_BUDGET/ITER2/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
-#> 7  man/data/cesbio/output//BAND1/RADIATIVE_BUDGET/ILLUDIFF/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
-#> 8   man/data/cesbio/output//BAND1/RADIATIVE_BUDGET/ILLUDIR/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
-#> 9     man/data/cesbio/output//BAND2/RADIATIVE_BUDGET/ITER1/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
-#> 10    man/data/cesbio/output//BAND2/RADIATIVE_BUDGET/ITER2/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
-#> 11 man/data/cesbio/output//BAND2/RADIATIVE_BUDGET/ILLUDIFF/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
-#> 12  man/data/cesbio/output//BAND2/RADIATIVE_BUDGET/ILLUDIR/3D_30_33_11_Intercepted_Scattered_Emitted_Absorbed_+ZFaceExit_+ZFaceEntry.bin
-#>    simName
-#> 1   cesbio
-#> 2   cesbio
-#> 3   cesbio
-#> 4   cesbio
-#> 5   cesbio
-#> 6   cesbio
-#> 7   cesbio
-#> 8   cesbio
-#> 9   cesbio
-#> 10  cesbio
-#> 11  cesbio
-#> 12  cesbio
-```
-
-Load in the data all at once. It is relatively memory intensive
+i.e. quite a lot of data. Load in the data all at once. It is relatively
+memory intensive
 
 ``` r
 simData <- daRt::getData(x = simFiles, nCores = 2)
@@ -381,7 +337,7 @@ ggplot(statVals) +
     theme(aspect.ratio = 1)
 ```
 
-<img src="man/figures/README-unnamed-chunk-20-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-19-1.png" width="100%" />
 
 #### Option 2: Load data in sections and process each section
 
