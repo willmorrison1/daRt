@@ -194,10 +194,10 @@ head(DFdata, n = 3)
 dim(DFdata)
 ```
 Do some analysis on the data. Get the mean of non-zero values across
-each vertical layer of each `variablesRB3D`, `bands` and `iters` according to the above column names
+each vertical layer of each `variablesRB3D`, `bands`, `iters` (already grouped) according to the above column names
 ```{r}
 statVals <- DFdata %>%
-    dplyr::group_by(X, Y, variablesRB3D, band, iter) %>%
+    dplyr::group_by(X, Y, variablesRB3D, add = TRUE) %>%
     dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
 ```
 
@@ -206,7 +206,7 @@ Do 'scenario 1' analysis but with data processed for each band separately to sav
 ```{r}
 sF <- simulationFilter(product = "rb3D", 
                        bands = c("BAND0", "BAND1", "BAND2"), 
-                       iters = "ITER1", "ITER2", "ILLUDIFF", "ILLUDIR",
+                       iters = c("ITER1", "ITER2", "ILLUDIFF", "ILLUDIR"),
                        typeNums = "",
                        variables = "RADIATIVE_BUDGET")
 allBands <- bands(simData)
@@ -221,7 +221,7 @@ for (i in 1:length(allBands)) {
 }
 ```
 Now put together the list of data. As each list element is a summary of the raw data, it has a much smaller memory footprint. As the summary was performed on one band at a time, the amount of data loaded at once is less than if getFiles() was executed for all bands at once (scenario 1). By loading one band at a time as opposed to all three at once, the memory footprint is around 1/3 of scenario 1. 
-```{r, fig.height = 6}
+```{r}
 simDataDF <- dplyr::bind_rows(simDataList)
 
 statVals1 <- simDataDF

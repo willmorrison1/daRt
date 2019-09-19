@@ -320,12 +320,12 @@ dim(DFdata)
 ```
 
 Do some analysis on the data. Get the mean of non-zero values across
-each vertical layer of each `variablesRB3D`, `bands` and `iters`
-according to the above column names
+each vertical layer of each `variablesRB3D`, `bands`, `iters` (already
+grouped) according to the above column names
 
 ``` r
 statVals <- DFdata %>%
-    dplyr::group_by(X, Y, variablesRB3D, band, iter) %>%
+    dplyr::group_by(X, Y, variablesRB3D, add = TRUE) %>%
     dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
 ```
 
@@ -337,7 +337,7 @@ separately to save on memory usage.
 ``` r
 sF <- simulationFilter(product = "rb3D", 
                        bands = c("BAND0", "BAND1", "BAND2"), 
-                       iters = "ITER1", "ITER2", "ILLUDIFF", "ILLUDIR",
+                       iters = c("ITER1", "ITER2", "ILLUDIFF", "ILLUDIR"),
                        typeNums = "",
                        variables = "RADIATIVE_BUDGET")
 allBands <- bands(simData)
@@ -370,7 +370,7 @@ Both scenarios give the same results
 
 ``` r
 all.equal(statVals, statVals1)
-#> [1] "Cols in y but not x: `typeNum`, `simName`. "
+#> [1] TRUE
 ```
 
 but by processing in parts, the latter (scenario 2) - produced by
