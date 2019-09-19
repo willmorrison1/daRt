@@ -192,8 +192,8 @@ This section provides further misc examples and guidance for reference.
 ### SimulationFilter editing
 
 To look at images for `bands` 0, 1 and 2; `iters` (iterations) 1 and 2,
-and `ima` (images) 5 and 7, create the relevant SimulationFilter then
-load the data
+and `imageNo` (image numbers) 5 and 7, create the relevant
+SimulationFilter then load the data
 
 ``` r
 #create SimulationFilter
@@ -229,7 +229,9 @@ simData <- daRt::getData(x = simulationDir, sF = sF)
 ```
 
 The 3D radiative budget data are stored with the X, Y and Z location of
-each cell, stored in 3 columns.
+each cell (conforming to DART coordinate system i.e. "the part of the
+scene that horizontally is ‘top left’ and vertically is at the bottom
+is: X = 1, Y = 1, Z = 1), stored in 3 columns.
 
 ``` r
 head(as.data.frame(simData), n = 3)
@@ -242,9 +244,6 @@ head(as.data.frame(simData), n = 3)
 #> 3     3     1     1  1.01 Intercepted   BAND0 ITER1 ""      cesbio
 ```
 
-It’s important that `SimulationFilter` matches only the data you
-actually want.
-
 The below example uses “dplyr” to work with this data. Here we look at
 the lowest horizontal layer of each 3D radiative budget array (i.e. Z =
 1).
@@ -252,6 +251,7 @@ the lowest horizontal layer of each 3D radiative budget array (i.e. Z =
 ``` r
 library(dplyr)
 
+#filter lowest horizontal cross section of the radiative budget
 simData_filtered <- as.data.frame(simData) %>%
     dplyr::filter(Z == 1)
 
@@ -270,17 +270,18 @@ ggplot(simData_filtered) +
 
 ### Memory management
 
-This section demonstrates memory management when performing analysis on
-a relatively large set of files. `getData()` loads all data to memory
-which is problematic when loading many large files (e.g. Radiative
-Budget). It is assumed that the user will perform some analysis on
-subsets of the raw data in a way that reduces the overall size of the
-data. Files here are loaded in two ways: option 1 uses the default
-`getData()` to load and then analyse all data at once. Option 2 loads
-and analyses the data in pieces, which has a much smaller memory
-footprint (but may be slower). Both options give the same result.
+When performing analysis on a relatively large set of files, memory
+management is important. `getData()` loads all data to memory which is
+problematic when loading many large files (e.g. Radiative Budget). It is
+assumed that the user will perform some analysis on subsets of the raw
+data in a way that reduces the overall size of the data in memory. To
+demonstrate meory management, files in this section are loaded in two
+different scenarios: scenario 1 uses the default `getData()` to load and
+then analyse all data at once. Scenario 2 loads and analyses the data in
+pieces, which has a much smaller memory footprint (but may be slower).
+Both scenarios give the same result with different memory usage.
 
-#### Option 1: Load data all at once
+#### Scenario 1: Load data all at once
 
 Load all radiative budget products at once into memory and take the mean
 of each horizontal layer.
@@ -319,30 +320,19 @@ dim(DFdata)
 ```
 
 Do some analysis on the data. Get the mean of non-zero values across
-each vertical layer of each variable, band, etc
+each vertical layer of each `variablesRB3D`, `bands` and `iters`
+according to the above column names
 
 ``` r
 statVals <- DFdata %>%
-    dplyr::group_by(X, Y, variablesRB3D, add = TRUE) %>%
+    dplyr::group_by(X, Y, variablesRB3D, band, iter) %>%
     dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
 ```
 
-Then plot these values
+#### Scenario 2: Load data in sections and process each section
 
-``` r
-ggplot(statVals) +
-    geom_raster(aes(x = X, y = Y, fill = meanVal)) +
-    facet_grid(iter + band ~ variablesRB3D) +
-    theme(strip.text = element_text(size = 5, margin = margin(0.1, 0.1, 0.1, 0.1))) +
-    theme(aspect.ratio = 1)
-```
-
-<img src="man/figures/README-unnamed-chunk-19-1.png" width="100%" />
-
-#### Option 2: Load data in sections and process each section
-
-Do Option 1 analysis but with data processed for each band separately to
-save on memory usage.
+Do ‘scenario 1’ analysis but with data processed for each band
+separately to save on memory usage.
 
 ``` r
 sF <- simulationFilter(product = "rb3D", 
@@ -366,9 +356,9 @@ for (i in 1:length(allBands)) {
 Now put together the list of data. As each list element is a summary of
 the raw data, it has a much smaller memory footprint. As the summary was
 performed on one band at a time, the amount of data loaded at once is
-less than if getFiles() was executed for all bands at once (Option 1).
+less than if getFiles() was executed for all bands at once (scenario 1).
 By loading one band at a time as opposed to all three at once, the
-memory footprint is around 1/3 comparsed to Option 1.
+memory footprint is around 1/3 of scenario 1.
 
 ``` r
 simDataDF <- dplyr::bind_rows(simDataList)
@@ -376,14 +366,14 @@ simDataDF <- dplyr::bind_rows(simDataList)
 statVals1 <- simDataDF
 ```
 
-Both approaches give the same results
+Both scenarios give the same results
 
 ``` r
 all.equal(statVals, statVals1)
-#> [1] "Different number of rows"
+#> [1] "Cols in y but not x: `typeNum`, `simName`. "
 ```
 
-but by processing in parts, the latter (Option 2) - produced by
+but by processing in parts, the latter (scenario 2) - produced by
 ‘statVals1’ - has a smaller memory footprint as the stats are
 calculated for each band separately. When inter-band stats are required,
 the example can be adapted to iterate over e.g. ‘iters’ or

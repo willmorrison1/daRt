@@ -193,19 +193,12 @@ DFdata <- as.data.frame(simData)
 head(DFdata, n = 3)
 dim(DFdata)
 ```
-Do some analysis on the data. Get the mean of non-zero values across each vertical layer of each variable, band, etc
+Do some analysis on the data. Get the mean of non-zero values across
+each vertical layer of each `variablesRB3D`, `bands` and `iters` according to the above column names
 ```{r}
 statVals <- DFdata %>%
-    dplyr::group_by(X, Y, variablesRB3D, add = TRUE) %>%
+    dplyr::group_by(X, Y, variablesRB3D, band, iter) %>%
     dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
-```
-Then plot these values
-```{r, fig.height = 5}
-ggplot(statVals) +
-    geom_raster(aes(x = X, y = Y, fill = meanVal)) +
-    facet_grid(iter + band ~ variablesRB3D) +
-    theme(strip.text = element_text(size = 5, margin = margin(0.1, 0.1, 0.1, 0.1))) +
-    theme(aspect.ratio = 1)
 ```
 
 #### Scenario 2: Load data in sections and process each section
