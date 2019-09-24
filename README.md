@@ -226,6 +226,8 @@ product(sF) <- "rb3D"
 simData <- daRt::getData(x = simulationDir, sF = sF)
 #> Warning in filesFun(x = x[i], sF = sF): Forcing 'RADIATIVE_BUDGET' variable
 #> in 'simulationFilter' variables.
+#> Warning in filesFun(x = x[i], sF = sF): Found duplicate rb3D files in: output//BAND0/RADIATIVE_BUDGET/ITER2 (different extensions).
+#>                                     Cleaning duplicates. Run rb3DtoNcdf() if warning persists.
 ```
 
 The 3D radiative budget data are stored with the X, Y and Z location of
@@ -293,6 +295,8 @@ sF <- simulationFilter(product = "rb3D",
                        typeNums = "",
                        variables = "RADIATIVE_BUDGET")
 simFiles <- daRt::getFiles(simulationDir, sF = sF)
+#> Warning in filesFun(x = x[i], sF = sF): Found duplicate rb3D files in: output//BAND0/RADIATIVE_BUDGET/ITER2 (different extensions).
+#>                                     Cleaning duplicates. Run rb3DtoNcdf() if warning persists.
 ```
 
 There are twelve files each with 6 variables and each as a 3D array -
@@ -351,6 +355,8 @@ for (i in 1:length(allBands)) {
         dplyr::group_by(X, Y, variablesRB3D, add = TRUE) %>%
         dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
 }
+#> Warning in filesFun(x = x[i], sF = sF): Found duplicate rb3D files in: output//BAND0/RADIATIVE_BUDGET/ITER2 (different extensions).
+#>                                     Cleaning duplicates. Run rb3DtoNcdf() if warning persists.
 ```
 
 Now put together the list of data. As each list element is a summary of
@@ -378,3 +384,21 @@ but by processing in parts, the latter (scenario 2) - produced by
 calculated for each band separately. When inter-band stats are required,
 the example can be adapted to iterate over e.g. ‘iters’ or
 ‘variablesRB3D’.
+
+### Compression of large binary files
+
+DART radiative budget files are raw binary and can get very large.
+\`rb3DtoNc’ converts .bin to netcdf (.nc) format, which gives smaller
+files sizes and can be compressed.
+
+``` r
+sF <- simulationFilter(product = "rb3D", 
+                       bands = "BAND1", 
+                       iters = "ITER1",
+                       typeNums = "",
+                       variables = "RADIATIVE_BUDGET")
+simFiles <- daRt::getFiles(simulationDir, sF = sF)
+simData <- as.data.frame(daRt::getData(simFiles))
+simFiles_nc <- daRt::rb3DtoNc(simFiles)
+simData_nc <- as.data.frame(daRt::getData(simFiles_nc))
+```

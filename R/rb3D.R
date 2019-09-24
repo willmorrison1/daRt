@@ -1,6 +1,7 @@
 setMethod(f = "rb3D",
           signature = signature(x = "SimulationFiles"),
           definition = function(x, nCores = 1){
+
               require(data.table)
               require(reshape2)
               require(foreach)
@@ -11,6 +12,7 @@ setMethod(f = "rb3D",
                          strict = TRUE)
               cl <- parallel::makeCluster(nCores)
               doParallel::registerDoParallel(cl)
+
               listData <- foreach(i = 1:nrow(RB3d@files),
                                   .export = ".readBin3DRadiativeBudget") %dopar% {
 
@@ -27,11 +29,13 @@ setMethod(f = "rb3D",
                                       RBdata_melted$simName <- fileRow$simName
                                       return(RBdata_melted)
                                   }
+
               stopCluster(cl)
               gc()
               RB3d@data <- data.table::rbindlist(listData, use.names = FALSE)
               rm(listData); gc()
               validObject(RB3d)
+
               return(RB3d)
           }
 )
@@ -49,6 +53,7 @@ setMethod(f = "rb3D",
     #return each radiative budget array, by type, to a named list of arrays
     RAWarrayLists <- lapply(thirdArrayDimIndex, function(x) RAWarray[, , (nCells[3] + x - 1):x])
     names(RAWarrayLists) <- radiativeBudgetNames3D
+
     if (!is.null(requiredVars)) {
         requiredVarsInd <- names(RAWarrayLists) %in% requiredVars
         if (all(requiredVarsInd == FALSE)) {
@@ -58,7 +63,33 @@ setMethod(f = "rb3D",
         }
         RAWarrayLists <- RAWarrayLists[names(RAWarrayLists) %in% requiredVars]
     }
-    RAWarrayListsAperm <- lapply(RAWarrayLists, function(x) aperm(x, c(2, 1, 3)))
-    return(RAWarrayListsAperm)
 
+    RAWarrayListsAperm <- lapply(RAWarrayLists, function(x) aperm(x, c(2, 1, 3)))
+
+    return(RAWarrayListsAperm)
+}
+
+.readNcdf3DRadiativeBudget <- function(inFile){
+
+    require(ncdf4)
+
+    if (length(inFile) != 1) {
+        stop(".readNcdf3DRadiativeBudget() Expected one file")
+    }
+
+    ncin  <- ncdf4::nc_open(inFile)
+    vars <- names(ncin$var)
+    OUTDATA <- vector("list", length(vars))
+
+    for (i in 1:length(OUTDATA)) {
+        varRawVals <- ncdf4::ncvar_get(ncin, vars[i])
+            varRawVals <- aperm(varRawVals, c(2, 1, 3))
+        OUTDATA[[i]] <- varRawVals
+    }
+
+    names(OUTDATA) <- .formatRB3DVarsForNcdf(vars, fromNc = TRUE)
+    OUTDATA <- OUTDATA
+    ncdf4::nc_close(ncin)
+
+    return(OUTDATA)
 }

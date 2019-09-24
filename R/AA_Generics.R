@@ -161,6 +161,25 @@ setGeneric(name = "sequenceParameters", def = function(x) standardGeneric("seque
 #'
 setGeneric(name = "removeRelief", def = function(x = "RB3D", DEM = "RasterLayer")
     standardGeneric("removeRelief"))
+
+
+#' Convert radiative budget .bin to .nc
+#' @title rb3DtoNc
+#' @description DART radiative budget .bin files can be very large. This function replaces all
+#' .bin files with .nc files, which can be compressed and are faster to read.
+#'
+#'
+#' @param x \link{SimulationFiles-class} type object.
+#' @param ncCompressionFactor Compression factor (0 - 9) for writing ncdf files (see ncdf4 package)
+#'
+#' @return
+#' @export
+#'
+#' @examples
+setGeneric(name = "rb3DtoNc", def = function(x = "SimulationFiles", ...)
+    standardGeneric("rb3DtoNc"))
+
+
 setGeneric(name = "directions", def = function(x = "character", ...)
     standardGeneric("directions"))
 setGeneric(name = "directionsFiles", def = function(x = "character", sF = "SimulationFilter")

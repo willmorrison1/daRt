@@ -233,3 +233,16 @@ all.equal(statVals, statVals1)
 ```
 but by processing in parts, the latter (scenario 2) - produced by 'statVals1' - has a smaller memory footprint as the stats are calculated for each band separately. When inter-band stats are required, the example can be adapted to iterate over e.g. 'iters' or 'variablesRB3D'.
 
+### Compression of large binary files
+DART radiative budget files are raw binary and can get very large. `rb3DtoNc' converts .bin to netcdf (.nc) format, which gives smaller files sizes and can be compressed.
+```{r}
+sF <- simulationFilter(product = "rb3D", 
+                       bands = "BAND1", 
+                       iters = "ITER1",
+                       typeNums = "",
+                       variables = "RADIATIVE_BUDGET")
+simFiles <- daRt::getFiles(simulationDir, sF = sF)
+simData <- as.data.frame(daRt::getData(simFiles))
+simFiles_nc <- daRt::rb3DtoNc(simFiles)
+simData_nc <- as.data.frame(daRt::getData(simFiles_nc))
+```
