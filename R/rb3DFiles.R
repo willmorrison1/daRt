@@ -2,6 +2,7 @@ setMethod(f = "rb3DFiles",
           signature = signature(x = "character", sF = "SimulationFilter"),
           definition = function(x, sF){
 
+              require(tools)
               simHandle <- simulationHandle(x)
               RB3DFiles <- as(object = simHandle, Class = "SimulationFiles")
               RB3DFiles@simulationFilter <- sF
@@ -19,13 +20,14 @@ setMethod(f = "rb3DFiles",
               typeNumsFound <- character()
               variablesRB3DFound <- character()
               for (i in 1:nrow(subDirs)) {
-                  allBinFiles <- list.files(fileDir[i], pattern = ".bin", full.names = TRUE)
-                  allFiles <- allBinFiles[grepl("3D_", basename(allBinFiles))]
-                  nonTypeNumFile <- allFiles[!grepl("TypeNum|Ground", basename(allFiles))]
-                  if (length(nonTypeNumFile) != 1) {
-                      stop(paste("RB3DFiles() expected at least one RB .bin file (the non-'typeNum' file) in:\n",
-                                 fileDir[i]))
+                  allFiles <- list.files(fileDir[i], pattern = ".bin|.nc", full.names = TRUE)
+                  all3DrbFiles <- allFiles[grepl("3D_", basename(allFiles))]
+                  all3DrbFiles_duplicated <- duplicated(tools::file_path_sans_ext(all3DrbFiles))
+                  if (any(all3DrbFiles_duplicated)) {
+                      warning(paste("Found duplicate rb3D files in:", subDirs$dirName[i], "(different extensions).
+                                    Cleaning duplicates. Run rb3DtoNcdf() if warning persists."))
                   }
+                  all3DrbFiles <- all3DrbFiles[all3DrbFiles_duplicated]
                   for (j in 1:length(RBTypeNums)) {
                       for (v in 1:length(allFiles)) {
                           RB3Dinfo <- .parse3DRBfileName(allFiles[v])
@@ -34,9 +36,9 @@ setMethod(f = "rb3DFiles",
                           variablesRB3DFound <- unique(c(variablesRB3DFound,  RB3Dinfo$variables))
                           if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
                               nProcessed <- nProcessed + 1
-                              OUT[[nProcessed]] <- data.frame("band" = subDirs[i,]$band,
-                                                              "variable" = subDirs[i,]$variable,
-                                                              "iter" = subDirs[i,]$iter,
+                              OUT[[nProcessed]] <- data.frame("band" = subDirs[i, ]$band,
+                                                              "variable" = subDirs[i, ]$variable,
+                                                              "iter" = subDirs[i, ]$iter,
                                                               "typeNum" = typeNums(sF)[j],
                                                               "fileName" = allFiles[v],
                                                               stringsAsFactors = FALSE)
@@ -83,7 +85,7 @@ setMethod(f = "rb3DFiles",
         isTypeNum <- FALSE
     }
     fileExt <- tools::file_ext(RB3DfileName)
-    if (fileExt != "bin") .isNot3DRBstop(RB3DfileName)
+    if (!fileExt %in% c("bin", "nc")) .isNot3DRBstop(RB3DfileName)
     rawSplit <- strsplit(RB3DfileName, "_")[[1]]
     if (rawSplit[1] != "3D") .isNot3DRBstop(RB3DfileName)
     nCells <- as.numeric(c(rawSplit[2], rawSplit[3], rawSplit[4]))
@@ -99,7 +101,12 @@ setMethod(f = "rb3DFiles",
     }
     OUT <- list("nCells" = nCells,
                 "variables" = variables,
-                "typeNum" = typeNum)
+                "typeNum" = typeNum,
+                "fileExtension" = fileExt)
 
     return(OUT)
+}
+
+.isNot3DRBstop <- function(RB3DfileName) {
+    stop(paste(RB3DfileName, "is not a rb3D file"))
 }
