@@ -179,6 +179,22 @@ setGeneric(name = "removeRelief", def = function(x = "RB3D", DEM = "RasterLayer"
 setGeneric(name = "rb3DtoNc", def = function(x = "SimulationFiles", ...)
     standardGeneric("rb3DtoNc"))
 
+#' Delete potentially large input files
+#' @title deleteInputFiles
+#' @description DART input files can be very large. This function deletes those large files
+#' that are not required for post-processing of data in this package.
+#'
+#'
+#' @param x \link{SimulationFiles-class} type object.
+#' @param ... Optional arguments `triangles` (bool) to remove triangles files.
+#'
+#' @return
+#' @export
+#'
+#' @examples
+setGeneric(name = "deleteInputFiles", def = function(x = "SimulationFiles", ...)
+    standardGeneric("deleteInputFiles"))
+
 
 setGeneric(name = "directions", def = function(x = "character", ...)
     standardGeneric("directions"))
