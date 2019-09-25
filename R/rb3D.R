@@ -17,18 +17,13 @@ setMethod(f = "rb3D",
               listData <- foreach(i = 1:nrow(RB3d@files),
                                   .export = c(".readBin3DRadiativeBudget",
                                               ".parse3DRBfileName",
-                                              ".readNcdf3DRadiativeBudget")) %dopar% {
+                                              ".readNcdf3DRadiativeBudget",
+                                              ".read3DRadiativeBudget")) %dopar% {
 
                                                   fileRow <- RB3d@files[i, ]
                                                   sF <- RB3d@simulationFilter
-                                                  rbFileNameDetails <- .parse3DRBfileName(fileRow$fileName)
-                                                  if (rbFileNameDetails$fileExtension == "bin") {
-                                                      RBdata <- .readBin3DRadiativeBudget(fileName = fileRow$fileName,
-                                                                                          requiredVars = variablesRB3D(sF))
-                                                  } else {
-                                                      RBdata <- .readNcdf3DRadiativeBudget(fileName = fileRow$fileName,
-                                                                                           requiredVars = variablesRB3D(sF))
-                                                  }
+                                                  RBdata <- .read3DRadiativeBudget(fileName = fileRow$fileName,
+                                                                                   requiredVars = variablesRB3D(sF))
                                                   RBdata_melted <- reshape2::melt(data = RBdata)
                                                   rm(RBdata); gc()
                                                   colnames(RBdata_melted) <- c("X", "Y", "Z", "value", "variablesRB3D")
@@ -48,6 +43,20 @@ setMethod(f = "rb3D",
               return(RB3d)
           }
 )
+
+
+.read3DRadiativeBudget <- function(fileName, requiredVars = NULL){
+
+    rbFileNameDetails <- .parse3DRBfileName(fileName)
+    if (rbFileNameDetails$fileExtension == "bin") {
+        RBdata <- .readBin3DRadiativeBudget(fileName = fileName,
+                                            requiredVars = requiredVars)
+    } else {
+        RBdata <- .readNcdf3DRadiativeBudget(fileName = fileName,
+                                             requiredVars = requiredVars)
+    }
+    return(RBdata)
+}
 
 
 .readBin3DRadiativeBudget <- function(fileName, requiredVars = NULL){

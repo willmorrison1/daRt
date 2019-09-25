@@ -388,7 +388,7 @@ the example can be adapted to iterate over e.g. ‘iters’ or
 ### Compression of large binary files
 
 DART radiative budget files are raw binary and can get very large.
-\`rb3DtoNc’ converts .bin to netcdf (.nc) format, which gives smaller
+`rb3DtoNc` converts .bin to NetCDF (.nc) format, which gives smaller
 files sizes and can be compressed.
 
 Get some DART radiative budget bindary data (the default data)
@@ -406,8 +406,8 @@ simData_bin <- as.data.frame(daRt::getData(simFiles_bin))
 fileSize_bin <- file.size(files(simFiles_bin)$fileName)
 ```
 
-Convert the binary data to .nc. The .bin file will be deleted during
-this process.
+Convert the .bin data to .nc. The .bin file will be deleted by
+`rb3DtoNc`.
 
 ``` r
 simFiles_nc <- daRt::rb3DtoNc(simFiles_bin)
@@ -428,3 +428,6 @@ The new .nc file is much smaller:
 file.size(files(simFiles_nc)$fileName) / fileSize_bin
 #> [1] 0.1244318
 ```
+
+and is much faster to read. It can also be read by third party NetCDF
+browsers e.g. ncview.
