@@ -1,6 +1,6 @@
 setMethod(f = "deleteInputFiles",
-          signature = signature(x = "SimulationFiles"),
-          definition = function(x, triangles = FALSE) {
+          signature = signature(x = "SimulationFiles", triangles = "logical"),
+          definition = function(x, triangles) {
               validObject(x, complete = TRUE)
 
               simDirs <- simdir(x)
