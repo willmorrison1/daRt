@@ -391,14 +391,40 @@ DART radiative budget files are raw binary and can get very large.
 \`rb3DtoNc’ converts .bin to netcdf (.nc) format, which gives smaller
 files sizes and can be compressed.
 
+Get some DART radiative budget bindary data (the default data)
+
 ``` r
+simulationDir <- "man/data/cesbio"
 sF <- simulationFilter(product = "rb3D", 
                        bands = "BAND1", 
                        iters = "ITER1",
                        typeNums = "",
                        variables = "RADIATIVE_BUDGET")
-simFiles <- daRt::getFiles(simulationDir, sF = sF)
-simData <- as.data.frame(daRt::getData(simFiles))
-simFiles_nc <- daRt::rb3DtoNc(simFiles)
+simFiles_bin <- daRt::getFiles(simulationDir, sF = sF)
+simData_bin <- as.data.frame(daRt::getData(simFiles_bin))
+#get the file size - for later comparison
+fileSize_bin <- file.size(files(simFiles_bin)$fileName)
+```
+
+Convert the binary data to .nc. The .bin file will be deleted during
+this process.
+
+``` r
+simFiles_nc <- daRt::rb3DtoNc(simFiles_bin)
 simData_nc <- as.data.frame(daRt::getData(simFiles_nc))
+```
+
+There are some very minor differences in the two products - likely due
+to the ncdf compression algorithm and/or rounding.
+
+``` r
+max(abs(simData_nc$value - simData_bin$value))
+#> [1] 9.187445e-08
+```
+
+The new .nc file is much smaller:
+
+``` r
+file.size(files(simFiles_nc)$fileName) / fileSize_bin
+#> [1] 0.1244318
 ```

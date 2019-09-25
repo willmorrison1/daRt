@@ -16,7 +16,7 @@ setMethod(f = "rb3DtoNc",
                   oFile <- paste0(tools::file_path_sans_ext(RB3Dfiles$fileName[i]), ".nc")
                   .RB3DbinToNc(radiativeBudget3DData = binRBdata, outFile = oFile,
                                compressionFactor = ncCompressionFactor)
-                  ncRBdata <- .readNcdf3DRadiativeBudget(inFile = oFile)
+                  ncRBdata <- .readNcdf3DRadiativeBudget(fileName = oFile)
                   if (!all.equal(sapply(binRBdata, dim), sapply(ncRBdata, dim))) {
                       stop(paste("rb3DtoNc() reported that original .bin and created .nc files have different dims for:",
                                  RB3Dfiles$fileName[i], "and", oFile))

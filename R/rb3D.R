@@ -7,6 +7,7 @@ setMethod(f = "rb3D",
               require(foreach)
               require(parallel)
               require(doParallel)
+              require(tools)
 
               RB3d <- as(object = x, Class = "RB3D",
                          strict = TRUE)
@@ -14,21 +15,29 @@ setMethod(f = "rb3D",
               doParallel::registerDoParallel(cl)
 
               listData <- foreach(i = 1:nrow(RB3d@files),
-                                  .export = ".readBin3DRadiativeBudget") %dopar% {
+                                  .export = c(".readBin3DRadiativeBudget",
+                                              ".parse3DRBfileName",
+                                              ".readNcdf3DRadiativeBudget")) %dopar% {
 
-                                      fileRow <- RB3d@files[i, ]
-                                      sF <- RB3d@simulationFilter
-                                      RBdata <- .readBin3DRadiativeBudget(fileName = fileRow$fileName,
-                                                                          requiredVars = variablesRB3D(sF))
-                                      RBdata_melted <- reshape2::melt(data = RBdata)
-                                      rm(RBdata); gc()
-                                      colnames(RBdata_melted) <- c("X", "Y", "Z", "value", "variablesRB3D")
-                                      RBdata_melted$band <- fileRow$band
-                                      RBdata_melted$iter <- fileRow$iter
-                                      RBdata_melted$typeNum <- fileRow$typeNum
-                                      RBdata_melted$simName <- fileRow$simName
-                                      return(RBdata_melted)
-                                  }
+                                                  fileRow <- RB3d@files[i, ]
+                                                  sF <- RB3d@simulationFilter
+                                                  rbFileNameDetails <- .parse3DRBfileName(fileRow$fileName)
+                                                  if (rbFileNameDetails$fileExtension == "bin") {
+                                                      RBdata <- .readBin3DRadiativeBudget(fileName = fileRow$fileName,
+                                                                                          requiredVars = variablesRB3D(sF))
+                                                  } else {
+                                                      RBdata <- .readNcdf3DRadiativeBudget(fileName = fileRow$fileName,
+                                                                                           requiredVars = variablesRB3D(sF))
+                                                  }
+                                                  RBdata_melted <- reshape2::melt(data = RBdata)
+                                                  rm(RBdata); gc()
+                                                  colnames(RBdata_melted) <- c("X", "Y", "Z", "value", "variablesRB3D")
+                                                  RBdata_melted$band <- fileRow$band
+                                                  RBdata_melted$iter <- fileRow$iter
+                                                  RBdata_melted$typeNum <- fileRow$typeNum
+                                                  RBdata_melted$simName <- fileRow$simName
+                                                  return(RBdata_melted)
+                                              }
 
               stopCluster(cl)
               gc()
@@ -69,26 +78,34 @@ setMethod(f = "rb3D",
     return(RAWarrayListsAperm)
 }
 
-.readNcdf3DRadiativeBudget <- function(inFile){
+.readNcdf3DRadiativeBudget <- function(fileName, requiredVars = NULL){
 
     require(ncdf4)
 
-    if (length(inFile) != 1) {
+    if (length(fileName) != 1) {
         stop(".readNcdf3DRadiativeBudget() Expected one file")
     }
 
-    ncin  <- ncdf4::nc_open(inFile)
+    ncin  <- ncdf4::nc_open(fileName)
     vars <- names(ncin$var)
     OUTDATA <- vector("list", length(vars))
+    names(OUTDATA) <- .formatRB3DVarsForNcdf(vars, fromNc = TRUE)
+
+    if (!is.null(requiredVars)) {
+        requiredVarsInd <- names(OUTDATA) %in% requiredVars
+        if (all(requiredVarsInd == FALSE)) {
+            stop(paste0("The'required' RB3D vars are: ", paste0(requiredVars, collapse = ","), ". ",
+                        "But the available RB3D vars are: ", paste0(names(OUTDATA), collapse = ","),
+                        " in file: ", fileName))
+        }
+        OUTDATA <- OUTDATA[names(OUTDATA) %in% requiredVars]
+    }
 
     for (i in 1:length(OUTDATA)) {
         varRawVals <- ncdf4::ncvar_get(ncin, vars[i])
-            varRawVals <- aperm(varRawVals, c(2, 1, 3))
+        varRawVals <- aperm(varRawVals, c(2, 1, 3))
         OUTDATA[[i]] <- varRawVals
     }
-
-    names(OUTDATA) <- .formatRB3DVarsForNcdf(vars, fromNc = TRUE)
-    OUTDATA <- OUTDATA
     ncdf4::nc_close(ncin)
 
     return(OUTDATA)
