@@ -28,6 +28,9 @@ setMethod(f = "rb3DFiles",
                                     Cleaning duplicates. Run rb3DtoNcdf() if warning persists."))
                   }
                   all3DrbFiles <- all3DrbFiles[all3DrbFiles_duplicated]
+                  if (length(all3DrbFiles) == 0) {
+                      stop(paste("No RB files in:", fileDir[i]))
+                  }
                   for (j in 1:length(RBTypeNums)) {
                       for (v in 1:length(allFiles)) {
                           RB3Dinfo <- .parse3DRBfileName(allFiles[v])

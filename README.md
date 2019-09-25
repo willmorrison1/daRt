@@ -226,8 +226,194 @@ product(sF) <- "rb3D"
 simData <- daRt::getData(x = simulationDir, sF = sF)
 #> Warning in filesFun(x = x[i], sF = sF): Forcing 'RADIATIVE_BUDGET' variable
 #> in 'simulationFilter' variables.
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
 #> Warning in filesFun(x = x[i], sF = sF): Found duplicate rb3D files in: output//BAND0/RADIATIVE_BUDGET/ITER2 (different extensions).
 #>                                     Cleaning duplicates. Run rb3DtoNcdf() if warning persists.
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
 ```
 
 The 3D radiative budget data are stored with the X, Y and Z location of
@@ -295,8 +481,380 @@ sF <- simulationFilter(product = "rb3D",
                        typeNums = "",
                        variables = "RADIATIVE_BUDGET")
 simFiles <- daRt::getFiles(simulationDir, sF = sF)
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
 #> Warning in filesFun(x = x[i], sF = sF): Found duplicate rb3D files in: output//BAND0/RADIATIVE_BUDGET/ITER2 (different extensions).
 #>                                     Cleaning duplicates. Run rb3DtoNcdf() if warning persists.
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
 ```
 
 There are twelve files each with 6 variables and each as a 3D array -
@@ -355,8 +913,380 @@ for (i in 1:length(allBands)) {
         dplyr::group_by(X, Y, variablesRB3D, add = TRUE) %>%
         dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
 }
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
 #> Warning in filesFun(x = x[i], sF = sF): Found duplicate rb3D files in: output//BAND0/RADIATIVE_BUDGET/ITER2 (different extensions).
 #>                                     Cleaning duplicates. Run rb3DtoNcdf() if warning persists.
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
 ```
 
 Now put together the list of data. As each list element is a summary of
@@ -395,12 +1325,43 @@ Get some DART radiative budget bindary data (the default data)
 
 ``` r
 simulationDir <- "man/data/cesbio"
-sF <- simulationFilter(product = "rb3D", 
+sF <- simulationFilter(product = "rb3D",
                        bands = "BAND1", 
                        iters = "ITER1",
                        typeNums = "",
                        variables = "RADIATIVE_BUDGET")
 simFiles_bin <- daRt::getFiles(simulationDir, sF = sF)
+#> Called from: filesFun(x = x[i], sF = sF)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#33: for (v in 1:length(allFiles)) {
+#>     RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#>     varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#>     typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#>     variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#>     if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>         nProcessed <- nProcessed + 1
+#>         OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>             variable = subDirs[i, ]$variable, iter = subDirs[i, 
+#>                 ]$iter, typeNum = typeNums(sF)[j], fileName = allFiles[v], 
+#>             stringsAsFactors = FALSE)
+#>         break
+#>     }
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#34: RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#35: varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#36: typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#37: variablesRB3DFound <- unique(c(variablesRB3DFound, RB3Dinfo$variables))
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#38: if (RB3Dinfo$typeNum == RBTypeNums[j] & any(varsInFile)) {
+#>     nProcessed <- nProcessed + 1
+#>     OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, 
+#>         variable = subDirs[i, ]$variable, iter = subDirs[i, ]$iter, 
+#>         typeNum = typeNums(sF)[j], fileName = allFiles[v], stringsAsFactors = FALSE)
+#>     break
+#> }
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#39: nProcessed <- nProcessed + 1
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#40: OUT[[nProcessed]] <- data.frame(band = subDirs[i, ]$band, variable = subDirs[i, 
+#>     ]$variable, iter = subDirs[i, ]$iter, typeNum = typeNums(sF)[j], 
+#>     fileName = allFiles[v], stringsAsFactors = FALSE)
+#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/rb3DFiles.R#46: break
 simData_bin <- as.data.frame(daRt::getData(simFiles_bin))
 #get the file size - for later comparison
 fileSize_bin <- file.size(files(simFiles_bin)$fileName)

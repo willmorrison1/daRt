@@ -239,7 +239,7 @@ DART radiative budget files are raw binary and can get very large. `rb3DtoNc` co
 Get some DART radiative budget bindary data (the default data)
 ```{r}
 simulationDir <- "man/data/cesbio"
-sF <- simulationFilter(product = "rb3D", 
+sF <- simulationFilter(product = "rb3D",
                        bands = "BAND1", 
                        iters = "ITER1",
                        typeNums = "",
