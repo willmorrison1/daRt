@@ -27,13 +27,15 @@ setMethod(f = "rb3DFiles",
                       warning(paste("Found duplicate rb3D files in:", subDirs$dirName[i], "(different extensions).
                                     Cleaning duplicates. Run rb3DtoNcdf() if warning persists."))
                   }
-                  all3DrbFiles <- all3DrbFiles[all3DrbFiles_duplicated]
+
+                  all3DrbFiles <- all3DrbFiles[!all3DrbFiles_duplicated]
+                  file.remove(all3DrbFiles[all3DrbFiles_duplicated])
                   if (length(all3DrbFiles) == 0) {
                       stop(paste("No RB files in:", fileDir[i]))
                   }
                   for (j in 1:length(RBTypeNums)) {
-                      for (v in 1:length(allFiles)) {
-                          RB3Dinfo <- .parse3DRBfileName(allFiles[v])
+                      for (v in 1:length(all3DrbFiles)) {
+                          RB3Dinfo <- .parse3DRBfileName(all3DrbFiles[v])
                           varsInFile <- unique(variablesRB3D(sF) %in% RB3Dinfo$variables)
                           typeNumsFound <- unique(c(typeNumsFound, RB3Dinfo$typeNum))
                           variablesRB3DFound <- unique(c(variablesRB3DFound,  RB3Dinfo$variables))
@@ -43,7 +45,7 @@ setMethod(f = "rb3DFiles",
                                                               "variable" = subDirs[i, ]$variable,
                                                               "iter" = subDirs[i, ]$iter,
                                                               "typeNum" = typeNums(sF)[j],
-                                                              "fileName" = allFiles[v],
+                                                              "fileName" = all3DrbFiles[v],
                                                               stringsAsFactors = FALSE)
                               break
                           }

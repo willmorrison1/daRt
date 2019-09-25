@@ -136,7 +136,7 @@ simData <- daRt::getData(x = simulationDir, sF = sF, nCores = 2)
 ggplot(as.data.frame(simData)) + 
     geom_raster(aes(x = x, y = y, fill = value)) +
     facet_grid(band ~ imageNo + iter) +
-    theme(aspect.ratio = 1)
+    theme(aspect.ratio = 1) 
 ```
 
 ### Radiative budget {#RB}
