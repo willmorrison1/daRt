@@ -30,6 +30,6 @@ setMethod(f = "deleteFiles",
 
 .deleteMaketOutput <- function(simulationDir) {
 
-    outputDir <- file.path(simulationDir, "input")
+    outputDir <- file.path(simulationDir, "output")
     unlink(file.path(outputDir, "maket.txt"))
 }
