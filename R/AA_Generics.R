@@ -180,20 +180,23 @@ setGeneric(name = "rb3DtoNc", def = function(x = "SimulationFiles", ...)
     standardGeneric("rb3DtoNc"))
 
 #' Delete potentially large input files
-#' @title deleteInputFiles
+#' @title deleteFiles
 #' @description DART input files can be very large. This function deletes those large files
 #' that are not required for post-processing of data in this package.
 #'
 #'
 #' @param x \link{SimulationFiles-class} type object.
-#' @param triangles remove "triangles" input files? (bool)
+#' @param trianglesInput remove "triangles" input files? (bool)
+#' @param maketOutput remove "maket.txt" output file? (bool)
 #'
 #' @return
 #' @export
 #'
 #' @examples
-setGeneric(name = "deleteInputFiles", def = function(x = "SimulationFiles", triangles = "logical")
-    standardGeneric("deleteInputFiles"))
+setGeneric(name = "deleteFiles", def = function(x = "SimulationFiles",
+                                                trianglesInput = "logical",
+                                                maketOutput = "logical")
+    standardGeneric("deleteFiles"))
 
 setGeneric(name = "directions", def = function(x = "character", ...)
     standardGeneric("directions"))
