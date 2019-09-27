@@ -100,7 +100,7 @@ setMethod(f = "rb3DFiles",
         typeNum <- gsub("TypeNum=", "", typeNumRaw)
     } else {
         variables <- rawSplit[-c(1:4)]
-        variables[length(variables)] <- gsub(".bin", "", variables[length(variables)])
+        variables[length(variables)] <- gsub(".bin|.nc", "", variables[length(variables)])
         typeNum <- ""
     }
     OUT <- list("nCells" = nCells,
