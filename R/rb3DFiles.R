@@ -1,7 +1,7 @@
 setMethod(f = "rb3DFiles",
           signature = signature(x = "character", sF = "SimulationFilter"),
           definition = function(x, sF){
-
+browser()
               require(tools)
               simHandle <- simulationHandle(x)
               RB3DFiles <- as(object = simHandle, Class = "SimulationFiles")
@@ -61,8 +61,8 @@ setMethod(f = "rb3DFiles",
               }
               varRB3DnotFound <- !variablesRB3D(sF) %in% variablesRB3DFound
               if (any(varRB3DnotFound)) {
-                  stop(paste0("RB3DFiles() couldn't find all expected RB3Dvariables for the given simFilter.\n",
-                              "variablesRB3D found: '", paste0(variablesRB3DFound, collapse = ","), "'\n
+                  stop(paste0("RB3DFiles() couldn't find all expected RB3Dvariables for the given simFilter",
+                              "variablesRB3D found: '", paste0(variablesRB3DFound, collapse = ","), "'
                              Use this information to adjust your 'simulationFilter'"))
               }
               return(RB3DFiles)
@@ -97,7 +97,7 @@ setMethod(f = "rb3DFiles",
     if (any(is.na(nCells))) .isNot3DRBstop(RB3DfileName)
     if (isTypeNum) {
         variables <- rawSplit[-c(1:4, length(rawSplit))]
-        typeNumRaw <- gsub(".bin", "", rawSplit[length(rawSplit)])
+        typeNumRaw <- gsub(".bin|.nc", "", rawSplit[length(rawSplit)])
         typeNum <- gsub("TypeNum=", "", typeNumRaw)
     } else {
         variables <- rawSplit[-c(1:4)]
