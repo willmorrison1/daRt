@@ -1,7 +1,6 @@
 setMethod(f = "rb3DFiles",
           signature = signature(x = "character", sF = "SimulationFilter"),
           definition = function(x, sF){
-browser()
               require(tools)
               simHandle <- simulationHandle(x)
               RB3DFiles <- as(object = simHandle, Class = "SimulationFiles")
