@@ -71,9 +71,11 @@
     bandsPrompt <- "Set as e.g. c('BAND0', 'BAND1')"
     itersPrompt <- "Set as e.g. c('ITER1', 'ILLUDIR')"
     splitVarsPrompt <- "'typeNum' is invalid. Should be '[numeric]_[character]' e.g. '2_Ground'"
-    allowedVariables <- c("BRF", "RADIATIVE_BUDGET", "Tapp", "Radiance")
+    allowedVariables <- c("BRF", "RADIATIVE_BUDGET", "Tapp", "Radiance", "Transmittance")
     variablesPrompt <- paste("Invalid variables. Should be ONE of:",
                              paste0(allowedVariables, collapse = ","))
+    imagesTransmittancePrompt <- paste0("Transmittance variable selected but product is: ", object@product, ". ",
+                                       "Product must be 'images'")
     errors <- character()
     #allowed projects
     allowedProducts <- c("directions", "rb3D", "images")
@@ -94,6 +96,9 @@
     }
     if (!any(allowedVariables %in% object@variables)) {
         errors <- c(errors, variablesPrompt)
+    }
+    if (any(object@variables == "Transmittance") & !any(object@product == "images")) {
+        errors <- c(errors, imagesTransmittancePrompt)
     }
     #allowed iters
     if (all(object@iters == "")) errors <- c(errors, paste("Empty iters.", itersPrompt))
