@@ -66,67 +66,176 @@
                   no = errors))
 }
 
+.allowedVariables <- function() {
+
+    c(
+        "BRF",
+        "RADIATIVE_BUDGET",
+        "Tapp",
+        "Radiance",
+        "BRF_Transmittance",
+        "Tapp_Transmittance",
+        "Radiance_Transmittance"
+    )
+
+}
+
+.allowedProducts <- function() {
+
+    c(
+        "directions",
+        "rb3D",
+        "images"
+    )
+}
+
+.allowedImageTypes <- function() {
+
+    c(
+        "ima",
+        "camera",
+        ""
+    )
+}
+
+.simFilterValidity_bands <- function(object) {
+
+    .bandsErr <- function() paste("Invalid bands. Set as e.g. c('BAND0', 'BAND1')")
+    bandVals <- bands(object)
+    if (any(!grepl("BAND", bandVals))) return(.bandsErr())
+    bandSplit <- strsplit(bandVals, "BAND")
+    for (i in 1:length(bandSplit)) {
+        if (length(bandSplit[[i]]) != 2) return(paste(bandVals[i], .bandsErr()))
+        if (bandSplit[[i]][1] != "")  return(paste(bandVals[i], .bandsErr()))
+        if (is.na(as.numeric(bandSplit[[i]][2])))  return(paste(bandVals[i], .bandsErr()))
+    }
+
+    return()
+}
+
+.simFilterValidity_variables <- function(object) {
+
+    .variablesErr <- function() {
+        paste("Invalid variables. Must be one of:",
+              paste0(.allowedVariables(), collapse = ";"))
+    }
+
+    varVals <- variables(object)
+
+    if (length(varVals) > 1 || varVals == "")
+        return(.variablesErr())
+
+    if (!any(.allowedVariables() %in% varVals))
+        return(.variablesErr())
+
+    return()
+
+}
+
+.simFilterValidity_product <- function(object) {
+
+    productVals <- product(object)
+    product <- try(match.arg(arg = productVals, choices = .allowedProducts(),
+                             several.ok = FALSE), silent = TRUE)
+
+    if (class(product) == "try-error") {
+        return(paste0("Product set to ", productVals, " but must
+                                   be one of ",
+                      paste0(.allowedProducts(), collapse = ";")))
+    }
+
+    return()
+}
+
+.simFilterValidity_iters <- function(object) {
+
+    .itersErr <- function() "Invalid iters. Set as e.g. c('ITER1', 'ILLUDIR')"
+
+    iterVals <- iters(object)
+    grepValues_iter <- c("ITER", "ILLUDIR", "ILLUDIFF", "ORDER", "ORDRE")
+    itersWithNoNumber <- c("ILLUDIR", "ILLUDIFF")
+
+    if (all(iterVals == "")) return(paste("Empty iters.", .itersErr()))
+    nonNumericIterExceptions <- c("X")
+
+    for (i in 1:length(iterVals)) {
+        iterInd <- sapply(grepValues_iter, function(x) grepl(x, iterVals))
+        if (length(which(iterInd)) != 1) return(paste(iterVals[i], .itersErr()))
+        iterSplit <- strsplit(iterVals, grepValues_iter[iterInd])
+        if (!grepValues_iter[iterInd] %in% itersWithNoNumber) {
+            if (length(iterSplit[[1]]) != 2) return(paste(iterVals[i], .itersErr()))
+            if (iterSplit[[1]][1] != "") return(paste(iterVals[i], .itersErr()))
+            if (!nonNumericIterExceptions %in% iterSplit[[1]][2]) {
+                if (is.na(as.numeric(iterSplit[[i]][2]))) return(paste(iterVals[i], .itersErr()))
+            }
+        }
+    }
+
+    return()
+
+}
+
+.simFilterValidity_variablesRB3D <- function(object) {
+
+    varRB3DVals <- variablesRB3D(object)
+    typeNumVals <- typeNums(object)
+
+    .typeNumErr <- function() {
+        "'typeNum' is invalid. Should be '[numeric]_[character]' e.g. '2_Ground'"
+    }
+
+    if (all(varRB3DVals == "")) return("No RB3D variables set.")
+
+    for (i in 1:length(typeNumVals)) {
+        if (typeNumVals[i] == "") next
+        splitVars <- strsplit(typeNumVals[i], split = "_")[[1]]
+        if (length(splitVars) < 2) return(paste(typeNumVals[i], .typeNumErr()))
+        if (is.na(as.numeric(splitVars[1]))) return(paste(typeNumVals[i], .typeNumErr()))
+    }
+
+    return()
+
+}
+
+.simFilterValidity_images <- function(object) {
+    imageTypeVal <- imageType(object)
+    if (all(imageTypeVal == "")) return("No 'imageType' entered")
+    if (!any(.allowedImageTypes() %in% imageTypeVal)) {
+        return(paste("Invalid imageType. Should be any of:",
+                     paste(.allowedImageTypes(), collapse = ";")))
+    }
+
+    return()
+
+}
+
+
+.simFilterValidity_imageNo <- function(object) {
+
+    imageNoVal <- imageNo(object)
+    if (any(is.na(imageNoVal))) return("imageNo contains non-numeric (NAs)")
+
+    return()
+}
+
 
 .simFilterValidity <- function(object){
-    bandsPrompt <- "Set as e.g. c('BAND0', 'BAND1')"
-    itersPrompt <- "Set as e.g. c('ITER1', 'ILLUDIR')"
-    splitVarsPrompt <- "'typeNum' is invalid. Should be '[numeric]_[character]' e.g. '2_Ground'"
-    allowedVariables <- c("BRF", "RADIATIVE_BUDGET", "Tapp", "Radiance", "Transmittance")
-    variablesPrompt <- paste("Invalid variables. Should be ONE of:",
-                             paste0(allowedVariables, collapse = ","))
-    imagesTransmittancePrompt <- paste0("Transmittance variable selected but product is: ", object@product, ". ",
-                                       "Product must be 'images'")
-    errors <- character()
-    #allowed projects
-    allowedProducts <- c("directions", "rb3D", "images")
-    product <- try(match.arg(arg = product(object), choices = allowedProducts,
-                             several.ok = FALSE), silent = TRUE)
-    #allowed products
-    if (class(product) == "try-error") {
-        errors <- c(errors, paste0("Product set to ", product(object), " but must
-                                   be one of ", paste0(allowedProducts, collapse = ",")))
-    }
-    #allowed bands
-    if (all(object@bands == "")) errors <- c(errors, paste("Empty bands.", bandsPrompt))
-    if (any(!grepl("BAND", object@bands))) errors <- c(errors, paste("Invalid bands.", bandsPrompt))
 
+    errors <- character()
+    #allowed products
+    errors <- c(errors, .simFilterValidity_product(object))
+    #allowed bands
+    errors <- c(errors, .simFilterValidity_bands(object))
     #allowed variables
-    if (length(object@variables) > 1 || object@variables == "") {
-        errors <- c(errors, variablesPrompt)
-    }
-    if (!any(allowedVariables %in% object@variables)) {
-        errors <- c(errors, variablesPrompt)
-    }
-    if (any(object@variables == "Transmittance") & !any(object@product == "images")) {
-        errors <- c(errors, imagesTransmittancePrompt)
-    }
+    errors <- c(errors, .simFilterValidity_variables(object))
     #allowed iters
-    if (all(object@iters == "")) errors <- c(errors, paste("Empty iters.", itersPrompt))
-    if (any(!grepl("ITER|ILLUDIR|ILLUDIFF|ORDER|ORDRE", object@iters))) {
-        errors <- c(errors, paste("Invalid iters.", itersPrompt))
-    }
-    #allowed RB3Dvars
-    if (all(object@variablesRB3D == "")) errors <- c(errors, "Empty RB3D.")
-    #allowed typeNums
-    for (i in 1:length(object@typeNums)) {
-        if (object@typeNums[i] == "") next
-        splitVars <- strsplit(object@typeNums[i], split = "_")[[1]]
-        if (length(splitVars) < 2) {
-            errors <- c(errors, paste(object@typeNums[i], splitVarsPrompt))
-        }
-        if (is.na(as.numeric(splitVars[1]))) {
-            errors <- c(errors, paste(object@typeNums[i], splitVarsPrompt))
-        }
-    }
+    errors <- c(errors, .simFilterValidity_iters(object))
+    #allowed rb3D vars
+    errors <- c(errors, .simFilterValidity_variablesRB3D(object))
     #allowed images
-    if (all(object@imageType == "")) errors <- c(errors, "No 'imageType'.")
-    if (any(!grepl("ima|camera", object@imageType))) {
-        errors <- c(errors, paste("Invalid imageType. Should be either/or 'ima,camera'"))
-    }
+    errors <- c(errors, .simFilterValidity_images(object))
     #allowed imageNo
-    if (any(is.na(object@imageNo))) {
-        errors <- c(errors, "imageNo contains non-numeric (NAs)")
-    }
+    errors <- c(errors, .simFilterValidity_imageNo(object))
 
     return(ifelse(test = length(errors) == 0,
                   yes = TRUE,
