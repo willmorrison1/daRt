@@ -39,7 +39,8 @@ setGeneric(name = "imageNos<-", def = function(x, value) standardGeneric("imageN
 #' typeNums(simFiles)
 #' }
 #'
-NULL
+
+
 #' @rdname accessors
 setGeneric(name = "product", def = function(x) standardGeneric("product"))
 #' @rdname accessors
