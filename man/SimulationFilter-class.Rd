@@ -35,21 +35,21 @@ SimulationFilter class.
 \section{Slots}{
 
 \describe{
-\item{\code{bands}}{character.}
+\item{\code{bands}}{character e.g. "BAND0".}
 
-\item{\code{variables}}{character.}
+\item{\code{variables}}{character e.g. "BRF".}
 
-\item{\code{iters}}{character.}
+\item{\code{iters}}{character e.g. "ITERX".}
 
-\item{\code{variablesRB3D}}{character.}
+\item{\code{variablesRB3D}}{character e.g. "Irradiance".}
 
-\item{\code{typeNums}}{character.}
+\item{\code{typeNums}}{character e.g. "2_Ground".}
 
-\item{\code{imageTypes}}{character.}
+\item{\code{imageTypes}}{character e.g. "ima".}
 
 \item{\code{imageNos}}{numeric.}
 
-\item{\code{product}}{character.}
+\item{\code{product}}{character e.g. "directions".}
 }}
 
 \seealso{

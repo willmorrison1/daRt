@@ -280,14 +280,14 @@
 
 #' SimulationFilter class.
 #'
-#' @slot bands character.
-#' @slot variables character.
-#' @slot iters character.
-#' @slot variablesRB3D character.
-#' @slot typeNums character.
-#' @slot imageTypes character.
+#' @slot bands character e.g. "BAND0".
+#' @slot variables character e.g. "BRF".
+#' @slot iters character e.g. "ITERX".
+#' @slot variablesRB3D character e.g. "Irradiance".
+#' @slot typeNums character e.g. "2_Ground".
+#' @slot imageTypes character e.g. "ima".
 #' @slot imageNos numeric.
-#' @slot product character.
+#' @slot product character e.g. "directions".
 #'
 #' @return
 #' @export

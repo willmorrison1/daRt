@@ -7,9 +7,11 @@
 simulationFilter(product = "character", ...)
 }
 \arguments{
-\item{product}{One of "directions", "rb3D", "images".}
+\item{product}{One of: `directions`, `rb3D`, `images`.}
 
-\item{...}{}
+\item{...}{Optional arguments of: `bands`, `variables`, `iterations`, `variablesRB3D`,
+`typeNums`, `imageTypes`, `imageNos`. See \link{SimulationFilter-class} for full
+description.}
 }
 \description{
 Function for creating the \linkS4class{SimulationFilter} class

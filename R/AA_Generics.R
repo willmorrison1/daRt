@@ -70,8 +70,10 @@ setGeneric(name = "simdir", def = function(x) standardGeneric("simdir"))
 #'
 #' @name simulationFilter
 #' @description Function for creating the \linkS4class{SimulationFilter} class
-#' @param product One of "directions", "rb3D", "images".
-#' @param ...
+#' @param product One of: `directions`, `rb3D`, `images`.
+#' @param ... Optional arguments of: `bands`, `variables`, `iterations`, `variablesRB3D`,
+#' `typeNums`, `imageTypes`, `imageNos`. See \link{SimulationFilter-class} for full
+#' description.
 #'
 #' @return
 #' @export
