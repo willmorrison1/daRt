@@ -210,10 +210,10 @@
 }
 
 
-.simFilterValidity_imageNo <- function(object) {
+.simFilterValidity_imageNos <- function(object) {
 
-    imageNoVal <- imageNo(object)
-    if (any(is.na(imageNoVal))) return("imageNo contains non-numeric (NAs)")
+    imageNosVal <- imageNos(object)
+    if (any(is.na(imageNosVal))) return("imageNos contains non-numeric (NAs)")
 
     return()
 }
@@ -234,8 +234,8 @@
     errors <- c(errors, .simFilterValidity_variablesRB3D(object))
     #allowed images
     errors <- c(errors, .simFilterValidity_images(object))
-    #allowed imageNo
-    errors <- c(errors, .simFilterValidity_imageNo(object))
+    #allowed imageNos
+    errors <- c(errors, .simFilterValidity_imageNos(object))
 
     return(ifelse(test = length(errors) == 0,
                   yes = TRUE,
@@ -287,7 +287,7 @@
 #' @slot variablesRB3D character.
 #' @slot typeNums character.
 #' @slot imageType character.
-#' @slot imageNo numeric.
+#' @slot imageNos numeric.
 #' @slot product character.
 #'
 #' @return
@@ -303,7 +303,7 @@ setClass(
                  variablesRB3D = "character",
                  typeNums = "character",
                  imageType = "character",
-                 imageNo = "numeric",
+                 imageNos = "numeric",
                  product = "character"))
 setValidity("SimulationFilter", .simFilterValidity)
 

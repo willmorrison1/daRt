@@ -119,14 +119,14 @@ plot(plotOut)
 This section provides further examples of package use.
 
 ### SimulationFilter editing
-To look at images for `bands` 0, 1 and 2; `iters` (iterations) 1 and 2, and `imageNo` (image numbers) 5 and 7, create the relevant SimulationFilter then load the data 
+To look at images for `bands` 0, 1 and 2; `iters` (iterations) 1 and 2, and `imageNos` (image numbers) 5 and 7, create the relevant SimulationFilter then load the data 
 ```{r images example}
 #create SimulationFilter
 sF <- simulationFilter(product = "images", 
                        bands = c("BAND0", "BAND1", "BAND2"),
                        iters = c("ITER1", "ITER2"),
                        variables = "BRF",
-                       imageNo = c(5, 7),
+                       imageNos = c(5, 7),
                        imageType = "ima")
 #load data - 'nCores' allows parallel processing of files.
 #It is useful for access to drives that have optimised paralell I/O.

@@ -11,7 +11,7 @@
 \alias{variablesRB3D}
 \alias{typeNums}
 \alias{imageType}
-\alias{imageNo}
+\alias{imageNos}
 \title{Access object information}
 \usage{
 product(x)
@@ -32,7 +32,7 @@ typeNums(x)
 
 imageType(x)
 
-imageNo(x)
+imageNos(x)
 }
 \description{
 Generic functions to access information from the objects with classes

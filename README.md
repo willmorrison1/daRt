@@ -72,7 +72,7 @@ sF
 #> variablesRB3D:  Intercepted, Scattered, Emitted, Absorbed, +ZFaceExit, +ZFaceEntry 
 #> typeNums:        
 #> imageType:      ima, camera 
-#> imageNo:
+#> imageNos:
 ```
 
 List the 'setter' and 'accessor' methods available
@@ -80,7 +80,7 @@ List the 'setter' and 'accessor' methods available
 ``` r
 methods(class = "SimulationFilter")
 #>  [1] bands           bands<-         getData         getFiles       
-#>  [5] imageFiles      imageNo         imageNo<-       imageType      
+#>  [5] imageFiles      imageNos        imageNos<-      imageType      
 #>  [9] imageType<-     iters           iters<-         product        
 #> [13] product<-       show            simdir          typeNums       
 #> [17] typeNums<-      variables       variables<-     variablesRB3D  
@@ -166,7 +166,7 @@ This section provides further examples of package use.
 
 ### SimulationFilter editing
 
-To look at images for `bands` 0, 1 and 2; `iters` (iterations) 1 and 2, and `imageNo` (image numbers) 5 and 7, create the relevant SimulationFilter then load the data
+To look at images for `bands` 0, 1 and 2; `iters` (iterations) 1 and 2, and `imageNos` (image numbers) 5 and 7, create the relevant SimulationFilter then load the data
 
 ``` r
 #create SimulationFilter
@@ -174,7 +174,7 @@ sF <- simulationFilter(product = "images",
                        bands = c("BAND0", "BAND1", "BAND2"),
                        iters = c("ITER1", "ITER2"),
                        variables = "BRF",
-                       imageNo = c(5, 7),
+                       imageNos = c(5, 7),
                        imageType = "ima")
 #load data - 'nCores' allows parallel processing of files.
 #It is useful for access to drives that have optimised paralell I/O.

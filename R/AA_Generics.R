@@ -13,7 +13,7 @@ setGeneric(name = "typeNums<-", def = function(x, value) standardGeneric("typeNu
 #' @rdname SimulationFilter-class
 setGeneric(name = "imageType<-", def = function(x, value) standardGeneric("imageType<-"))
 #' @rdname SimulationFilter-class
-setGeneric(name = "imageNo<-", def = function(x, value) standardGeneric("imageNo<-"))
+setGeneric(name = "imageNos<-", def = function(x, value) standardGeneric("imageNos<-"))
 
 #' Access object information
 #'
@@ -59,7 +59,7 @@ setGeneric(name = "typeNums", def = function(x) standardGeneric("typeNums"))
 #' @rdname accessors
 setGeneric(name = "imageType", def = function(x) standardGeneric("imageType"))
 #' @rdname accessors
-setGeneric(name = "imageNo", def = function(x) standardGeneric("imageNo"))
+setGeneric(name = "imageNos", def = function(x) standardGeneric("imageNos"))
 
 
 #' @rdname SimulationFiles-class

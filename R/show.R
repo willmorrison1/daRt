@@ -15,7 +15,7 @@ setMethod(f = "show",  signature = "SimulationFilter",
               cat(paste("variablesRB3D: ", paste0(object@variablesRB3D, collapse = ", "), "\n"))
               cat(paste("typeNums:      ", paste0(object@typeNums, collapse = ", "), "\n"))
               cat(paste("imageType:     ", paste0(object@imageType, collapse = ", "), "\n"))
-              cat(paste("imageNo:       ", paste0(object@imageNo, collapse = ", "), "\n"))
+              cat(paste("imageNos:       ", paste0(object@imageNos, collapse = ", "), "\n"))
           }
 )
 

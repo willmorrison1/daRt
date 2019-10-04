@@ -19,12 +19,12 @@ setMethod(f = "imageFiles",
                   imgInfoDFList[[i]] <- dplyr::bind_rows(lapply(allImagesFull, .imgInfo))
                   imgInfoDFList[[i]] <- imgInfoDFList[[i]] %>%
                       dplyr::filter(grepl(paste(imageType(sF), collapse = "|"), imgType))
-                  if (length(sF@imageNo) != 0) {
+                  if (length(sF@imageNos) != 0) {
                       imgInfoDFList[[i]] <- imgInfoDFList[[i]] %>%
-                          dplyr::filter(imageNo %in% sF@imageNo)
+                          dplyr::filter(imageNos %in% sF@imageNos)
                   }
                   if (nrow(imgInfoDFList[[i]]) == 0) {
-                      stop("No images found after 'imageNo' filter applied")
+                      stop("No images found after 'imageNos' filter applied")
                   }
                   imgInfoDFList[[i]]$band <- subDirs$band[i]
                   imgInfoDFList[[i]]$variable <- subDirs$variable[i]
@@ -43,17 +43,17 @@ setMethod(f = "imageFiles",
     imageFileName <- tools::file_path_sans_ext(basename(imageFile))
     imageFileSplit <- strsplit(imageFileName, "_")[[1]]
     imgInfoDF <- data.frame("imgType" = character(1),
-                            "imageNo" = numeric(1),
+                            "imageNos" = numeric(1),
                             "VZ" = numeric(1),
                             "VA" = numeric(1),
                             "fileName" = character(1))
     if (grepl("ima", imageFileSplit[1])) {
-        imgInfoDF$imageNo <- as.numeric(gsub("ima", "", imageFileSplit[1]))
+        imgInfoDF$imageNos <- as.numeric(gsub("ima", "", imageFileSplit[1]))
         imgInfoDF$imgType <- "ima"
         imgInfoDF$VZ <- as.numeric(paste0(gsub("VZ=", "", imageFileSplit[2]), ".", imageFileSplit[3]))
         imgInfoDF$VA <- as.numeric(paste0(gsub("VA=", "", imageFileSplit[4]), ".", imageFileSplit[5]))
     } else if (grepl("camera", imageFileSplit[1])) {
-        imgInfoDF$imageNo <- as.numeric(imageFileSplit[2])
+        imgInfoDF$imageNos <- as.numeric(imageFileSplit[2])
         imgInfoDF$imgType <- "camera"
         imgInfoDF$VZ <- as.numeric(paste0(gsub("VZ=", "", imageFileSplit[3]), ".", imageFileSplit[4]))
         imgInfoDF$VA <- as.numeric(paste0(gsub("VA=", "", imageFileSplit[5]), ".", imageFileSplit[6]))
