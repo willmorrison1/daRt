@@ -197,10 +197,10 @@
 }
 
 .simFilterValidity_images <- function(object) {
-    imageTypeVal <- imageType(object)
-    if (all(imageTypeVal == "")) return("No 'imageType' entered")
-    if (any(!imageTypeVal %in% .allowedImageTypes())) {
-        return(paste("Invalid imageType. Should be any of:",
+    imageTypesVal <- imageTypes(object)
+    if (all(imageTypesVal == "")) return("No 'imageTypes' entered")
+    if (any(!imageTypesVal %in% .allowedImageTypes())) {
+        return(paste("Invalid imageTypes. Should be any of:",
                      paste(.allowedImageTypes(), collapse = ";")))
     }
 
@@ -285,7 +285,7 @@
 #' @slot iters character.
 #' @slot variablesRB3D character.
 #' @slot typeNums character.
-#' @slot imageType character.
+#' @slot imageTypes character.
 #' @slot imageNos numeric.
 #' @slot product character.
 #'
@@ -301,7 +301,7 @@ setClass(
                  iters = "character",
                  variablesRB3D = "character",
                  typeNums = "character",
-                 imageType = "character",
+                 imageTypes = "character",
                  imageNos = "numeric",
                  product = "character"))
 setValidity("SimulationFilter", .simFilterValidity)

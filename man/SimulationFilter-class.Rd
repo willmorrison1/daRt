@@ -9,7 +9,7 @@
 \alias{variablesRB3D<-}
 \alias{variables<-}
 \alias{typeNums<-}
-\alias{imageType<-}
+\alias{imageTypes<-}
 \alias{imageNos<-}
 \title{SimulationFilter class.}
 \usage{
@@ -25,7 +25,7 @@ variables(x) <- value
 
 typeNums(x) <- value
 
-imageType(x) <- value
+imageTypes(x) <- value
 
 imageNos(x) <- value
 }
@@ -45,7 +45,7 @@ SimulationFilter class.
 
 \item{\code{typeNums}}{character.}
 
-\item{\code{imageType}}{character.}
+\item{\code{imageTypes}}{character.}
 
 \item{\code{imageNos}}{numeric.}
 

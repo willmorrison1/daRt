@@ -11,7 +11,7 @@ setGeneric(name = "variables<-", def = function(x, value) standardGeneric("varia
 #' @rdname SimulationFilter-class
 setGeneric(name = "typeNums<-", def = function(x, value) standardGeneric("typeNums<-"))
 #' @rdname SimulationFilter-class
-setGeneric(name = "imageType<-", def = function(x, value) standardGeneric("imageType<-"))
+setGeneric(name = "imageTypes<-", def = function(x, value) standardGeneric("imageTypes<-"))
 #' @rdname SimulationFilter-class
 setGeneric(name = "imageNos<-", def = function(x, value) standardGeneric("imageNos<-"))
 
@@ -58,7 +58,7 @@ setGeneric(name = "variablesRB3D", def = function(x) standardGeneric("variablesR
 #' @rdname accessors
 setGeneric(name = "typeNums", def = function(x) standardGeneric("typeNums"))
 #' @rdname accessors
-setGeneric(name = "imageType", def = function(x) standardGeneric("imageType"))
+setGeneric(name = "imageTypes", def = function(x) standardGeneric("imageTypes"))
 #' @rdname accessors
 setGeneric(name = "imageNos", def = function(x) standardGeneric("imageNos"))
 
@@ -113,6 +113,7 @@ setGeneric(name = "getFiles", def = function(x = "character", sF = "SimulationFi
 setGeneric(name = "getData", signature = c("x", "sF"), def = function(x, sF, ...)
     standardGeneric("getData"))
 
+
 #' Aggregate images to single values
 #' @title imagesToDirectionsDF
 #' @description Convert an \link{Images-class} object to a {Directions-class} object
@@ -125,14 +126,21 @@ setGeneric(name = "getData", signature = c("x", "sF"), def = function(x, sF, ...
 #'
 setGeneric(name = "imagesToDirectionsDF", def = function(x, fun) standardGeneric("imagesToDirectionsDF"))
 
-#' Return resource use
-#' @title ResourceUse
-#' @description Return a data frame with information on the resource use for a \link{SimulationFiles-class} type object
-#' @param x \link{SimulationFiles-class} type object
+
+#' Simulation version info
+#' @title versionInfo
+#' @description Get the version used for the given simulation data
+#' @param x \link{SimulationFiles-class} object
+#'
 #' @export
 setGeneric(name = "versionInfo", def = function(x) standardGeneric("versionInfo"))
 
-#' @param x
+
+#' Return resource use
+#'
+#' @title ResourceUse
+#' @description Return a data frame with information on the resource use for a \link{SimulationFiles-class} type object
+#' @param x \link{SimulationFiles-class} type object
 #'
 #' @export
 setGeneric(name = "resourceUse", def = function(x = "SimulationFiles") standardGeneric("resourceUse"))

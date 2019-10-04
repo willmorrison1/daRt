@@ -71,7 +71,7 @@ sF
 #> iterations:     ITER1, ITER2 
 #> variablesRB3D:  Intercepted, Scattered, Emitted, Absorbed, +ZFaceExit, +ZFaceEntry 
 #> typeNums:        
-#> imageType:      ima, camera 
+#> imageTypes:      ima, camera 
 #> imageNos:
 ```
 
@@ -80,8 +80,8 @@ List the 'setter' and 'accessor' methods available
 ``` r
 methods(class = "SimulationFilter")
 #>  [1] bands           bands<-         getData         getFiles       
-#>  [5] imageFiles      imageNos        imageNos<-      imageType      
-#>  [9] imageType<-     iters           iters<-         product        
+#>  [5] imageFiles      imageNos        imageNos<-      imageTypes     
+#>  [9] imageTypes<-    iters           iters<-         product        
 #> [13] product<-       show            simdir          typeNums       
 #> [17] typeNums<-      variables       variables<-     variablesRB3D  
 #> [21] variablesRB3D<-
@@ -175,7 +175,7 @@ sF <- simulationFilter(product = "images",
                        iters = c("ITER1", "ITER2"),
                        variables = "BRF",
                        imageNos = c(5, 7),
-                       imageType = "ima")
+                       imageTypes = "ima")
 #load data - 'nCores' allows parallel processing of files.
 #It is useful for access to drives that have optimised paralell I/O.
 #here load data using 2 cores.

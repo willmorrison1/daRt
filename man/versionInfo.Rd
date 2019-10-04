@@ -2,16 +2,16 @@
 % Please edit documentation in R/AA_Generics.R
 \name{versionInfo}
 \alias{versionInfo}
-\title{ResourceUse}
+\title{versionInfo}
 \usage{
 versionInfo(x)
 }
 \arguments{
-\item{x}{\link{SimulationFiles-class} type object}
+\item{x}{\link{SimulationFiles-class} object}
 }
 \description{
-Return a data frame with information on the resource use for a \link{SimulationFiles-class} type object
+Get the version used for the given simulation data
 }
 \details{
-Return resource use
+Simulation version info
 }

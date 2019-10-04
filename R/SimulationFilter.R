@@ -7,7 +7,7 @@ setMethod(f = "simulationFilter",
                                 iters = .defaultIters(),
                                 variablesRB3D = .defaultVariablesRB3D(),
                                 typeNums = .defaultTypeNums(),
-                                imageType = .defaultImageType(),
+                                imageTypes = .defaultimageTypes(),
                                 imageNos = .defaultimageNos()){
 
               s <- new("SimulationFilter",
@@ -16,7 +16,7 @@ setMethod(f = "simulationFilter",
                        iters = iters,
                        variablesRB3D = variablesRB3D,
                        typeNums = typeNums,
-                       imageType = imageType,
+                       imageTypes = imageTypes,
                        imageNos = imageNos,
                        product = product)
 
@@ -67,7 +67,7 @@ setMethod(f = "simulationFilter",
 
 }
 
-.defaultImageType <- function(){
+.defaultimageTypes <- function(){
 
     c("ima", "camera")
 

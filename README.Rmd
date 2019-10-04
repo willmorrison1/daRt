@@ -127,7 +127,7 @@ sF <- simulationFilter(product = "images",
                        iters = c("ITER1", "ITER2"),
                        variables = "BRF",
                        imageNos = c(5, 7),
-                       imageType = "ima")
+                       imageTypes = "ima")
 #load data - 'nCores' allows parallel processing of files.
 #It is useful for access to drives that have optimised paralell I/O.
 #here load data using 2 cores.

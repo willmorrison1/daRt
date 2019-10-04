@@ -9,7 +9,7 @@ setMethod(f = "imageFiles",
               imageFiles@simulationFilter <- sF
               subDirs <- simdir(sF)
               subDirs$dirName <- file.path(subDirs$dirName, "IMAGES_DART")
-              imgTypeDF <- .parseImageType(sF)
+              imgTypeDF <- .parseimageTypes(sF)
               imgInfoDFList <- vector(mode = "list", length = nrow(subDirs) * nrow(imgTypeDF))
               iterTrack <- 1
               for (v in 1:nrow(imgTypeDF)) {
@@ -26,7 +26,7 @@ setMethod(f = "imageFiles",
                       allImagesFull <- list.files(subDirFull, pattern = ".mpr", full.names = TRUE)
                       imgInfoDFList[[iterTrack]] <- dplyr::bind_rows(lapply(allImagesFull, .imgInfo))
                       imgInfoDFList[[iterTrack]] <- imgInfoDFList[[iterTrack]] %>%
-                          dplyr::filter(grepl(imgTypeDF$imageType[v], imgType))
+                          dplyr::filter(grepl(imgTypeDF$imageTypes[v], imgType))
                       if (length(sF@imageNos) != 0) {
                           imgInfoDFList[[iterTrack]] <- imgInfoDFList[[iterTrack]] %>%
                               dplyr::filter(imageNos %in% sF@imageNos)
@@ -77,13 +77,13 @@ setMethod(f = "imageFiles",
 
 }
 
-.parseImageType <- function(object) {
+.parseimageTypes <- function(object) {
 
-    imageTypeRaw <- imageType(object)
-    imageTypeSplit <- strsplit(imageTypeRaw, "_")
-    isTransmittance <- sapply(imageTypeSplit, function(x) x[length(x)] == "transmittance")
-    imageTypeVal <- sapply(imageTypeSplit, function(x) x[1])
-    outDF <- data.frame(imageType = imageTypeVal, isTransmittance = isTransmittance,
+    imageTypesRaw <- imageTypes(object)
+    imageTypesSplit <- strsplit(imageTypesRaw, "_")
+    isTransmittance <- sapply(imageTypesSplit, function(x) x[length(x)] == "transmittance")
+    imageTypesVal <- sapply(imageTypesSplit, function(x) x[1])
+    outDF <- data.frame(imageTypes = imageTypesVal, isTransmittance = isTransmittance,
                         stringsAsFactors = FALSE)
 
     return(outDF)

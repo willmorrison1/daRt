@@ -9,7 +9,7 @@
 \alias{variables}
 \alias{variablesRB3D}
 \alias{typeNums}
-\alias{imageType}
+\alias{imageTypes}
 \alias{imageNos}
 \title{Access object information}
 \usage{
@@ -29,7 +29,7 @@ variablesRB3D(x)
 
 typeNums(x)
 
-imageType(x)
+imageTypes(x)
 
 imageNos(x)
 }

@@ -1,12 +1,4 @@
-#' Get compute resource usage
-#' @title resourceUse
-#' @description Return data frame with simulation name, memory usage and time taken
-#' @param SimulationFiles \link{SimulationFiles-class} type object
-#'
-#' @return
 #' @export
-#'
-#' @examples
 setMethod("resourceUse", "SimulationFiles",
           function(x){
               require(dplyr)
