@@ -2,7 +2,6 @@
 % Please edit documentation in R/AA_Generics.R
 \name{accessors}
 \alias{accessors}
-\alias{product}
 \alias{simname}
 \alias{files}
 \alias{bands}
