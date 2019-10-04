@@ -26,7 +26,7 @@ setMethod(f = "rb3D",
                                                                                    requiredVars = variablesRB3D(sF))
                                                   RBdata_melted <- reshape2::melt(data = RBdata)
                                                   rm(RBdata); gc()
-                                                  colnames(RBdata_melted) <- c("X", "Y", "Z", "value", "variablesRB3D")
+                                                  colnames(RBdata_melted) <- c("X", "Y", "Z", "value", "variableRB3D")
                                                   RBdata_melted$band <- fileRow$band
                                                   RBdata_melted$iter <- fileRow$iter
                                                   RBdata_melted$typeNum <- fileRow$typeNum
