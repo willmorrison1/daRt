@@ -160,7 +160,7 @@ simData_filtered <- as.data.frame(simData) %>%
 
 ggplot(simData_filtered) + 
     geom_raster(aes(x = X, y = Y, fill = value)) +
-    facet_grid(band ~ variablesRB3D) +
+    facet_grid(band ~ variableRB3D) +
     theme_bw() +
     theme(panel.spacing = unit(0, "cm"), 
           strip.text = element_text(size = 6, 
@@ -197,7 +197,7 @@ Do some analysis on the data. Get the mean of non-zero values across
 each vertical layer of each `variablesRB3D`, `bands`, `iters` (already grouped) according to the above column names
 ```{r}
 statVals <- DFdata %>%
-    dplyr::group_by(X, Y, variablesRB3D, add = TRUE) %>%
+    dplyr::group_by(X, Y, variableRB3D, add = TRUE) %>%
     dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
 ```
 
@@ -216,7 +216,7 @@ for (i in 1:length(allBands)) {
     bands(sF) <- allBands[i]
     simDataPiece  <- daRt::getData(x = simulationDir, sF = sF)
     simDataList[[i]] <- as.data.frame(simDataPiece) %>%
-        dplyr::group_by(X, Y, variablesRB3D, add = TRUE) %>%
+        dplyr::group_by(X, Y, variableRB3D, add = TRUE) %>%
         dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
 }
 ```

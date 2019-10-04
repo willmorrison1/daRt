@@ -206,11 +206,11 @@ The 3D radiative budget data are stored with the X, Y and Z location of each cel
 head(as.data.frame(simData), n = 3)
 #> # A tibble: 3 x 9
 #> # Groups:   band, iter, typeNum, simName [1]
-#>       X     Y     Z value variablesRB3D band  iter  typeNum simName
-#>   <int> <int> <int> <dbl> <chr>         <chr> <chr> <chr>   <chr>  
-#> 1     1     1     1  1.01 Intercepted   BAND0 ITER1 ""      cesbio 
-#> 2     2     1     1  1.02 Intercepted   BAND0 ITER1 ""      cesbio 
-#> 3     3     1     1  1.01 Intercepted   BAND0 ITER1 ""      cesbio
+#>       X     Y     Z value variableRB3D band  iter  typeNum simName
+#>   <int> <int> <int> <dbl> <chr>        <chr> <chr> <chr>   <chr>  
+#> 1     1     1     1  1.01 Intercepted  BAND0 ITER1 ""      cesbio 
+#> 2     2     1     1  1.02 Intercepted  BAND0 ITER1 ""      cesbio 
+#> 3     3     1     1  1.01 Intercepted  BAND0 ITER1 ""      cesbio
 ```
 
 The below example uses "dplyr" to work with this data. Here we look at the lowest horizontal layer of each 3D radiative budget array (i.e. Z = 1).
@@ -224,7 +224,7 @@ simData_filtered <- as.data.frame(simData) %>%
 
 ggplot(simData_filtered) + 
     geom_raster(aes(x = X, y = Y, fill = value)) +
-    facet_grid(band ~ variablesRB3D) +
+    facet_grid(band ~ variableRB3D) +
     theme_bw() +
     theme(panel.spacing = unit(0, "cm"), 
           strip.text = element_text(size = 6, 
@@ -265,11 +265,11 @@ DFdata <- as.data.frame(simData)
 head(DFdata, n = 3)
 #> # A tibble: 3 x 9
 #> # Groups:   band, iter, typeNum, simName [1]
-#>       X     Y     Z value variablesRB3D band  iter  typeNum simName
-#>   <int> <int> <int> <dbl> <chr>         <chr> <chr> <chr>   <chr>  
-#> 1     1     1     1  1.01 Intercepted   BAND0 ITER1 ""      cesbio 
-#> 2     2     1     1  1.02 Intercepted   BAND0 ITER1 ""      cesbio 
-#> 3     3     1     1  1.01 Intercepted   BAND0 ITER1 ""      cesbio
+#>       X     Y     Z value variableRB3D band  iter  typeNum simName
+#>   <int> <int> <int> <dbl> <chr>        <chr> <chr> <chr>   <chr>  
+#> 1     1     1     1  1.01 Intercepted  BAND0 ITER1 ""      cesbio 
+#> 2     2     1     1  1.02 Intercepted  BAND0 ITER1 ""      cesbio 
+#> 3     3     1     1  1.01 Intercepted  BAND0 ITER1 ""      cesbio
 dim(DFdata)
 #> [1] 784080      9
 ```
@@ -278,7 +278,7 @@ Do some analysis on the data. Get the mean of non-zero values across each vertic
 
 ``` r
 statVals <- DFdata %>%
-    dplyr::group_by(X, Y, variablesRB3D, add = TRUE) %>%
+    dplyr::group_by(X, Y, variableRB3D, add = TRUE) %>%
     dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
 ```
 
@@ -300,7 +300,7 @@ for (i in 1:length(allBands)) {
     bands(sF) <- allBands[i]
     simDataPiece  <- daRt::getData(x = simulationDir, sF = sF)
     simDataList[[i]] <- as.data.frame(simDataPiece) %>%
-        dplyr::group_by(X, Y, variablesRB3D, add = TRUE) %>%
+        dplyr::group_by(X, Y, variableRB3D, add = TRUE) %>%
         dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
 }
 ```
