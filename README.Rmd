@@ -269,7 +269,8 @@ max(abs(simData_nc$value - simData_bin$value))
 
 The new .nc file is much smaller:
 ```{r}
-file.size(files(simFiles_nc)$fileName) / fileSize_bin
+fileSize_nc <- file.size(files(simFiles_nc)$fileName)
+fileSize_nc / fileSize_bin
 ```
 and is much faster to read. It can also be read by third party NetCDF browsers e.g. ncview.
 

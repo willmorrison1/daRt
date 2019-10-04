@@ -358,7 +358,8 @@ max(abs(simData_nc$value - simData_bin$value))
 The new .nc file is much smaller:
 
 ``` r
-file.size(files(simFiles_nc)$fileName) / fileSize_bin
+fileSize_nc <- file.size(files(simFiles_nc)$fileName)
+fileSize_nc / fileSize_bin
 #> [1] 0.1244318
 ```
 
