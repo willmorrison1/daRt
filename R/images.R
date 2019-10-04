@@ -46,7 +46,8 @@ setMethod(f = "images",
                                                                 "imageNo" = rep(fileRow$imageNo, nrowsData),
                                                                 "VZ" = rep(fileRow$VZ, nrowsData),
                                                                 "VA" = rep(fileRow$VA, nrowsData),
-                                                                "simName" = rep(fileRow$simName, nrowsData))
+                                                                "simName" = rep(fileRow$simName, nrowsData),
+                                                                "transmittance" = rep(fileRow$transmittance, nrowsData))
                                            imgDat <- cbind(imgDat, metaDF)
                                            return(imgDat)
                                        }

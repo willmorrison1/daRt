@@ -9,27 +9,38 @@ setMethod(f = "imageFiles",
               imageFiles@simulationFilter <- sF
               subDirs <- simdir(sF)
               subDirs$dirName <- file.path(subDirs$dirName, "IMAGES_DART")
-              imgInfoDFList <- vector(mode = "list", length = nrow(subDirs))
-              for (i in 1:nrow(subDirs)) {
-                  subDirFull <- file.path(simdir(imageFiles), subDirs$dirName[i])
-                  if (!dir.exists(subDirFull)) {
-                      stop(paste("No image files in", subDirs$dirName[i]))
+              imgTypeDF <- .parseImageType(sF)
+              imgInfoDFList <- vector(mode = "list", length = nrow(subDirs) * nrow(imgTypeDF))
+              iterTrack <- 1
+              for (v in 1:nrow(imgTypeDF)) {
+                  for (i in 1:nrow(subDirs)) {
+                      if (imgTypeDF$isTransmittance[v]) {
+                          subDirFull <- file.path(simdir(imageFiles), subDirs$dirName[i],
+                                                  "Transmittance")
+                      } else {
+                          subDirFull <- file.path(simdir(imageFiles), subDirs$dirName[i])
+                      }
+                      if (!dir.exists(subDirFull)) {
+                          stop(paste("No image files in", subDirs$dirName[i]))
+                      }
+                      allImagesFull <- list.files(subDirFull, pattern = ".mpr", full.names = TRUE)
+                      imgInfoDFList[[iterTrack]] <- dplyr::bind_rows(lapply(allImagesFull, .imgInfo))
+                      imgInfoDFList[[iterTrack]] <- imgInfoDFList[[iterTrack]] %>%
+                          dplyr::filter(grepl(imgTypeDF$imageType[v], imgType))
+                      if (length(sF@imageNos) != 0) {
+                          imgInfoDFList[[iterTrack]] <- imgInfoDFList[[iterTrack]] %>%
+                              dplyr::filter(imageNos %in% sF@imageNos)
+                      }
+                      if (nrow(imgInfoDFList[[iterTrack]]) == 0) {
+                          stop("No images found after 'imageNos' filter applied")
+                      }
+                      imgInfoDFList[[iterTrack]]$band <- subDirs$band[i]
+                      imgInfoDFList[[iterTrack]]$variable <- subDirs$variable[i]
+                      imgInfoDFList[[iterTrack]]$iter <- subDirs$iter[i]
+                      imgInfoDFList[[iterTrack]]$typeNum <- subDirs$typeNum[i]
+                      imgInfoDFList[[iterTrack]]$transmittance <- imgTypeDF$isTransmittance[v]
+                      iterTrack <- iterTrack + 1
                   }
-                  allImagesFull <- list.files(subDirFull, pattern = ".mpr", full.names = TRUE)
-                  imgInfoDFList[[i]] <- dplyr::bind_rows(lapply(allImagesFull, .imgInfo))
-                  imgInfoDFList[[i]] <- imgInfoDFList[[i]] %>%
-                      dplyr::filter(grepl(paste(imageType(sF), collapse = "|"), imgType))
-                  if (length(sF@imageNos) != 0) {
-                      imgInfoDFList[[i]] <- imgInfoDFList[[i]] %>%
-                          dplyr::filter(imageNos %in% sF@imageNos)
-                  }
-                  if (nrow(imgInfoDFList[[i]]) == 0) {
-                      stop("No images found after 'imageNos' filter applied")
-                  }
-                  imgInfoDFList[[i]]$band <- subDirs$band[i]
-                  imgInfoDFList[[i]]$variable <- subDirs$variable[i]
-                  imgInfoDFList[[i]]$iter <- subDirs$iter[i]
-                  imgInfoDFList[[i]]$typeNum <- subDirs$typeNum[i]
               }
               imgInfoDF <- dplyr::bind_rows(imgInfoDFList)
               imageFiles@files <- imgInfoDF
@@ -63,5 +74,18 @@ setMethod(f = "imageFiles",
     }
     imgInfoDF$fileName <- imageFile
     return(imgInfoDF)
+
+}
+
+.parseImageType <- function(object) {
+
+    imageTypeRaw <- imageType(object)
+    imageTypeSplit <- strsplit(imageTypeRaw, "_")
+    isTransmittance <- sapply(imageTypeSplit, function(x) x[length(x)] == "transmittance")
+    imageTypeVal <- sapply(imageTypeSplit, function(x) x[1])
+    outDF <- data.frame(imageType = imageTypeVal, isTransmittance = isTransmittance,
+                        stringsAsFactors = FALSE)
+
+    return(outDF)
 
 }

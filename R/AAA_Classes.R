@@ -72,10 +72,7 @@
         "BRF",
         "RADIATIVE_BUDGET",
         "Tapp",
-        "Radiance",
-        "BRF_Transmittance",
-        "Tapp_Transmittance",
-        "Radiance_Transmittance"
+        "Radiance"
     )
 
 }
@@ -94,6 +91,8 @@
     c(
         "ima",
         "camera",
+        "ima_transmittance",
+        "camera_transmittance",
         ""
     )
 }
@@ -200,7 +199,7 @@
 .simFilterValidity_images <- function(object) {
     imageTypeVal <- imageType(object)
     if (all(imageTypeVal == "")) return("No 'imageType' entered")
-    if (!any(.allowedImageTypes() %in% imageTypeVal)) {
+    if (any(!imageTypeVal %in% .allowedImageTypes())) {
         return(paste("Invalid imageType. Should be any of:",
                      paste(.allowedImageTypes(), collapse = ";")))
     }
