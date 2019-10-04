@@ -116,7 +116,7 @@ plot(plotOut)
 ```
 
 ## Further examples
-This section provides further misc examples and guidance for reference.
+This section provides further examples of package use.
 
 ### SimulationFilter editing
 To look at images for `bands` 0, 1 and 2; `iters` (iterations) 1 and 2, and `imageNo` (image numbers) 5 and 7, create the relevant SimulationFilter then load the data 

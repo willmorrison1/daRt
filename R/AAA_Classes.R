@@ -159,14 +159,14 @@
     nonNumericIterExceptions <- c("X")
 
     for (i in 1:length(iterVals)) {
-        iterInd <- sapply(grepValues_iter, function(x) grepl(x, iterVals))
+        iterInd <- sapply(grepValues_iter, function(x) grepl(x, iterVals[i]))
         if (length(which(iterInd)) != 1) return(paste(iterVals[i], .itersErr()))
-        iterSplit <- strsplit(iterVals, grepValues_iter[iterInd])
+        iterSplit <- strsplit(iterVals[i], grepValues_iter[iterInd])[[1]]
         if (!grepValues_iter[iterInd] %in% itersWithNoNumber) {
-            if (length(iterSplit[[1]]) != 2) return(paste(iterVals[i], .itersErr()))
-            if (iterSplit[[1]][1] != "") return(paste(iterVals[i], .itersErr()))
-            if (!nonNumericIterExceptions %in% iterSplit[[1]][2]) {
-                if (is.na(as.numeric(iterSplit[[i]][2]))) return(paste(iterVals[i], .itersErr()))
+            if (length(iterSplit) != 2) return(paste(iterVals[i], .itersErr()))
+            if (iterSplit[1] != "") return(paste(iterVals[i], .itersErr()))
+            if (!nonNumericIterExceptions %in% iterSplit[2]) {
+                if (is.na(as.numeric(iterSplit[2]))) return(paste(iterVals[i], .itersErr()))
             }
         }
     }
