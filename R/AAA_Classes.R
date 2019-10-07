@@ -16,11 +16,12 @@
         errors <- c(errors, "Inconsistent version info. Expected one row in @softwareVersion slot for
                 'SimulationHandle' type object")
     }
+
     #check sim version being used is compatible
     if (!dplyr::between(x = object@softwareVersion$buildNumber,
                         left = .__daRtVersion["minBuildVersion"],
                         right = .__daRtVersion["maxBuildVersion"])) {
-        errors <- c(errors, paste("DART build:", object@softwareVersion$buildNo,
+        errors <- c(errors, paste("DART build:", object@softwareVersion$buildNumber,
                                   "is incompatible/untested with daRt package."))
     }
     #check if there are sequences/nonsequences together- won't work. i.e. sequenceInfo should
