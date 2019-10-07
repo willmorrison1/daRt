@@ -14,5 +14,7 @@ getFiles(x = "character", sF = "SimulationFilter")
 \item{...}{Optional arguments of: \code{nCores}: number of cores to use when loading data.}
 }
 \description{
-Get DART output filenames
+Function for getting \link{SimulationFiles-class} type object. Useful to perform a 'dry run' of
+\link{getData} by exploring the files that will vary based on the contents of \code{x} and
+the configuration of \code{sF}.
 }

@@ -86,7 +86,7 @@ setGeneric(name = "simulationFilter", def = function(product = "character", ...)
 #' Get DART output filenames
 #'
 #' @name getFiles
-#' @descriptio Function for getting \link{SimulationFiles-class} type object. Useful to perform a 'dry run' of
+#' @description Function for getting \link{SimulationFiles-class} type object. Useful to perform a 'dry run' of
 #' \link{getData} by exploring the files that will vary based on the contents of \code{x} and
 #' the configuration of \code{sF}.
 #'
@@ -114,6 +114,18 @@ setGeneric(name = "getFiles", def = function(x = "character", sF = "SimulationFi
 #' @examples
 setGeneric(name = "getData", signature = c("x", "sF"), def = function(x, sF, ...)
     standardGeneric("getData"))
+
+#' bandInfo
+#' @description get full information on wavelengths for each band
+#' @param x sF \link{SimulationFiles-class}
+#'
+#' @return
+#' @export
+#'
+#' @examples
+setGeneric(name = "bandInfo", def = function(x = "SimulationFiles")
+    standardGeneric("bandInfo"))
+
 
 
 #' Aggregate images to single values
