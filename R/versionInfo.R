@@ -31,7 +31,7 @@ setMethod(f = "versionInfo", signature = signature(x = "character"),
 #' @export
 setMethod(f = "versionInfo", signature = signature(x = "SimulationHandle"),
           definition = function(x){
-              OUT <- versionInfo(simdir(x))
+              OUT <- versionInfo(baseDir(x))
               return(OUT)
           }
 )

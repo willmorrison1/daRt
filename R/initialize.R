@@ -1,12 +1,12 @@
 setMethod("initialize", "SimulationHandle",
           function(.Object,
-                   simDir = character(),
+                   baseDir = character(),
                    isSequence = logical(),
                    sequenceInfo = data.frame(),
                    softwareVersion = data.frame()){
 
-            .Object@simDir <- simDir
-            .Object@simName <- basename(simDir)
+            .Object@baseDir <- baseDir
+            .Object@simName <- basename(baseDir)
             .Object@isSequence <- isSequence
             .Object@sequenceInfo <- sequenceInfo
             .Object@softwareVersion <- softwareVersion

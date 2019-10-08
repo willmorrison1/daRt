@@ -64,7 +64,15 @@ setGeneric(name = "imageNos", def = function(x) standardGeneric("imageNos"))
 
 
 #' @rdname SimulationFiles-class
-setGeneric(name = "simdir", def = function(x) standardGeneric("simdir"))
+setGeneric(name = "baseDir", def = function(x) standardGeneric("baseDir"))
+
+#' @export
+#' @rdname SimulationFiles-class
+setGeneric(name = "simulationFilter<-", def = function(x, value)
+    standardGeneric("simulationFilter<-"))
+
+#' @rdname SimulationFiles-class
+setGeneric(name = "subDir", def = function(x) standardGeneric("subDir"))
 
 #' Create \linkS4class{SimulationFilter} class
 #'
@@ -80,7 +88,7 @@ setGeneric(name = "simdir", def = function(x) standardGeneric("simdir"))
 #' @seealso \code{\link{SimulationFilter-class}}
 #' @examples
 #'
-setGeneric(name = "simulationFilter", def = function(product = "character", ...)
+setGeneric(name = "simulationFilter", def = function(product = "character", x, ...)
     standardGeneric("simulationFilter"))
 
 #' Get DART output filenames
@@ -124,6 +132,9 @@ setGeneric(name = "getData", signature = c("x", "sF"), def = function(x, sF, ...
 #'
 #' @examples
 setGeneric(name = "wavelengths", def = function(x = "SimulationFiles")
+    standardGeneric("wavelengths"))
+
+setGeneric(name = "wavelengths<-", def = function(x = "SimulationFiles")
     standardGeneric("wavelengths"))
 
 

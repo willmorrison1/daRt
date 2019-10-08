@@ -6,17 +6,15 @@ setMethod(f = "rb3DFiles",
 
               simHandle <- simulationHandle(x)
               RB3DFiles <- as(object = simHandle, Class = "SimulationFiles")
-              #TODOmake "attachSimulationFilter" method - whereby i can e.g. make sure the sF bands are updated accordingly
-              #e.g. if sF has integer() bands i need to add the .getWavelengthsDF(SimulationFiles)$band
-              #function to get all bands.
-              RB3DFiles@simulationFilter <- sF
               if (variables(sF) != "RADIATIVE_BUDGET") {
                   warning("Forcing 'RADIATIVE_BUDGET' variable in 'simulationFilter' variables.")
                   variables(sF) <- "RADIATIVE_BUDGET"
               }
-              sFnoTypeNums <- sF; typeNums(sFnoTypeNums) <- "" #RB3D 'typeNums' appear under typeNums = "" only
-              subDirs <- simdir(sFnoTypeNums)
-              fileDir <- file.path(simdir(RB3DFiles), subDirs$dirName)
+              simulationFilter(RB3DFiles) <- sF
+              #RB3D 'typeNums' appear under typeNums = "" only
+              sFnoTypeNums <- simulationFilter(x = RB3DFiles); typeNums(sFnoTypeNums) <- ""
+              subDirs <- subDir(sFnoTypeNums)
+              fileDir <- file.path(baseDir(RB3DFiles), subDirs$dirName)
               expectedFiles <- prod(nrow(subDirs), length(typeNums(sF)))
               OUT <- vector("list", length = expectedFiles)
               RBTypeNums <- .RB3DtypeNums(typeNums(sF))

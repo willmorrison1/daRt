@@ -3,10 +3,16 @@
 \docType{class}
 \name{SimulationFiles-class}
 \alias{SimulationFiles-class}
-\alias{simdir}
+\alias{baseDir}
+\alias{simulationFilter<-}
+\alias{subDir}
 \title{SimulationFiles class}
 \usage{
-simdir(x)
+baseDir(x)
+
+simulationFilter(x) <- value
+
+subDir(x)
 }
 \description{
 An S4 class to represent the files within a simulation or simulations.

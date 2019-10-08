@@ -1,7 +1,7 @@
 .simHandleValidity <- function(object){
     require(dplyr)
     errors <- character()
-    allPathsDF <- expand.grid(object@simDir, c("input", "output"))
+    allPathsDF <- expand.grid(baseDir(object), c("input", "output"))
     allPaths <- apply(allPathsDF, 1, function(x) file.path(x[1], x[2]))
     dirMissingBool <- sapply(allPaths, function(x) !dir.exists(x))
     if (any(dirMissingBool)) {
@@ -304,7 +304,7 @@ setValidity("SimulationFilter", .simFilterValidity)
 
 setClass(
     Class = "SimulationHandle",
-    slots = list(simDir = "character",
+    slots = list(baseDir = "character",
                  simName = "character",
                  isSequence = "logical",
                  sequenceInfo = "data.frame",

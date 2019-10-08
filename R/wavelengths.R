@@ -1,9 +1,13 @@
 #' @export
 setMethod("wavelengths", "SimulationFiles", function(x){
 
+    #incomplete
+    if (nrow(x@wavelengths) == 0) return(.getWavelengthsDF(x))
+
     return(x@wavelengths)
 
 })
+
 
 .getWavelengthsDF <- function(x) {
 
@@ -29,8 +33,9 @@ setMethod("wavelengths", "SimulationFiles", function(x){
     }
 
     bandDF <- bandDF %>%
-        dplyr::mutate_at(c("band", "equivalentWavelength", "lambdamax", "lambdamin"),
+        dplyr::mutate_at(c("equivalentWavelength", "lambdamax", "lambdamin"),
                          as.numeric) %>%
+        dplyr::mutate_at("band", as.integer) %>%
         dplyr::mutate(lambdamid = lambdamin + ((lambdamax - lambdamin) / 2)) %>%
         dplyr::arrange(simName, band) %>%
         dplyr::select(simName, band, lambdamin, lambdamid, lambdamax, equivalentWavelength)

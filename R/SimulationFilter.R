@@ -1,5 +1,5 @@
 setMethod(f = "simulationFilter",
-          signature(product = "character"),
+          signature(product = "character", x = "missing"),
 
           definition = function(product, ...,
                                 bands = .defaultBands(),
@@ -24,6 +24,30 @@ setMethod(f = "simulationFilter",
               return(s)
           }
 )
+
+#' @export
+setMethod(f = "simulationFilter<-",
+          signature(x = "SimulationFiles", value = "SimulationFilter"),
+          definition = function(x, value){
+
+              #bands update
+              if (length(value@bands) == 0) {
+                  value@bands <- .getWavelengthsDF(x)$band
+              }
+
+              x@simulationFilter <- value
+
+              return(x)
+
+          })
+
+#' @export
+setMethod(f = "simulationFilter",
+          signature(x = "SimulationFiles", product = "missing"),
+          definition = function(x){
+
+              x@simulationFilter
+          })
 
 
 .defaultBands <- function(){

@@ -19,6 +19,7 @@ isSequence <- function(simDir){
 }
 
 sequenceInfo <- function(simDir){
+
     isSeq <- isSequence(simDir)
 
     if (!isSeq) {

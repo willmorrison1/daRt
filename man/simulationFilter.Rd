@@ -4,7 +4,7 @@
 \alias{simulationFilter}
 \title{Create \linkS4class{SimulationFilter} class}
 \usage{
-simulationFilter(product = "character", ...)
+simulationFilter(product = "character", x, ...)
 }
 \arguments{
 \item{product}{One of: `directions`, `rb3D`, `images`.}

@@ -4,11 +4,13 @@ setMethod(f = "getFiles",
           definition = function(x, sF){
 
               require(dplyr)
+
               if (product(sF) == "directions") filesFun <- directionsFiles
               if (product(sF) == "rb3D") filesFun <- rb3DFiles
               if (product(sF) == "images") filesFun <- imageFiles
 
               simFilesList <- vector(mode = "list", length = length(x))
+
               for (i in 1:length(x)) {
                   simFilesList[[i]] <- filesFun(x = x[i], sF = sF)
               }
@@ -25,11 +27,11 @@ setMethod(f = "getFiles",
 
               sequenceInfoOut <- uniqueSequenceInfo[[1]]
               simFilesStacked <- new(Class = class(simFilesList[[1]])[1],
-                                     simDir = sapply(simFilesList, simdir),
+                                     baseDir = sapply(simFilesList, baseDir),
                                      isSequence = sapply(simFilesList, function(x) x@isSequence),
                                      sequenceInfo = sequenceInfoOut)
               simFilesStacked@sequenceInfoList <- sequenceInfoList
-              simFilesStacked@simulationFilter <- simFilesList[[1]]@simulationFilter
+              simulationFilter(simFilesStacked) <- simFilesList[[1]]@simulationFilter
               simFilesStacked@softwareVersion <- versionInfo(simFilesStacked)
 
               for (i in 1:length(simFilesList)) {

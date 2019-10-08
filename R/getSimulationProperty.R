@@ -28,6 +28,6 @@ getSimulationProperty <- function(x, strSearch, allow_multiLines = FALSE) {
 
 .getSimulationPropertiesFileNames <- function(x) {
 
-    file.path(simdir(x), "output", "simulation.properties.txt")
+    file.path(baseDir(x), "output", "simulation.properties.txt")
 
 }

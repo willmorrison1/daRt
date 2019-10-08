@@ -8,15 +8,8 @@ setMethod(f = "imageFiles",
 
               simHandle <- simulationHandle(x)
               imageFiles <- as(object = simHandle, Class = "SimulationFiles")
-              #TODOmake "attachSimulationFilter" method - whereby i can e.g. make sure the sF bands are updated accordingly
-              #e.g. if sF has integer() bands i need to add the .getWavelengthsDF(SimulationFiles)$band
-              #function to get all bands.
-              imageFiles@simulationFilter <- sF
-              #TODO - why does simdir do vastly different things for sF and SimulationFiles??
-              #simdir should be removed (to make sure it's not used stupidly) and replaced with subDirectories() and the
-              #SimulationFiles should use the @sF slot, so it basically uses the same thing. Then baseDirectories() is for the simulation dir
-              #for the SimulationFiles type object.
-              subDirs <- simdir(sF)
+              simulationFilter(imageFiles) <- sF
+              subDirs <- subDir(imageFiles)
               subDirs$dirName <- file.path(subDirs$dirName, "IMAGES_DART")
               imgTypeDF <- .parseimageTypes(sF)
               imgInfoDFList <- vector(mode = "list", length = nrow(subDirs) * nrow(imgTypeDF))
@@ -24,10 +17,10 @@ setMethod(f = "imageFiles",
               for (v in 1:nrow(imgTypeDF)) {
                   for (i in 1:nrow(subDirs)) {
                       if (imgTypeDF$isTransmittance[v]) {
-                          subDirFull <- file.path(simdir(imageFiles), subDirs$dirName[i],
+                          subDirFull <- file.path(baseDir(imageFiles), subDirs$dirName[i],
                                                   "Transmittance")
                       } else {
-                          subDirFull <- file.path(simdir(imageFiles), subDirs$dirName[i])
+                          subDirFull <- file.path(baseDir(imageFiles), subDirs$dirName[i])
                       }
                       if (!dir.exists(subDirFull)) {
                           stop(paste("No image files in", subDirs$dirName[i]))

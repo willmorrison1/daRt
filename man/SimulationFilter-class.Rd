@@ -35,7 +35,7 @@ SimulationFilter class.
 \section{Slots}{
 
 \describe{
-\item{\code{bands}}{numeric e.g. 0 for "BAND0"}
+\item{\code{bands}}{integer e.g. 0 for "BAND0"}
 
 \item{\code{variables}}{character e.g. "BRF".}
 
@@ -47,7 +47,7 @@ SimulationFilter class.
 
 \item{\code{imageTypes}}{character e.g. "ima".}
 
-\item{\code{imageNos}}{numeric.}
+\item{\code{imageNos}}{integer}
 
 \item{\code{product}}{character e.g. "directions".}
 }}

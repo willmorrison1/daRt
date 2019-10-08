@@ -3,7 +3,7 @@ setMethod(f = "deleteFiles",
                                 maketOutput = "logical"),
           definition = function(x, trianglesInput, maketOutput) {
               validObject(x, complete = TRUE)
-              simDirs <- simdir(x)
+              simDirs <- baseDir(x)
               for (i in 1:length(simDirs)) {
 
                   if (trianglesInput) {

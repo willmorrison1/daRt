@@ -1,7 +1,7 @@
 simulationHandle <- function(x) {
 
    simHandleObj <- new("SimulationHandle",
-        simDir = x,
+        baseDir = x,
         isSequence = isSequence(x),
         sequenceInfo = sequenceInfo(x),
         softwareVersion = versionInfo(x))

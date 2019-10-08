@@ -1,3 +1,3 @@
 getDartTxtFileName <- function(SimulationHandle) {
-    file.path(simdir(SimulationHandle), "output", "dart.txt")
+    file.path(baseDir(SimulationHandle), "output", "dart.txt")
 }
