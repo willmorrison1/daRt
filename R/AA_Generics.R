@@ -115,7 +115,7 @@ setGeneric(name = "getFiles", def = function(x = "character", sF = "SimulationFi
 setGeneric(name = "getData", signature = c("x", "sF"), def = function(x, sF, ...)
     standardGeneric("getData"))
 
-#' bandInfo
+#' wavelengths
 #' @description get full information on wavelengths for each band
 #' @param x sF \link{SimulationFiles-class}
 #'
@@ -123,8 +123,8 @@ setGeneric(name = "getData", signature = c("x", "sF"), def = function(x, sF, ...
 #' @export
 #'
 #' @examples
-setGeneric(name = "bandInfo", def = function(x = "SimulationFiles")
-    standardGeneric("bandInfo"))
+setGeneric(name = "wavelengths", def = function(x = "SimulationFiles")
+    standardGeneric("wavelengths"))
 
 
 

@@ -1,5 +1,11 @@
 #' @export
-setMethod("bandInfo", "SimulationFiles", function(x){
+setMethod("wavelengths", "SimulationFiles", function(x){
+
+    return(x@wavelengths)
+
+})
+
+.getWavelengthsDF <- function(x) {
 
     rawResultsList <- getSimulationProperty(x, "lambdamin|lambdamax|equivalentWavelength",
                                             allow_multiLines = TRUE)
@@ -16,12 +22,18 @@ setMethod("bandInfo", "SimulationFiles", function(x){
         dplyr::select(-c("module")) %>%
         dplyr::mutate(band = gsub("band", "", band)) %>%
         dplyr::distinct(band, var, simName, .keep_all = TRUE) %>%
-        reshape2::dcast(band + simName ~ var, value.var = "V2") %>%
+        reshape2::dcast(band + simName ~ var, value.var = "V2")
+
+    if (!"equivalentWavelength" %in% names(bandDF)) {
+        bandDF$equivalentWavelength <- NA
+    }
+
+    bandDF <- bandDF %>%
         dplyr::mutate_at(c("band", "equivalentWavelength", "lambdamax", "lambdamin"),
                          as.numeric) %>%
         dplyr::mutate(lambdamid = lambdamin + ((lambdamax - lambdamin) / 2)) %>%
-        dplyr::arrange(simName, band)
+        dplyr::arrange(simName, band) %>%
+        dplyr::select(simName, band, lambdamin, lambdamid, lambdamax, equivalentWavelength)
 
     return(bandDF)
-
-})
+}

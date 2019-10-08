@@ -24,19 +24,11 @@ setMethod(f = "simulationFilter",
               return(s)
           }
 )
-#to check
-
-# setMethod(f = "simulationFilter",
-#           signature(product = "missing"),
-#           definition = function(x){
-#               x@simulationFilter
-#           }
-# )
 
 
 .defaultBands <- function(){
 
-    "BAND0"
+    as.integer(0)
 
 }
 
@@ -75,6 +67,6 @@ setMethod(f = "simulationFilter",
 
 .defaultimageNos <- function(){
 
-    numeric()
+    integer()
 
 }

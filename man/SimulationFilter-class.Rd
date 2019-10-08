@@ -35,7 +35,7 @@ SimulationFilter class.
 \section{Slots}{
 
 \describe{
-\item{\code{bands}}{character e.g. "BAND0".}
+\item{\code{bands}}{numeric e.g. 0 for "BAND0"}
 
 \item{\code{variables}}{character e.g. "BRF".}
 

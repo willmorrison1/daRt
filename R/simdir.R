@@ -4,12 +4,14 @@ setMethod(f = "simdir", signature = "SimulationHandle",
               x@simDir
           }
 )
+
+
 #' @export
 setMethod(f = "simdir", signature(x = "SimulationFilter"),
           definition = function(x){
 
               simFltr <- x
-              bands <- bands(simFltr)
+              bands <- paste0("BAND", bands(simFltr))
               variables <- variables(simFltr)
               iters <- iters(simFltr)
               typeNums <- typeNums(simFltr)

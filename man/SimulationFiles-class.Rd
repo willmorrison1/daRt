@@ -21,6 +21,8 @@ by the object with class \link{SimulationFilter-class}
 \item{\code{files}}{a data.frame, with each row describing the file}
 
 \item{\code{sequenceInfoList}}{a list, with each list element showing the variable permutation(s) within this specific simulation sequence.}
+
+\item{\code{wavelengths}}{a data frame containing spectral information on each band for each simulation}
 }}
 
 \examples{

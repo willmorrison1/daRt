@@ -1,9 +1,14 @@
 setMethod(f = "rb3DFiles",
           signature = signature(x = "character", sF = "SimulationFilter"),
           definition = function(x, sF){
+
               require(tools)
+
               simHandle <- simulationHandle(x)
               RB3DFiles <- as(object = simHandle, Class = "SimulationFiles")
+              #TODOmake "attachSimulationFilter" method - whereby i can e.g. make sure the sF bands are updated accordingly
+              #e.g. if sF has integer() bands i need to add the .getWavelengthsDF(SimulationFiles)$band
+              #function to get all bands.
               RB3DFiles@simulationFilter <- sF
               if (variables(sF) != "RADIATIVE_BUDGET") {
                   warning("Forcing 'RADIATIVE_BUDGET' variable in 'simulationFilter' variables.")
@@ -26,7 +31,6 @@ setMethod(f = "rb3DFiles",
                       warning(paste("Found duplicate rb3D files in:", subDirs$dirName[i], "(different extensions).
                                     Cleaning duplicates. Run rb3DtoNcdf() if warning persists."))
                   }
-
                   all3DrbFiles <- all3DrbFiles[!all3DrbFiles_duplicated]
                   file.remove(all3DrbFiles[all3DrbFiles_duplicated])
                   if (length(all3DrbFiles) == 0) {
@@ -64,10 +68,13 @@ setMethod(f = "rb3DFiles",
                               "variablesRB3D found: '", paste0(variablesRB3DFound, collapse = ","), "'
                              Use this information to adjust your 'simulationFilter'"))
               }
+
               return(RB3DFiles)
+
           })
 
 .RB3DtypeNums <- function(typeNumVals){
+
     for (i in 1:length(typeNumVals)) {
         if (typeNumVals[i] == "") next
         typeNumSplit <- strsplit(typeNumVals[i], "_")[[1]]
@@ -77,11 +84,15 @@ setMethod(f = "rb3DFiles",
             typeNumVals[i] <- typeNumSplit[1]
         }
     }
+
     return(typeNumVals)
+
 }
 
 .parse3DRBfileName <- function(RB3DfileName){
+
     require(tools)
+
     RB3DfileName <- basename(RB3DfileName)
     if (grepl("_TypeNum=|Ground", RB3DfileName)) {
         isTypeNum <- TRUE
@@ -112,5 +123,7 @@ setMethod(f = "rb3DFiles",
 }
 
 .isNot3DRBstop <- function(RB3DfileName) {
+
     stop(paste(RB3DfileName, "is not a rb3D file"))
+
 }

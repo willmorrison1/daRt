@@ -2,11 +2,20 @@
 setMethod(f = "imageFiles",
           signature = signature(x = "character", sF = "SimulationFilter"),
           definition = function(x, sF){
+
               require(tools)
               require(dplyr)
+
               simHandle <- simulationHandle(x)
               imageFiles <- as(object = simHandle, Class = "SimulationFiles")
+              #TODOmake "attachSimulationFilter" method - whereby i can e.g. make sure the sF bands are updated accordingly
+              #e.g. if sF has integer() bands i need to add the .getWavelengthsDF(SimulationFiles)$band
+              #function to get all bands.
               imageFiles@simulationFilter <- sF
+              #TODO - why does simdir do vastly different things for sF and SimulationFiles??
+              #simdir should be removed (to make sure it's not used stupidly) and replaced with subDirectories() and the
+              #SimulationFiles should use the @sF slot, so it basically uses the same thing. Then baseDirectories() is for the simulation dir
+              #for the SimulationFiles type object.
               subDirs <- simdir(sF)
               subDirs$dirName <- file.path(subDirs$dirName, "IMAGES_DART")
               imgTypeDF <- .parseimageTypes(sF)
@@ -45,6 +54,7 @@ setMethod(f = "imageFiles",
               imgInfoDF <- dplyr::bind_rows(imgInfoDFList)
               imageFiles@files <- imgInfoDF
               validObject(imageFiles)
+
               return(imageFiles)
 
           })
@@ -73,6 +83,7 @@ setMethod(f = "imageFiles",
                    imageFileName))
     }
     imgInfoDF$fileName <- imageFile
+
     return(imgInfoDF)
 
 }

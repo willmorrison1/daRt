@@ -68,7 +68,7 @@ methods(class = "SimulationFilter")
 ```
 Use these methods to edit the `SimulationFilter` object e.g. the `bands` or `iters` (iterations) that you want to load
 ```{r}
-bands(sF) <- c("BAND0", "BAND1")
+bands(sF) <- 0:1
 iters(sF) <- "ITER1"
 ```
 
@@ -123,10 +123,10 @@ To look at images for `bands` 0, 1 and 2; `iters` (iterations) 1 and 2, and `ima
 ```{r images example}
 #create SimulationFilter
 sF <- simulationFilter(product = "images", 
-                       bands = c("BAND0", "BAND1", "BAND2"),
+                       bands = as.integer(0:2),
                        iters = c("ITER1", "ITER2"),
                        variables = "BRF",
-                       imageNos = c(5, 7),
+                       imageNos = as.integer(c(5, 7)),
                        imageTypes = "ima")
 #load data - 'nCores' allows parallel processing of files.
 #It is useful for access to drives that have optimised paralell I/O.
@@ -176,7 +176,7 @@ When performing analysis on a relatively large set of files, memory management i
 Load all radiative budget products at once into memory and take the mean of each horizontal layer. 
 ```{r}
 sF <- simulationFilter(product = "rb3D", 
-                       bands = c("BAND0", "BAND1", "BAND2"), 
+                       bands = as.integer(0:2), 
                        iters = c("ITER1", "ITER2", "ILLUDIFF", "ILLUDIR"),
                        typeNums = "",
                        variables = "RADIATIVE_BUDGET")
@@ -205,7 +205,7 @@ statVals <- DFdata %>%
 Do 'scenario 1' analysis but with data processed for each band separately to save on memory usage.
 ```{r}
 sF <- simulationFilter(product = "rb3D", 
-                       bands = c("BAND0", "BAND1", "BAND2"), 
+                       bands = as.integer(0:2), 
                        iters = c("ITER1", "ITER2", "ILLUDIFF", "ILLUDIR"),
                        typeNums = "",
                        variables = "RADIATIVE_BUDGET")
@@ -240,7 +240,7 @@ Get some DART radiative budget bindary data (the default data)
 ```{r}
 simulationDir <- "man/data/cesbio"
 sF <- simulationFilter(product = "rb3D",
-                       bands = "BAND1", 
+                       bands = as.integer(1), 
                        iters = "ITER1",
                        typeNums = "",
                        variables = "RADIATIVE_BUDGET")

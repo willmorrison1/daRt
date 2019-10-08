@@ -100,15 +100,9 @@
 
 .simFilterValidity_bands <- function(object) {
 
-    .bandsErr <- function() paste("Invalid bands. Set as e.g. c('BAND0', 'BAND1')")
+    .bandsErr <- function() paste("Invalid bands. Set as numeric e.g. 0:1 for bands 'BAND0' and 'BAND1'")
     bandVals <- bands(object)
-    if (any(!grepl("BAND", bandVals))) return(.bandsErr())
-    bandSplit <- strsplit(bandVals, "BAND")
-    for (i in 1:length(bandSplit)) {
-        if (length(bandSplit[[i]]) != 2) return(paste(bandVals[i], .bandsErr()))
-        if (bandSplit[[i]][1] != "")  return(paste(bandVals[i], .bandsErr()))
-        if (is.na(as.numeric(bandSplit[[i]][2])))  return(paste(bandVals[i], .bandsErr()))
-    }
+    if (any(bandVals < 0)) return(.bandsErr())
 
     return()
 }
@@ -281,13 +275,13 @@
 
 #' SimulationFilter class.
 #'
-#' @slot bands character e.g. "BAND0".
+#' @slot bands integer e.g. 0 for "BAND0"
 #' @slot variables character e.g. "BRF".
 #' @slot iters character e.g. "ITERX".
 #' @slot variablesRB3D character e.g. "Irradiance".
 #' @slot typeNums character e.g. "2_Ground".
 #' @slot imageTypes character e.g. "ima".
-#' @slot imageNos numeric.
+#' @slot imageNos integer
 #' @slot product character e.g. "directions".
 #'
 #' @return
@@ -297,13 +291,13 @@
 #' @examples
 setClass(
     Class = "SimulationFilter",
-    slots = list(bands = "character",
+    slots = list(bands = "integer",
                  variables = "character",
                  iters = "character",
                  variablesRB3D = "character",
                  typeNums = "character",
                  imageTypes = "character",
-                 imageNos = "numeric",
+                 imageNos = "integer",
                  product = "character"))
 setValidity("SimulationFilter", .simFilterValidity)
 
@@ -329,6 +323,7 @@ setValidity("SimulationHandle", .simHandleValidity)
 #' @slot simulationFilter contains \link{SimulationFilter-class} object
 #' @slot files a data.frame, with each row describing the file
 #' @slot sequenceInfoList a list, with each list element showing the variable permutation(s) within this specific simulation sequence.
+#' @slot wavelengths a data frame containing spectral information on each band for each simulation
 #'
 #' @return
 #' @export
@@ -339,7 +334,8 @@ setClass(
     Class = "SimulationFiles", contains = "SimulationHandle",
     slots = list(simulationFilter = "SimulationFilter",
                  files = "data.frame",
-                 sequenceInfoList = "list"))
+                 sequenceInfoList = "list",
+                 wavelengths = "data.frame"))
 setValidity("SimulationFiles", .dirFilesValidity)
 
 
