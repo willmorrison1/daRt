@@ -44,6 +44,7 @@ setMethod(f = "imageFiles",
                       iterTrack <- iterTrack + 1
                   }
               }
+
               imgInfoDF <- dplyr::bind_rows(imgInfoDFList)
               imageFiles@files <- imgInfoDF
               validObject(imageFiles)

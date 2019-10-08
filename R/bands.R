@@ -8,4 +8,8 @@ setMethod("bands<-", "SimulationFilter", function(x, value){
 })
 
 #' @export
-setMethod("bands", "SimulationFiles", function(x) x@wavelengths$band)
+setMethod("bands", "SimulationFiles", function(x){
+
+    return(bands(simulationFilter(x = simData)))
+}
+)

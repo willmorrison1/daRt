@@ -134,8 +134,6 @@ setGeneric(name = "getData", signature = c("x", "sF"), def = function(x, sF, ...
 setGeneric(name = "wavelengths", def = function(x = "SimulationFiles")
     standardGeneric("wavelengths"))
 
-setGeneric(name = "wavelengths<-", def = function(x = "SimulationFiles")
-    standardGeneric("wavelengths"))
 
 
 

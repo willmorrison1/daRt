@@ -31,10 +31,11 @@ setMethod(f = "simulationFilter<-",
           definition = function(x, value){
 
               #bands update
+              wavelengthVals <- .getWavelengthsDF(x)
+              x@wavelengths <- wavelengthVals
               if (length(value@bands) == 0) {
-                  value@bands <- .getWavelengthsDF(x)$band
+                  value@bands <- wavelengthVals$band
               }
-
               x@simulationFilter <- value
 
               return(x)
@@ -52,7 +53,7 @@ setMethod(f = "simulationFilter",
 
 .defaultBands <- function(){
 
-    as.integer(0)
+    as.integer(0:1)
 
 }
 

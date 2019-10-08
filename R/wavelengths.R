@@ -1,7 +1,6 @@
 #' @export
 setMethod("wavelengths", "SimulationFiles", function(x){
 
-    #incomplete
     if (nrow(x@wavelengths) == 0) return(.getWavelengthsDF(x))
 
     return(x@wavelengths)

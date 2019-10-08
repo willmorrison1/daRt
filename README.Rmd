@@ -3,7 +3,6 @@ output: github_document
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit and run README.Rmd file to regenerate README.md -->
-
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
     collapse = TRUE,
@@ -68,8 +67,8 @@ methods(class = "SimulationFilter")
 ```
 Use these methods to edit the `SimulationFilter` object e.g. the `bands` or `iters` (iterations) that you want to load
 ```{r}
-bands(sF) <- 0:1
-iters(sF) <- "ITER1"
+bands(sF) <- 0:2
+iters(sF) <- "ITER3"
 ```
 
 ### SimulationFiles

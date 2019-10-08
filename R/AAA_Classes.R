@@ -38,7 +38,7 @@
 }
 
 
-.dirFilesValidity <- function(object){
+.simFilesValidity <- function(object){
 
     require(stringr)
     errors <- character()
@@ -62,6 +62,12 @@
                          paste0("..", str_sub(object@files$fileName[filesMissing], -50)), collapse = "; "))
         errors <- c(errors, msg)
     }
+
+    if (nrow(object@wavelengths) == 0) {
+        errors <- c(errors, "No data in @wavelengths slot.
+                    A SimulationFiles method has not set the 'wavelengths' slot.")
+    }
+
     return(ifelse(test = length(errors) == 0,
                   yes = TRUE,
                   no = errors))
@@ -336,7 +342,7 @@ setClass(
                  files = "data.frame",
                  sequenceInfoList = "list",
                  wavelengths = "data.frame"))
-setValidity("SimulationFiles", .dirFilesValidity)
+setValidity("SimulationFiles", .simFilesValidity)
 
 
 #' Generic SimulationData class

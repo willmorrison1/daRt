@@ -49,33 +49,6 @@ Load data for the given simulation using the predetermined file types
 
 ``` r
 simData <- daRt::getData(x = simulationDir, sF = sF)
-#> Called from: .getWavelengthsDF(simFilesStacked)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#10: rawResultsList <- getSimulationProperty(x, "lambdamin|lambdamax|equivalentWavelength", 
-#>     allow_multiLines = TRUE)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#13: for (i in 1:length(rawResultsList)) {
-#>     rawResultsList[[i]] <- as.data.frame(rawResultsList[[i]])
-#>     rawResultsList[[i]]$simName <- names(rawResultsList)[i]
-#> }
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#14: rawResultsList[[i]] <- as.data.frame(rawResultsList[[i]])
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#15: rawResultsList[[i]]$simName <- names(rawResultsList)[i]
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#18: rawResults <- do.call(rbind, rawResultsList)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#20: bandDF <- rawResults %>% tidyr::separate(col = V1, into = c("module", 
-#>     "band", "var"), sep = "[.]") %>% dplyr::select(-c("module")) %>% 
-#>     dplyr::mutate(band = gsub("band", "", band)) %>% dplyr::distinct(band, 
-#>     var, simName, .keep_all = TRUE) %>% reshape2::dcast(band + 
-#>     simName ~ var, value.var = "V2")
-#> Warning: The `printer` argument is deprecated as of rlang 0.3.0.
-#> This warning is displayed once per session.
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#27: if (!"equivalentWavelength" %in% names(bandDF)) {
-#>     bandDF$equivalentWavelength <- NA
-#> }
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#28: bandDF$equivalentWavelength <- NA
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#31: bandDF <- bandDF %>% dplyr::mutate_at(c("band", "equivalentWavelength", 
-#>     "lambdamax", "lambdamin"), as.numeric) %>% dplyr::mutate(lambdamid = lambdamin + 
-#>     ((lambdamax - lambdamin)/2)) %>% dplyr::arrange(simName, 
-#>     band) %>% dplyr::select(simName, band, lambdamin, lambdamid, 
-#>     lambdamax, equivalentWavelength)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#38: return(bandDF)
 ```
 
 Use the data in the given “long” format
@@ -85,11 +58,11 @@ DF <- as.data.frame(simData)
 head(DF, n = 3)
 #> # A tibble: 3 x 8
 #> # Groups:   band, iter, typeNum, simName [1]
-#>   zenith azimuth value band  variable iter  typeNum simName
-#>    <dbl>   <dbl> <dbl> <chr> <chr>    <chr> <chr>   <chr>  
-#> 1    0         0 0.646 BAND0 BRF      ITER1 ""      cesbio 
-#> 2   22.4      30 0.612 BAND0 BRF      ITER1 ""      cesbio 
-#> 3   22.4      90 0.598 BAND0 BRF      ITER1 ""      cesbio
+#>   zenith azimuth value  band variable iter  typeNum simName
+#>    <dbl>   <dbl> <dbl> <int> <chr>    <chr> <chr>   <chr>  
+#> 1    0         0 0.646     0 BRF      ITER1 ""      cesbio 
+#> 2   22.4      30 0.612     0 BRF      ITER1 ""      cesbio 
+#> 3   22.4      90 0.598     0 BRF      ITER1 ""      cesbio
 ```
 
 ### SimulationFilter
@@ -102,7 +75,7 @@ of the `SimulationFilter`
 sF
 #> 'SimulationFilter' object for DART product: directions 
 #> 
-#> bands:          0 
+#> bands:          0, 1 
 #> variables:      BRF 
 #> iterations:     ITER1, ITER2 
 #> variablesRB3D:  Intercepted, Scattered, Emitted, Absorbed, +ZFaceExit, +ZFaceEntry 
@@ -115,12 +88,14 @@ List the ‘setter’ and ‘accessor’ methods available
 
 ``` r
 methods(class = "SimulationFilter")
-#>  [1] bands           bands<-         getData         getFiles       
-#>  [5] imageFiles      imageNos        imageNos<-      imageTypes     
-#>  [9] imageTypes<-    iters           iters<-         product        
-#> [13] product<-       show            simdir          typeNums       
-#> [17] typeNums<-      variables       variables<-     variablesRB3D  
-#> [21] variablesRB3D<-
+#>  [1] bands              bands<-            getData           
+#>  [4] getFiles           imageFiles         imageNos          
+#>  [7] imageNos<-         imageTypes         imageTypes<-      
+#> [10] iters              iters<-            product           
+#> [13] product<-          show               simulationFilter<-
+#> [16] subDir             typeNums           typeNums<-        
+#> [19] variables          variables<-        variablesRB3D     
+#> [22] variablesRB3D<-   
 #> see '?methods' for accessing help and source code
 ```
 
@@ -128,8 +103,8 @@ Use these methods to edit the `SimulationFilter` object e.g. the `bands`
 or `iters` (iterations) that you want to load
 
 ``` r
-bands(sF) <- 0:1
-iters(sF) <- "ITER1"
+bands(sF) <- 0:2
+iters(sF) <- "ITER3"
 ```
 
 ### SimulationFiles
@@ -164,31 +139,6 @@ simulation that correspond to this filter
 
 ``` r
 simFiles <- daRt::getFiles(x = simulationDir, sF = sF)
-#> Called from: .getWavelengthsDF(simFilesStacked)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#10: rawResultsList <- getSimulationProperty(x, "lambdamin|lambdamax|equivalentWavelength", 
-#>     allow_multiLines = TRUE)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#13: for (i in 1:length(rawResultsList)) {
-#>     rawResultsList[[i]] <- as.data.frame(rawResultsList[[i]])
-#>     rawResultsList[[i]]$simName <- names(rawResultsList)[i]
-#> }
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#14: rawResultsList[[i]] <- as.data.frame(rawResultsList[[i]])
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#15: rawResultsList[[i]]$simName <- names(rawResultsList)[i]
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#18: rawResults <- do.call(rbind, rawResultsList)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#20: bandDF <- rawResults %>% tidyr::separate(col = V1, into = c("module", 
-#>     "band", "var"), sep = "[.]") %>% dplyr::select(-c("module")) %>% 
-#>     dplyr::mutate(band = gsub("band", "", band)) %>% dplyr::distinct(band, 
-#>     var, simName, .keep_all = TRUE) %>% reshape2::dcast(band + 
-#>     simName ~ var, value.var = "V2")
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#27: if (!"equivalentWavelength" %in% names(bandDF)) {
-#>     bandDF$equivalentWavelength <- NA
-#> }
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#28: bandDF$equivalentWavelength <- NA
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#31: bandDF <- bandDF %>% dplyr::mutate_at(c("band", "equivalentWavelength", 
-#>     "lambdamax", "lambdamin"), as.numeric) %>% dplyr::mutate(lambdamid = lambdamin + 
-#>     ((lambdamax - lambdamin)/2)) %>% dplyr::arrange(simName, 
-#>     band) %>% dplyr::select(simName, band, lambdamin, lambdamid, 
-#>     lambdamax, equivalentWavelength)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#38: return(bandDF)
 ```
 
 Explore the output of this to check we happy to continue and load the
@@ -196,12 +146,14 @@ data. `getFiles()` is essentially a ‘dry-run’ of the data extraction
 
 ``` r
 files(simFiles)
-#>    band variable  iter typeNum                                    fileName
-#> 1 BAND0      BRF ITER1         man/data/cesbio/output//BAND0/BRF/ITER1/brf
-#> 2 BAND1      BRF ITER1         man/data/cesbio/output//BAND1/BRF/ITER1/brf
+#>   band variable  iter typeNum                                    fileName
+#> 1    0      BRF ITER3         man/data/cesbio/output//BAND0/BRF/ITER3/brf
+#> 2    1      BRF ITER3         man/data/cesbio/output//BAND1/BRF/ITER3/brf
+#> 3    2      BRF ITER3         man/data/cesbio/output//BAND2/BRF/ITER3/brf
 #>   simName
 #> 1  cesbio
 #> 2  cesbio
+#> 3  cesbio
 ```
 
 ### SimulationData
@@ -212,31 +164,6 @@ the `getData()` method
 
 ``` r
 simData <- daRt::getData(x = simulationDir, sF = sF)
-#> Called from: .getWavelengthsDF(simFilesStacked)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#10: rawResultsList <- getSimulationProperty(x, "lambdamin|lambdamax|equivalentWavelength", 
-#>     allow_multiLines = TRUE)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#13: for (i in 1:length(rawResultsList)) {
-#>     rawResultsList[[i]] <- as.data.frame(rawResultsList[[i]])
-#>     rawResultsList[[i]]$simName <- names(rawResultsList)[i]
-#> }
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#14: rawResultsList[[i]] <- as.data.frame(rawResultsList[[i]])
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#15: rawResultsList[[i]]$simName <- names(rawResultsList)[i]
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#18: rawResults <- do.call(rbind, rawResultsList)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#20: bandDF <- rawResults %>% tidyr::separate(col = V1, into = c("module", 
-#>     "band", "var"), sep = "[.]") %>% dplyr::select(-c("module")) %>% 
-#>     dplyr::mutate(band = gsub("band", "", band)) %>% dplyr::distinct(band, 
-#>     var, simName, .keep_all = TRUE) %>% reshape2::dcast(band + 
-#>     simName ~ var, value.var = "V2")
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#27: if (!"equivalentWavelength" %in% names(bandDF)) {
-#>     bandDF$equivalentWavelength <- NA
-#> }
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#28: bandDF$equivalentWavelength <- NA
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#31: bandDF <- bandDF %>% dplyr::mutate_at(c("band", "equivalentWavelength", 
-#>     "lambdamax", "lambdamin"), as.numeric) %>% dplyr::mutate(lambdamid = lambdamin + 
-#>     ((lambdamax - lambdamin)/2)) %>% dplyr::arrange(simName, 
-#>     band) %>% dplyr::select(simName, band, lambdamin, lambdamid, 
-#>     lambdamax, equivalentWavelength)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#38: return(bandDF)
 #also can do this using simFiles object
 simData_fromFiles <- daRt::getData(x = simFiles)
 identical(simData_fromFiles, simData)
@@ -282,31 +209,6 @@ sF <- simulationFilter(product = "images",
 #It is useful for access to drives that have optimised paralell I/O.
 #here load data using 2 cores.
 simData <- daRt::getData(x = simulationDir, sF = sF, nCores = 2)
-#> Called from: .getWavelengthsDF(simFilesStacked)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#10: rawResultsList <- getSimulationProperty(x, "lambdamin|lambdamax|equivalentWavelength", 
-#>     allow_multiLines = TRUE)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#13: for (i in 1:length(rawResultsList)) {
-#>     rawResultsList[[i]] <- as.data.frame(rawResultsList[[i]])
-#>     rawResultsList[[i]]$simName <- names(rawResultsList)[i]
-#> }
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#14: rawResultsList[[i]] <- as.data.frame(rawResultsList[[i]])
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#15: rawResultsList[[i]]$simName <- names(rawResultsList)[i]
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#18: rawResults <- do.call(rbind, rawResultsList)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#20: bandDF <- rawResults %>% tidyr::separate(col = V1, into = c("module", 
-#>     "band", "var"), sep = "[.]") %>% dplyr::select(-c("module")) %>% 
-#>     dplyr::mutate(band = gsub("band", "", band)) %>% dplyr::distinct(band, 
-#>     var, simName, .keep_all = TRUE) %>% reshape2::dcast(band + 
-#>     simName ~ var, value.var = "V2")
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#27: if (!"equivalentWavelength" %in% names(bandDF)) {
-#>     bandDF$equivalentWavelength <- NA
-#> }
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#28: bandDF$equivalentWavelength <- NA
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#31: bandDF <- bandDF %>% dplyr::mutate_at(c("band", "equivalentWavelength", 
-#>     "lambdamax", "lambdamin"), as.numeric) %>% dplyr::mutate(lambdamid = lambdamin + 
-#>     ((lambdamax - lambdamin)/2)) %>% dplyr::arrange(simName, 
-#>     band) %>% dplyr::select(simName, band, lambdamin, lambdamid, 
-#>     lambdamax, equivalentWavelength)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#38: return(bandDF)
 #simple plot of data
 ggplot(as.data.frame(simData)) + 
     geom_raster(aes(x = x, y = y, fill = value)) +
@@ -326,31 +228,6 @@ product(sF) <- "rb3D"
 simData <- daRt::getData(x = simulationDir, sF = sF)
 #> Warning in filesFun(x = x[i], sF = sF): Forcing 'RADIATIVE_BUDGET' variable
 #> in 'simulationFilter' variables.
-#> Called from: .getWavelengthsDF(simFilesStacked)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#10: rawResultsList <- getSimulationProperty(x, "lambdamin|lambdamax|equivalentWavelength", 
-#>     allow_multiLines = TRUE)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#13: for (i in 1:length(rawResultsList)) {
-#>     rawResultsList[[i]] <- as.data.frame(rawResultsList[[i]])
-#>     rawResultsList[[i]]$simName <- names(rawResultsList)[i]
-#> }
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#14: rawResultsList[[i]] <- as.data.frame(rawResultsList[[i]])
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#15: rawResultsList[[i]]$simName <- names(rawResultsList)[i]
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#18: rawResults <- do.call(rbind, rawResultsList)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#20: bandDF <- rawResults %>% tidyr::separate(col = V1, into = c("module", 
-#>     "band", "var"), sep = "[.]") %>% dplyr::select(-c("module")) %>% 
-#>     dplyr::mutate(band = gsub("band", "", band)) %>% dplyr::distinct(band, 
-#>     var, simName, .keep_all = TRUE) %>% reshape2::dcast(band + 
-#>     simName ~ var, value.var = "V2")
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#27: if (!"equivalentWavelength" %in% names(bandDF)) {
-#>     bandDF$equivalentWavelength <- NA
-#> }
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#28: bandDF$equivalentWavelength <- NA
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#31: bandDF <- bandDF %>% dplyr::mutate_at(c("band", "equivalentWavelength", 
-#>     "lambdamax", "lambdamin"), as.numeric) %>% dplyr::mutate(lambdamid = lambdamin + 
-#>     ((lambdamax - lambdamin)/2)) %>% dplyr::arrange(simName, 
-#>     band) %>% dplyr::select(simName, band, lambdamin, lambdamid, 
-#>     lambdamax, equivalentWavelength)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#38: return(bandDF)
 ```
 
 The 3D radiative budget data are stored with the X, Y and Z location of
@@ -362,11 +239,11 @@ is: X = 1, Y = 1, Z = 1), stored in 3 columns.
 head(as.data.frame(simData), n = 3)
 #> # A tibble: 3 x 9
 #> # Groups:   band, iter, typeNum, simName [1]
-#>       X     Y     Z value variableRB3D band  iter  typeNum simName
-#>   <int> <int> <int> <dbl> <chr>        <chr> <chr> <chr>   <chr>  
-#> 1     1     1     1  1.01 Intercepted  BAND0 ITER1 ""      cesbio 
-#> 2     2     1     1  1.02 Intercepted  BAND0 ITER1 ""      cesbio 
-#> 3     3     1     1  1.01 Intercepted  BAND0 ITER1 ""      cesbio
+#>       X     Y     Z value variableRB3D  band iter  typeNum simName
+#>   <int> <int> <int> <dbl> <chr>        <int> <chr> <chr>   <chr>  
+#> 1     1     1     1  1.01 Intercepted      0 ITER1 ""      cesbio 
+#> 2     2     1     1  1.02 Intercepted      0 ITER1 ""      cesbio 
+#> 3     3     1     1  1.01 Intercepted      0 ITER1 ""      cesbio
 ```
 
 The below example uses “dplyr” to work with this data. Here we look at
@@ -418,31 +295,6 @@ sF <- simulationFilter(product = "rb3D",
                        typeNums = "",
                        variables = "RADIATIVE_BUDGET")
 simFiles <- daRt::getFiles(simulationDir, sF = sF)
-#> Called from: .getWavelengthsDF(simFilesStacked)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#10: rawResultsList <- getSimulationProperty(x, "lambdamin|lambdamax|equivalentWavelength", 
-#>     allow_multiLines = TRUE)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#13: for (i in 1:length(rawResultsList)) {
-#>     rawResultsList[[i]] <- as.data.frame(rawResultsList[[i]])
-#>     rawResultsList[[i]]$simName <- names(rawResultsList)[i]
-#> }
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#14: rawResultsList[[i]] <- as.data.frame(rawResultsList[[i]])
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#15: rawResultsList[[i]]$simName <- names(rawResultsList)[i]
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#18: rawResults <- do.call(rbind, rawResultsList)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#20: bandDF <- rawResults %>% tidyr::separate(col = V1, into = c("module", 
-#>     "band", "var"), sep = "[.]") %>% dplyr::select(-c("module")) %>% 
-#>     dplyr::mutate(band = gsub("band", "", band)) %>% dplyr::distinct(band, 
-#>     var, simName, .keep_all = TRUE) %>% reshape2::dcast(band + 
-#>     simName ~ var, value.var = "V2")
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#27: if (!"equivalentWavelength" %in% names(bandDF)) {
-#>     bandDF$equivalentWavelength <- NA
-#> }
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#28: bandDF$equivalentWavelength <- NA
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#31: bandDF <- bandDF %>% dplyr::mutate_at(c("band", "equivalentWavelength", 
-#>     "lambdamax", "lambdamin"), as.numeric) %>% dplyr::mutate(lambdamid = lambdamin + 
-#>     ((lambdamax - lambdamin)/2)) %>% dplyr::arrange(simName, 
-#>     band) %>% dplyr::select(simName, band, lambdamin, lambdamid, 
-#>     lambdamax, equivalentWavelength)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#38: return(bandDF)
 ```
 
 There are twelve files each with 6 variables and each as a 3D array -
@@ -460,11 +312,11 @@ DFdata <- as.data.frame(simData)
 head(DFdata, n = 3)
 #> # A tibble: 3 x 9
 #> # Groups:   band, iter, typeNum, simName [1]
-#>       X     Y     Z value variableRB3D band  iter  typeNum simName
-#>   <int> <int> <int> <dbl> <chr>        <chr> <chr> <chr>   <chr>  
-#> 1     1     1     1  1.01 Intercepted  BAND0 ITER1 ""      cesbio 
-#> 2     2     1     1  1.02 Intercepted  BAND0 ITER1 ""      cesbio 
-#> 3     3     1     1  1.01 Intercepted  BAND0 ITER1 ""      cesbio
+#>       X     Y     Z value variableRB3D  band iter  typeNum simName
+#>   <int> <int> <int> <dbl> <chr>        <int> <chr> <chr>   <chr>  
+#> 1     1     1     1  1.01 Intercepted      0 ITER1 ""      cesbio 
+#> 2     2     1     1  1.02 Intercepted      0 ITER1 ""      cesbio 
+#> 3     3     1     1  1.01 Intercepted      0 ITER1 ""      cesbio
 dim(DFdata)
 #> [1] 784080      9
 ```
@@ -501,81 +353,6 @@ for (i in 1:length(allBands)) {
         dplyr::group_by(X, Y, variableRB3D, add = TRUE) %>%
         dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
 }
-#> Called from: .getWavelengthsDF(simFilesStacked)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#10: rawResultsList <- getSimulationProperty(x, "lambdamin|lambdamax|equivalentWavelength", 
-#>     allow_multiLines = TRUE)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#13: for (i in 1:length(rawResultsList)) {
-#>     rawResultsList[[i]] <- as.data.frame(rawResultsList[[i]])
-#>     rawResultsList[[i]]$simName <- names(rawResultsList)[i]
-#> }
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#14: rawResultsList[[i]] <- as.data.frame(rawResultsList[[i]])
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#15: rawResultsList[[i]]$simName <- names(rawResultsList)[i]
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#18: rawResults <- do.call(rbind, rawResultsList)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#20: bandDF <- rawResults %>% tidyr::separate(col = V1, into = c("module", 
-#>     "band", "var"), sep = "[.]") %>% dplyr::select(-c("module")) %>% 
-#>     dplyr::mutate(band = gsub("band", "", band)) %>% dplyr::distinct(band, 
-#>     var, simName, .keep_all = TRUE) %>% reshape2::dcast(band + 
-#>     simName ~ var, value.var = "V2")
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#27: if (!"equivalentWavelength" %in% names(bandDF)) {
-#>     bandDF$equivalentWavelength <- NA
-#> }
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#28: bandDF$equivalentWavelength <- NA
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#31: bandDF <- bandDF %>% dplyr::mutate_at(c("band", "equivalentWavelength", 
-#>     "lambdamax", "lambdamin"), as.numeric) %>% dplyr::mutate(lambdamid = lambdamin + 
-#>     ((lambdamax - lambdamin)/2)) %>% dplyr::arrange(simName, 
-#>     band) %>% dplyr::select(simName, band, lambdamin, lambdamid, 
-#>     lambdamax, equivalentWavelength)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#38: return(bandDF)
-#> Called from: .getWavelengthsDF(simFilesStacked)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#10: rawResultsList <- getSimulationProperty(x, "lambdamin|lambdamax|equivalentWavelength", 
-#>     allow_multiLines = TRUE)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#13: for (i in 1:length(rawResultsList)) {
-#>     rawResultsList[[i]] <- as.data.frame(rawResultsList[[i]])
-#>     rawResultsList[[i]]$simName <- names(rawResultsList)[i]
-#> }
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#14: rawResultsList[[i]] <- as.data.frame(rawResultsList[[i]])
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#15: rawResultsList[[i]]$simName <- names(rawResultsList)[i]
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#18: rawResults <- do.call(rbind, rawResultsList)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#20: bandDF <- rawResults %>% tidyr::separate(col = V1, into = c("module", 
-#>     "band", "var"), sep = "[.]") %>% dplyr::select(-c("module")) %>% 
-#>     dplyr::mutate(band = gsub("band", "", band)) %>% dplyr::distinct(band, 
-#>     var, simName, .keep_all = TRUE) %>% reshape2::dcast(band + 
-#>     simName ~ var, value.var = "V2")
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#27: if (!"equivalentWavelength" %in% names(bandDF)) {
-#>     bandDF$equivalentWavelength <- NA
-#> }
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#28: bandDF$equivalentWavelength <- NA
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#31: bandDF <- bandDF %>% dplyr::mutate_at(c("band", "equivalentWavelength", 
-#>     "lambdamax", "lambdamin"), as.numeric) %>% dplyr::mutate(lambdamid = lambdamin + 
-#>     ((lambdamax - lambdamin)/2)) %>% dplyr::arrange(simName, 
-#>     band) %>% dplyr::select(simName, band, lambdamin, lambdamid, 
-#>     lambdamax, equivalentWavelength)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#38: return(bandDF)
-#> Called from: .getWavelengthsDF(simFilesStacked)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#10: rawResultsList <- getSimulationProperty(x, "lambdamin|lambdamax|equivalentWavelength", 
-#>     allow_multiLines = TRUE)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#13: for (i in 1:length(rawResultsList)) {
-#>     rawResultsList[[i]] <- as.data.frame(rawResultsList[[i]])
-#>     rawResultsList[[i]]$simName <- names(rawResultsList)[i]
-#> }
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#14: rawResultsList[[i]] <- as.data.frame(rawResultsList[[i]])
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#15: rawResultsList[[i]]$simName <- names(rawResultsList)[i]
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#18: rawResults <- do.call(rbind, rawResultsList)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#20: bandDF <- rawResults %>% tidyr::separate(col = V1, into = c("module", 
-#>     "band", "var"), sep = "[.]") %>% dplyr::select(-c("module")) %>% 
-#>     dplyr::mutate(band = gsub("band", "", band)) %>% dplyr::distinct(band, 
-#>     var, simName, .keep_all = TRUE) %>% reshape2::dcast(band + 
-#>     simName ~ var, value.var = "V2")
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#27: if (!"equivalentWavelength" %in% names(bandDF)) {
-#>     bandDF$equivalentWavelength <- NA
-#> }
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#28: bandDF$equivalentWavelength <- NA
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#31: bandDF <- bandDF %>% dplyr::mutate_at(c("band", "equivalentWavelength", 
-#>     "lambdamax", "lambdamin"), as.numeric) %>% dplyr::mutate(lambdamid = lambdamin + 
-#>     ((lambdamax - lambdamin)/2)) %>% dplyr::arrange(simName, 
-#>     band) %>% dplyr::select(simName, band, lambdamin, lambdamid, 
-#>     lambdamax, equivalentWavelength)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#38: return(bandDF)
 ```
 
 Now put together the list of data. As each list element is a summary of
@@ -620,31 +397,6 @@ sF <- simulationFilter(product = "rb3D",
                        typeNums = "",
                        variables = "RADIATIVE_BUDGET")
 simFiles_bin <- daRt::getFiles(simulationDir, sF = sF)
-#> Called from: .getWavelengthsDF(simFilesStacked)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#10: rawResultsList <- getSimulationProperty(x, "lambdamin|lambdamax|equivalentWavelength", 
-#>     allow_multiLines = TRUE)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#13: for (i in 1:length(rawResultsList)) {
-#>     rawResultsList[[i]] <- as.data.frame(rawResultsList[[i]])
-#>     rawResultsList[[i]]$simName <- names(rawResultsList)[i]
-#> }
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#14: rawResultsList[[i]] <- as.data.frame(rawResultsList[[i]])
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#15: rawResultsList[[i]]$simName <- names(rawResultsList)[i]
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#18: rawResults <- do.call(rbind, rawResultsList)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#20: bandDF <- rawResults %>% tidyr::separate(col = V1, into = c("module", 
-#>     "band", "var"), sep = "[.]") %>% dplyr::select(-c("module")) %>% 
-#>     dplyr::mutate(band = gsub("band", "", band)) %>% dplyr::distinct(band, 
-#>     var, simName, .keep_all = TRUE) %>% reshape2::dcast(band + 
-#>     simName ~ var, value.var = "V2")
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#27: if (!"equivalentWavelength" %in% names(bandDF)) {
-#>     bandDF$equivalentWavelength <- NA
-#> }
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#28: bandDF$equivalentWavelength <- NA
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#31: bandDF <- bandDF %>% dplyr::mutate_at(c("band", "equivalentWavelength", 
-#>     "lambdamax", "lambdamin"), as.numeric) %>% dplyr::mutate(lambdamid = lambdamin + 
-#>     ((lambdamax - lambdamin)/2)) %>% dplyr::arrange(simName, 
-#>     band) %>% dplyr::select(simName, band, lambdamin, lambdamid, 
-#>     lambdamax, equivalentWavelength)
-#> debug at C:/Users/micromet/Dropbox/GitProjects/daRt/R/wavelengths.R#38: return(bandDF)
 simData_bin <- as.data.frame(daRt::getData(simFiles_bin))
 #get the file size - for later comparison
 fileSize_bin <- file.size(files(simFiles_bin)$fileName)
