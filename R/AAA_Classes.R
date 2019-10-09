@@ -54,8 +54,13 @@
             errors <- c(errors, msg)
         }
     }
-
-    filesMissing <- !file.exists(object@files$fileName)
+    filesMissing <- TRUE
+    nTries <- 0
+    while (any(filesMissing) && nTries < 5) {
+        filesMissing <- !file.exists(object@files$fileName)
+        Sys.sleep(0.5)
+        nTries <- nTries + 1
+    }
     if (any(filesMissing)) {
         msg <- paste("Missing files:",
                      paste0(
