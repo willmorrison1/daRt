@@ -9,6 +9,9 @@ wavelengths(x = "SimulationFiles")
 \arguments{
 \item{x}{sF \link{SimulationFiles-class}}
 }
+\value{
+data frame
+}
 \description{
-get full information on wavelengths for each band
+Get full information on wavelengths for each band
 }

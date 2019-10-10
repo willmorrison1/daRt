@@ -126,9 +126,9 @@ setGeneric(name = "getData", signature = c("x", "sF"), def = function(x, sF, ...
     standardGeneric("getData"))
 
 #' wavelengths
-#' @description get full information on wavelengths for each band
+#' @description Get full information on wavelengths for each band
 #' @param x sF \link{SimulationFiles-class}
-#'
+#' @return data frame
 #' @export
 #'
 setGeneric(name = "wavelengths", def = function(x = "SimulationFiles")
@@ -144,7 +144,7 @@ setGeneric(name = "wavelengths", def = function(x = "SimulationFiles")
 #' @param x \link{Images-class} object
 #' @param fun Function to apply across each image.
 #'
-#' @return data.frame()
+#' @return data frame
 #' @export
 #'
 setGeneric(name = "imagesToDirectionsDF", def = function(x, fun) standardGeneric("imagesToDirectionsDF"))
@@ -173,7 +173,7 @@ setGeneric(name = "resourceUse", def = function(x = "SimulationFiles") standardG
 #' @description Return a data frame where rows describe a parameter (parametre*) for a simulation (simName).
 #' @param   \link{SimulationFiles-class} or \link{SimulationData-class} class object
 #'
-#' @return data.frame()
+#' @return data frame
 #' @export
 #'
 setGeneric(name = "sequenceParameters", def = function(x) standardGeneric("sequenceParameters"))

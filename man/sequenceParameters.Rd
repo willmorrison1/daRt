@@ -10,7 +10,7 @@ sequenceParameters(x)
 \item{\link{SimulationFiles-class}}{or \link{SimulationData-class} class object}
 }
 \value{
-data.frame()
+data frame
 }
 \description{
 Return a data frame where rows describe a parameter (parametre*) for a simulation (simName).
