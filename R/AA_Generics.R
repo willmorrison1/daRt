@@ -218,16 +218,14 @@ setGeneric(name = "rb3DtoNc", def = function(x = "SimulationFiles", ...)
 #'
 #'
 #' @param x \link{SimulationFiles-class} type object.
-#' @param trianglesInput remove "triangles" input files? (bool)
-#' @param maketOutput remove "maket.txt" output file? (bool)
+#' @param ... \code{trianglesInput} remove "triangles" input files? (bool)
+#' @param ... \code{maketOutput} remove "maket.txt" output file? (bool)
 #'
 #' @return
 #' @export
 #'
 #' @examples
-setGeneric(name = "deleteFiles", def = function(x = "SimulationFiles",
-                                                trianglesInput = "logical",
-                                                maketOutput = "logical")
+setGeneric(name = "deleteFiles", def = function(x = "SimulationFiles", ...)
     standardGeneric("deleteFiles"))
 
 setGeneric(name = "directions", def = function(x = "character", ...)

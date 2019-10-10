@@ -1,5 +1,8 @@
 ---
-output: github_document
+output: 
+  github_document:
+    toc: true
+    toc_depth: 3
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit and run README.Rmd file to regenerate README.md -->
@@ -9,9 +12,9 @@ knitr::opts_chunk$set(
     comment = "#>",
     fig.path = "man/figures/README-",
     out.width = "100%",
-    fig.width = 8.5,
+    fig.width = 8,
     fig.height = 3,
-    dpi = 250,
+    dpi = 200,
     message = FALSE
 )
 ```
@@ -55,7 +58,7 @@ DF <- as.data.frame(simData)
 head(DF, n = 3)
 ```
 
-### SimulationFilter
+### Select data: SimulationFilter
 The "SimulationFilter" object describes what data you want to extract from a DART output directory structure.
 Show the current configuration of the `SimulationFilter`
 ```{r}
@@ -71,7 +74,7 @@ bands(sF) <- 0:2
 iters(sF) <- "ITER3"
 ```
 
-### SimulationFiles
+### Browse files: SimulationFiles
 The "SimulationFiles" object contains all information on the files that will be loaded, based on the provided `SimulationFilter`. It is used to explore the DART output directory structure. 
 First define the simulation directory. For this example, `simulationDir` is a relative directory (based on the github data provided) and consists of one simulation.
 ```{r}
@@ -93,7 +96,7 @@ Explore the output of this to check we happy to continue and load the data. `get
 files(simFiles)
 ```
 
-### SimulationData
+### Load data: SimulationData
 The `SimulationData` object contains all data for the given `SimulationFilter`. Do the following to extract DART output data using the `getData()` method
 ```{r}
 simData <- daRt::getData(x = simulationDir, sF = sF)
@@ -102,22 +105,24 @@ simData_fromFiles <- daRt::getData(x = simFiles)
 identical(simData_fromFiles, simData)
 ```
 
-### Simple plotting
-By having data in a "long" format, it is easy to perform analysis on the data.
+### Analyse data: as.data.frame()
+By having data in a "long" format, it is easy to perform analysis on the data. Once you are ready to use the data, retrieve it using `as.data.frame()`.
+
 ```{r plot data example}
 #plot using ggplot2
 library(ggplot2)
-plotOut <- ggplot(as.data.frame(simData)) +
+DFdata <- as.data.frame(simData)
+plotOut <- ggplot(DFdata) +
     geom_point(aes(x = zenith, y = value, colour = azimuth)) +
     facet_wrap(~ band) +
     theme(aspect.ratio = 1)
 plot(plotOut)
 ```
 
-## Further examples
+## Expanded examples
 This section provides further examples of package use.
 
-### SimulationFilter editing
+### Choosing what data to load - images
 To look at images for `bands` 0, 1 and 2; `iters` (iterations) 1 and 2, and `imageNos` (image numbers) 5 and 7, create the relevant SimulationFilter then load the data 
 ```{r images example}
 #create SimulationFilter
@@ -138,7 +143,7 @@ ggplot(as.data.frame(simData)) +
     theme(aspect.ratio = 1) 
 ```
 
-### Radiative budget {#RB}
+### Working with output data - radiative budget {#RB}
 Alter the `SimulationFilter` again to now look at files for the radiative budget `product`.
 ```{r RB3D example}
 product(sF) <- "rb3D"
@@ -167,6 +172,8 @@ ggplot(simData_filtered) +
     scale_fill_distiller(palette = "Spectral") +
        theme(aspect.ratio = 1)
 ```
+
+## Miscellaneous
 
 ### Memory management
 When performing analysis on a relatively large set of files, memory management is important. `getData()` loads all data to memory which is problematic when loading many large files (e.g. Radiative Budget). It is assumed that the user will perform some analysis on subsets of the raw data in a way that reduces the overall size of the data in memory. To demonstrate meory management, files in this section are loaded in two different scenarios: scenario 1 uses the default `getData()` to load and then analyse all data at once. Scenario 2 loads and analyses the data in pieces, which has a much smaller memory footprint (but may be slower). Both scenarios give the same result with different memory usage.
@@ -219,7 +226,7 @@ for (i in 1:length(allBands)) {
         dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
 }
 ```
-Now put together the list of data. As each list element is a summary of the raw data, it has a much smaller memory footprint. As the summary was performed on one band at a time, the amount of data loaded at once is less than if getFiles() was executed for all bands at once (scenario 1). By loading one band at a time as opposed to all three at once, the memory footprint is around 1/3 of scenario 1. 
+Now put together the list of data. As each list element is a summary of the raw data, it has a much smaller memory footprint. As the summary was performed on one band at a time, the amount of data loaded at once is less than if `getData()` was executed for all bands at once (scenario 1). By loading one band at a time as opposed to all three at once, the memory footprint is around 1/3 of scenario 1. 
 ```{r}
 simDataDF <- dplyr::bind_rows(simDataList)
 
@@ -230,12 +237,12 @@ Both scenarios give the same results
 ```{r}
 all.equal(statVals, statVals1)
 ```
-but by processing in parts, the latter (scenario 2) - produced by 'statVals1' - has a smaller memory footprint as the stats are calculated for each band separately. When inter-band stats are required, the example can be adapted to iterate over e.g. 'iters' or 'variablesRB3D'.
+but by processing in parts, the latter (scenario 2) - produced by 'statVals1' - has a smaller memory footprint as the stats are calculated for each band separately. When inter-band stats are required, the example can be adapted to iterate over e.g. `iters` or `variablesRB3D`.
 
-### Compression of large binary files
+### Radiative budget file compression
 DART radiative budget files are raw binary and can get very large. `rb3DtoNc` converts .bin to NetCDF (.nc) format, which gives smaller files sizes and can be compressed.
 
-Get some DART radiative budget bindary data (the default data)
+Get some DART radiative budget binary data (the default data)
 ```{r}
 simulationDir <- "man/data/cesbio"
 sF <- simulationFilter(product = "rb3D",
@@ -249,7 +256,7 @@ simData_bin <- as.data.frame(daRt::getData(simFiles_bin))
 fileSize_bin <- file.size(files(simFiles_bin)$fileName)
 ```
 
-```{r, echo = FALSE, results='hide',message=FALSE}
+```{r, echo = FALSE, results = 'hide',message = FALSE}
 #crea te backup of the .bin file (it will be deleted by daRt::rb3DtoNc)
 file.copy(files(simFiles_bin)$fileName, "tmp.bin")
 ```
@@ -271,11 +278,44 @@ The new .nc file is much smaller:
 fileSize_nc <- file.size(files(simFiles_nc)$fileName)
 fileSize_nc / fileSize_bin
 ```
+
 and is much faster to read. It can also be read by third party NetCDF browsers e.g. ncview.
 
-```{r, echo = FALSE, results='hide',message=FALSE}
+```{r, echo = FALSE, results = 'hide',message = FALSE}
 #cleanup the creation of .nc
 file.copy("tmp.bin", files(simFiles)$fileName)
 unlink("tmp.bin")
 file.remove(files(simFiles_nc)$fileName)
+```
+
+### File deletion
+DART can output many unwanted files. Use `deleteFiles()` to delete files based on a provided `SimulationFiles` object. Here delete all `directions` files from `iters` 1 and `bands` 1. 
+
+Define the file for deletion
+
+```{r}
+sF <- simulationFilter(product = "directions", 
+                       bands = 1L, 
+                       iters = "ITER1")
+filesToDelete <- getFiles(x = simulationDir, sF = sF)
+```
+
+```{r, echo = FALSE, results = 'hide',message = FALSE}
+#copy output files to save place
+tmpFile <- paste0(files(filesToDelete)$fileName, "_TMP")
+file.copy(files(filesToDelete)$fileName, tmpFile)
+```
+
+then delete the file
+
+```{r}
+deleteFiles(x = filesToDelete)
+
+```
+
+
+```{r, echo = FALSE, results = 'hide',message = FALSE}
+#restore the deleted file
+file.copy(tmpFile, gsub(pattern = "_TMP", replacement = "", tmpFile))
+unlink(tmpFile)
 ```

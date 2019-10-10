@@ -1,4 +1,23 @@
 
+  - [daRt](#dart)
+      - [Installation](#installation)
+      - [Overview](#overview)
+          - [Select data:
+            SimulationFilter](#select-data-simulationfilter)
+          - [Browse files:
+            SimulationFiles](#browse-files-simulationfiles)
+          - [Load data: SimulationData](#load-data-simulationdata)
+          - [Analyse data: as.data.frame()](#analyse-data-as.data.frame)
+      - [Expanded examples](#expanded-examples)
+          - [Choosing what data to load -
+            images](#choosing-what-data-to-load---images)
+          - [Working with output data - radiative budget](#RB)
+      - [Miscellaneous](#miscellaneous)
+          - [Memory management](#memory-management)
+          - [Radiative budget file
+            compression](#radiative-budget-file-compression)
+          - [File deletion](#file-deletion)
+
 <!-- README.md is generated from README.Rmd. Please edit and run README.Rmd file to regenerate README.md -->
 
 # daRt
@@ -49,6 +68,8 @@ Load data for the given simulation using the predetermined file types
 
 ``` r
 simData <- daRt::getData(x = simulationDir, sF = sF)
+#> Warning: The `printer` argument is deprecated as of rlang 0.3.0.
+#> This warning is displayed once per session.
 ```
 
 Use the data in the given “long” format
@@ -65,7 +86,7 @@ head(DF, n = 3)
 #> 3   22.4      90 0.598     0 BRF      ITER1 ""      cesbio
 ```
 
-### SimulationFilter
+### Select data: SimulationFilter
 
 The “SimulationFilter” object describes what data you want to extract
 from a DART output directory structure. Show the current configuration
@@ -107,7 +128,7 @@ bands(sF) <- 0:2
 iters(sF) <- "ITER3"
 ```
 
-### SimulationFiles
+### Browse files: SimulationFiles
 
 The “SimulationFiles” object contains all information on the files that
 will be loaded, based on the provided `SimulationFilter`. It is used to
@@ -156,7 +177,7 @@ files(simFiles)
 #> 3  cesbio
 ```
 
-### SimulationData
+### Load data: SimulationData
 
 The `SimulationData` object contains all data for the given
 `SimulationFilter`. Do the following to extract DART output data using
@@ -170,15 +191,17 @@ identical(simData_fromFiles, simData)
 #> [1] TRUE
 ```
 
-### Simple plotting
+### Analyse data: as.data.frame()
 
 By having data in a “long” format, it is easy to perform analysis on the
-data.
+data. Once you are ready to use the data, retrieve it using
+`as.data.frame()`.
 
 ``` r
 #plot using ggplot2
 library(ggplot2)
-plotOut <- ggplot(as.data.frame(simData)) +
+DFdata <- as.data.frame(simData)
+plotOut <- ggplot(DFdata) +
     geom_point(aes(x = zenith, y = value, colour = azimuth)) +
     facet_wrap(~ band) +
     theme(aspect.ratio = 1)
@@ -187,11 +210,11 @@ plot(plotOut)
 
 <img src="man/figures/README-plot data example-1.png" width="100%" />
 
-## Further examples
+## Expanded examples
 
 This section provides further examples of package use.
 
-### SimulationFilter editing
+### Choosing what data to load - images
 
 To look at images for `bands` 0, 1 and 2; `iters` (iterations) 1 and 2,
 and `imageNos` (image numbers) 5 and 7, create the relevant
@@ -218,7 +241,7 @@ ggplot(as.data.frame(simData)) +
 
 <img src="man/figures/README-images example-1.png" width="100%" />
 
-### Radiative budget
+### Working with output data - radiative budget
 
 Alter the `SimulationFilter` again to now look at files for the
 radiative budget `product`.
@@ -269,6 +292,8 @@ ggplot(simData_filtered) +
 ```
 
 <img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" />
+
+## Miscellaneous
 
 ### Memory management
 
@@ -358,8 +383,8 @@ for (i in 1:length(allBands)) {
 Now put together the list of data. As each list element is a summary of
 the raw data, it has a much smaller memory footprint. As the summary was
 performed on one band at a time, the amount of data loaded at once is
-less than if getFiles() was executed for all bands at once (scenario 1).
-By loading one band at a time as opposed to all three at once, the
+less than if `getData()` was executed for all bands at once (scenario
+1). By loading one band at a time as opposed to all three at once, the
 memory footprint is around 1/3 of scenario 1.
 
 ``` r
@@ -378,16 +403,16 @@ all.equal(statVals, statVals1)
 but by processing in parts, the latter (scenario 2) - produced by
 ‘statVals1’ - has a smaller memory footprint as the stats are
 calculated for each band separately. When inter-band stats are required,
-the example can be adapted to iterate over e.g. ‘iters’ or
-‘variablesRB3D’.
+the example can be adapted to iterate over e.g. `iters` or
+`variablesRB3D`.
 
-### Compression of large binary files
+### Radiative budget file compression
 
 DART radiative budget files are raw binary and can get very large.
 `rb3DtoNc` converts .bin to NetCDF (.nc) format, which gives smaller
 files sizes and can be compressed.
 
-Get some DART radiative budget bindary data (the default data)
+Get some DART radiative budget binary data (the default data)
 
 ``` r
 simulationDir <- "man/data/cesbio"
@@ -428,3 +453,25 @@ fileSize_nc / fileSize_bin
 
 and is much faster to read. It can also be read by third party NetCDF
 browsers e.g. ncview.
+
+### File deletion
+
+DART can output many unwanted files. Use `deleteFiles()` to delete files
+based on a provided `SimulationFiles` object. Here delete all
+`directions` files from `iters` 1 and `bands` 1.
+
+Define the file for deletion
+
+``` r
+sF <- simulationFilter(product = "directions", 
+                       bands = 1L, 
+                       iters = "ITER1")
+filesToDelete <- getFiles(x = simulationDir, sF = sF)
+```
+
+then delete the file
+
+``` r
+deleteFiles(x = filesToDelete)
+#> NULL
+```

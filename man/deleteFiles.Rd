@@ -4,15 +4,14 @@
 \alias{deleteFiles}
 \title{deleteFiles}
 \usage{
-deleteFiles(x = "SimulationFiles", trianglesInput = "logical",
-  maketOutput = "logical")
+deleteFiles(x = "SimulationFiles", ...)
 }
 \arguments{
 \item{x}{\link{SimulationFiles-class} type object.}
 
-\item{trianglesInput}{remove "triangles" input files? (bool)}
+\item{...}{\code{trianglesInput} remove "triangles" input files? (bool)}
 
-\item{maketOutput}{remove "maket.txt" output file? (bool)}
+\item{...}{\code{maketOutput} remove "maket.txt" output file? (bool)}
 }
 \description{
 DART input files can be very large. This function deletes those large files
