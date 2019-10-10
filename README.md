@@ -1,26 +1,24 @@
+daRt
+================
 
-  - [daRt](#dart)
-      - [Installation](#installation)
-      - [Overview](#overview)
-          - [Select data:
-            SimulationFilter](#select-data-simulationfilter)
-          - [Browse files:
-            SimulationFiles](#browse-files-simulationfiles)
-          - [Load data: SimulationData](#load-data-simulationdata)
-          - [Analyse data: as.data.frame()](#analyse-data-as.data.frame)
-      - [Expanded examples](#expanded-examples)
-          - [Choosing what data to load -
-            images](#choosing-what-data-to-load---images)
-          - [Working with output data - radiative budget](#RB)
-      - [Miscellaneous](#miscellaneous)
-          - [Memory management](#memory-management)
-          - [Radiative budget file
-            compression](#radiative-budget-file-compression)
-          - [File deletion](#file-deletion)
+  - [Installation](#installation)
+  - [Overview](#overview)
+      - [Define data to load:
+        SimulationFilter](#define-data-to-load-simulationfilter)
+      - [Browse files: SimulationFiles](#browse-files-simulationfiles)
+      - [Load data: SimulationData](#load-data-simulationdata)
+      - [Analysis: as.data.frame()](#analysis-as.data.frame)
+  - [Expanded examples](#expanded-examples)
+      - [Defining data to load: SimulationFilter for
+        images](#defining-data-to-load-simulationfilter-for-images)
+      - [Working with output data: radiative budget](#RB)
+  - [Miscellaneous](#miscellaneous)
+      - [Memory management: tips](#memory-management-tips)
+      - [Radiative budget files:
+        compression](#radiative-budget-files-compression)
+      - [Unwanted files: deletion](#unwanted-files-deletion)
 
 <!-- README.md is generated from README.Rmd. Please edit and run README.Rmd file to regenerate README.md -->
-
-# daRt
 
 <!-- badges: start -->
 
@@ -31,7 +29,7 @@ that is produced by the Discrete Anisotropic Radiative Transfer (DART)
 model. The data in daRt are formatted in a way that facilitates rapid
 data analysis.
 
-## Installation
+# Installation
 
 You can install the development version from
 [GitHub](https://github.com/) with:
@@ -47,12 +45,12 @@ Load the package
 library(daRt)
 ```
 
-## Overview
+# Overview
 
 This section demonstrates the most basic use of daRt to load the
 “directions” `product` data for the default “cesbio” simulation
 provided in this respository. Determine the type of files you want to
-load
+load (here with defaults)
 
 ``` r
 sF <- simulationFilter(product = "directions")
@@ -86,7 +84,7 @@ head(DF, n = 3)
 #> 3   22.4      90 0.598     0 BRF      ITER1 ""      cesbio
 ```
 
-### Select data: SimulationFilter
+## Define data to load: SimulationFilter
 
 The “SimulationFilter” object describes what data you want to extract
 from a DART output directory structure. Show the current configuration
@@ -128,7 +126,7 @@ bands(sF) <- 0:2
 iters(sF) <- "ITER3"
 ```
 
-### Browse files: SimulationFiles
+## Browse files: SimulationFiles
 
 The “SimulationFiles” object contains all information on the files that
 will be loaded, based on the provided `SimulationFilter`. It is used to
@@ -177,7 +175,7 @@ files(simFiles)
 #> 3  cesbio
 ```
 
-### Load data: SimulationData
+## Load data: SimulationData
 
 The `SimulationData` object contains all data for the given
 `SimulationFilter`. Do the following to extract DART output data using
@@ -191,7 +189,7 @@ identical(simData_fromFiles, simData)
 #> [1] TRUE
 ```
 
-### Analyse data: as.data.frame()
+## Analysis: as.data.frame()
 
 By having data in a “long” format, it is easy to perform analysis on the
 data. Once you are ready to use the data, retrieve it using
@@ -210,11 +208,11 @@ plot(plotOut)
 
 <img src="man/figures/README-plot data example-1.png" width="100%" />
 
-## Expanded examples
+# Expanded examples
 
 This section provides further examples of package use.
 
-### Choosing what data to load - images
+## Defining data to load: SimulationFilter for images
 
 To look at images for `bands` 0, 1 and 2; `iters` (iterations) 1 and 2,
 and `imageNos` (image numbers) 5 and 7, create the relevant
@@ -241,7 +239,7 @@ ggplot(as.data.frame(simData)) +
 
 <img src="man/figures/README-images example-1.png" width="100%" />
 
-### Working with output data - radiative budget
+## Working with output data: radiative budget
 
 Alter the `SimulationFilter` again to now look at files for the
 radiative budget `product`.
@@ -293,9 +291,9 @@ ggplot(simData_filtered) +
 
 <img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" />
 
-## Miscellaneous
+# Miscellaneous
 
-### Memory management
+## Memory management: tips
 
 When performing analysis on a relatively large set of files, memory
 management is important. `getData()` loads all data to memory which is
@@ -308,7 +306,7 @@ then analyse all data at once. Scenario 2 loads and analyses the data in
 pieces, which has a much smaller memory footprint (but may be slower).
 Both scenarios give the same result with different memory usage.
 
-#### Scenario 1: Load data all at once
+### Scenario 1: Load data all at once
 
 Load all radiative budget products at once into memory and take the mean
 of each horizontal layer.
@@ -356,7 +354,7 @@ statVals <- DFdata %>%
     dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
 ```
 
-#### Scenario 2: Load data in sections and process each section
+### Scenario 2: Load data in sections and process each section
 
 Do ‘scenario 1’ analysis but with data processed for each band
 separately to save on memory usage.
@@ -406,7 +404,7 @@ calculated for each band separately. When inter-band stats are required,
 the example can be adapted to iterate over e.g. `iters` or
 `variablesRB3D`.
 
-### Radiative budget file compression
+## Radiative budget files: compression
 
 DART radiative budget files are raw binary and can get very large.
 `rb3DtoNc` converts .bin to NetCDF (.nc) format, which gives smaller
@@ -454,7 +452,7 @@ fileSize_nc / fileSize_bin
 and is much faster to read. It can also be read by third party NetCDF
 browsers e.g. ncview.
 
-### File deletion
+## Unwanted files: deletion
 
 DART can output many unwanted files. Use `deleteFiles()` to delete files
 based on a provided `SimulationFiles` object. Here delete all
