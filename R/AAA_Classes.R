@@ -295,11 +295,9 @@
 #' @slot imageNos integer
 #' @slot product character e.g. "directions".
 #'
-#' @return
 #' @export
 #' @seealso \code{\link{simulationFilter}}
 #'
-#' @examples
 setClass(
     Class = "SimulationFilter",
     slots = list(bands = "integer",
@@ -336,10 +334,7 @@ setValidity("SimulationHandle", .simHandleValidity)
 #' @slot sequenceInfoList a list, with each list element showing the variable permutation(s) within this specific simulation sequence.
 #' @slot wavelengths a data frame containing spectral information on each band for each simulation
 #'
-#' @return
 #' @export
-#'
-#' @examples
 #'
 setClass(
     Class = "SimulationFiles", contains = "SimulationHandle",
@@ -356,10 +351,8 @@ setValidity("SimulationFiles", .simFilesValidity)
 #' @description Generic SimulationData class that extends to data classes for specific DART products
 #' @slot data data.frame.
 #'
-#' @return
 #' @export
 #' @seealso \link{Images-class} \link{Directions-class} \link{RB3D-class}
-#' @examples
 setClass(
     Class = "SimulationData", contains = "SimulationFiles",
     slots = list(data = "data.frame"))
@@ -369,10 +362,8 @@ setClass(
 #'
 #' @name Directions-class
 #' @description Directions data class that extends \link{SimulationData-class} class.
-#' @return
 #' @export
 #'
-#' @examples
 setClass(
     Class = "Directions", contains = "SimulationData")
 setValidity("Directions", .dirValidity)
@@ -382,10 +373,8 @@ setValidity("Directions", .dirValidity)
 #'
 #' @name Images-class
 #' @description Image data class extends \link{SimulationData-class} class.
-#' @return
 #' @export
 #'
-#' @examples
 setClass(
     Class = "Images", contains = "SimulationData")
 setValidity("Images", .imagesValidity)
@@ -395,10 +384,8 @@ setValidity("Images", .imagesValidity)
 #'
 #' @name RB3D-class
 #' @description RB3D (Radiative Budget 3D) class that extends \link{SimulationData-class} class.
-#' @return
 #' @export
 #'
-#' @examples
 setClass(
     Class = "RB3D", contains = "SimulationData")
 setValidity("RB3D", .RB3DValidity)

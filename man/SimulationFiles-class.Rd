@@ -31,6 +31,3 @@ by the object with class \link{SimulationFilter-class}
 \item{\code{wavelengths}}{a data frame containing spectral information on each band for each simulation}
 }}
 
-\examples{
-
-}

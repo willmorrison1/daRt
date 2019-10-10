@@ -1,7 +1,8 @@
 setMethod(f = "simulationFilter",
           signature(product = "character", x = "missing"),
 
-          definition = function(product, ...,
+          definition = function(product,
+                                x,
                                 bands = .defaultBands(),
                                 variables = .defaultVariables(),
                                 iters = .defaultIters(),
@@ -44,8 +45,8 @@ setMethod(f = "simulationFilter<-",
 
 #' @export
 setMethod(f = "simulationFilter",
-          signature(x = "SimulationFiles", product = "missing"),
-          definition = function(x){
+          signature(product = "missing", x = "SimulationFiles"),
+          definition = function(product, x){
 
               x@simulationFilter
           })

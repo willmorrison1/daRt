@@ -9,6 +9,11 @@
 }
 \arguments{
 \item{x}{SimulationData.}
+
+\item{as.tibble}{Return as a tibble-type data frame?}
+}
+\value{
+data.frame or tibble
 }
 \description{
 as.data.frame

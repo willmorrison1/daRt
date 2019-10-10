@@ -1,8 +1,0 @@
-today = make a function to turn any directions data into a post-processed "directions" object
-0) check "directions" output in DART - how does it compare to my results? - check "directions" points.. . 
-1) need to add @fromRawFiles = FALSE/TRUE, to then see if we need to do validitycheck on rawfiles
-2) add "test" points of different magnitude - that easily come out in directions plot and can be used to test hypothesis on their location
-3) the plot method must only work only for a single iter,band,typeNum
-4) ideally, the "directions" would have all of the directional meta data associated with it. so that a ggplot plot can be done with it
-5) for now, I just want one band, one iter, one timestep - plotted as a polar plot. 
-

@@ -11,6 +11,9 @@ imagesToDirectionsDF(x, fun)
 
 \item{fun}{Function to apply across each image.}
 }
+\value{
+data.frame()
+}
 \description{
 Convert an \link{Images-class} object to a {Directions-class} object
 }

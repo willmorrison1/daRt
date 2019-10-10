@@ -11,6 +11,9 @@ rb3DtoNc(x = "SimulationFiles", ...)
 
 \item{ncCompressionFactor}{Compression factor (0 - 9) for writing ncdf files (see ncdf4 package)}
 }
+\value{
+\link{SimulationFiles-class} type object.
+}
 \description{
 DART radiative budget .bin files can be very large. This function replaces all
 .bin files with .nc files, which can be compressed and are faster to read.

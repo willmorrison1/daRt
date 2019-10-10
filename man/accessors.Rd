@@ -33,7 +33,25 @@ imageTypes(x)
 
 imageNos(x)
 }
+\arguments{
+\item{x}{\linkS4class{SimulationFilter} or \linkS4class{SimulationFiles} class}
+}
 \description{
-Generic functions to access information from the objects with classes
-defined in this package
+Generic functions to access information from the objects with classes defined in this package
+}
+\examples{
+sF <- simulationFilter(product = "directions")
+bands(sF)
+
+\dontrun{
+#access information within SimulationFiles object
+#define the simulation directory
+simDir <- "C:/Users/<Username>/DART/user_data/simulations/cesbio/"
+simFiles <- getFiles(simDir)
+#show bands that are selected
+bands(simFiles)
+#show 'type numbers' that have been selected
+typeNums(simFiles)
+}
+
 }

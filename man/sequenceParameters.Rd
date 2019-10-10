@@ -9,8 +9,11 @@ sequenceParameters(x)
 \arguments{
 \item{\link{SimulationFiles-class}}{or \link{SimulationData-class} class object}
 }
+\value{
+data.frame()
+}
 \description{
-return a data frame. A row describes the parameters (parametre*) for a simulation (simName).
+Return a data frame where rows describe a parameter (parametre*) for a simulation (simName).
 }
 \details{
 Get data frame of all sequence parameters
