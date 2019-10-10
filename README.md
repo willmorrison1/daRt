@@ -48,13 +48,8 @@ library(daRt)
 # Overview
 
 This section demonstrates the most basic use of daRt to load the
-“directions” `product` data for the default “cesbio” simulation
-provided in this respository. Determine the type of files you want to
-load (here with defaults)
-
-``` r
-sF <- simulationFilter(product = "directions")
-```
+“directions” data `product` for the default “cesbio” simulation
+provided in this respository.
 
 Define a simulation directory
 
@@ -62,7 +57,15 @@ Define a simulation directory
 simulationDir <- "man/data/cesbio"
 ```
 
-Load data for the given simulation using the predetermined file types
+**`simulationFilter()`** determines the type of files you want to load
+(here with defaults).
+
+``` r
+sF <- daRt::simulationFilter(product = "directions")
+```
+
+**`getData()`** loads data for the given simulation using the
+predetermined file type(s).
 
 ``` r
 simData <- daRt::getData(x = simulationDir, sF = sF)
@@ -70,7 +73,8 @@ simData <- daRt::getData(x = simulationDir, sF = sF)
 #> This warning is displayed once per session.
 ```
 
-Use the data in the given “long” format
+**`as.data.frame()`** releases the data object as a “long” format data
+frame.
 
 ``` r
 DF <- as.data.frame(simData)
@@ -86,7 +90,7 @@ head(DF, n = 3)
 
 ## Define data to load: SimulationFilter
 
-The “SimulationFilter” object describes what data you want to extract
+The ‘SimulationFilter’ object describes what data you want to extract
 from a DART output directory structure. Show the current configuration
 of the `SimulationFilter`
 
@@ -128,7 +132,7 @@ iters(sF) <- "ITER3"
 
 ## Browse files: SimulationFiles
 
-The “SimulationFiles” object contains all information on the files that
+The ‘SimulationFiles’ object contains all information on the files that
 will be loaded, based on the provided `SimulationFilter`. It is used to
 explore the DART output directory structure. First define the simulation
 directory. For this example, `simulationDir` is a relative directory
@@ -220,7 +224,7 @@ SimulationFilter then load the data
 
 ``` r
 #create SimulationFilter
-sF <- simulationFilter(product = "images", 
+sF <- daRt::simulationFilter(product = "images", 
                        bands = as.integer(0:2),
                        iters = c("ITER1", "ITER2"),
                        variables = "BRF",
@@ -312,7 +316,7 @@ Load all radiative budget products at once into memory and take the mean
 of each horizontal layer.
 
 ``` r
-sF <- simulationFilter(product = "rb3D", 
+sF <- daRt::simulationFilter(product = "rb3D", 
                        bands = as.integer(0:2), 
                        iters = c("ITER1", "ITER2", "ILLUDIFF", "ILLUDIR"),
                        typeNums = "",
@@ -360,7 +364,7 @@ Do ‘scenario 1’ analysis but with data processed for each band
 separately to save on memory usage.
 
 ``` r
-sF <- simulationFilter(product = "rb3D", 
+sF <- daRt::simulationFilter(product = "rb3D", 
                        bands = as.integer(0:2), 
                        iters = c("ITER1", "ITER2", "ILLUDIFF", "ILLUDIR"),
                        typeNums = "",
@@ -414,7 +418,7 @@ Get some DART radiative budget binary data (the default data)
 
 ``` r
 simulationDir <- "man/data/cesbio"
-sF <- simulationFilter(product = "rb3D",
+sF <- daRt::simulationFilter(product = "rb3D",
                        bands = as.integer(1), 
                        iters = "ITER1",
                        typeNums = "",
@@ -461,10 +465,10 @@ based on a provided `SimulationFiles` object. Here delete all
 Define the file for deletion
 
 ``` r
-sF <- simulationFilter(product = "directions", 
+sF <- daRt::simulationFilter(product = "directions", 
                        bands = 1L, 
                        iters = "ITER1")
-filesToDelete <- getFiles(x = simulationDir, sF = sF)
+filesToDelete <- daRt::getFiles(x = simulationDir, sF = sF)
 ```
 
 then delete the file
