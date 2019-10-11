@@ -34,7 +34,8 @@ setMethod(f = "imageFiles",
                               dplyr::filter(imageNos %in% sF@imageNos)
                       }
                       if (nrow(imgInfoDFList[[iterTrack]]) == 0) {
-                          stop("No images found after 'imageNos' filter applied")
+                          stop("No images found after 'imageNos' filter applied for image type: ",
+                               imageTypes(sF)[v])
                       }
                       imgInfoDFList[[iterTrack]]$band <- subDirs$band[i]
                       imgInfoDFList[[iterTrack]]$variable <- subDirs$variable[i]
