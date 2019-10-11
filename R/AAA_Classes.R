@@ -183,13 +183,19 @@
 .simFilterValidity_variablesRB3D <- function(object) {
 
     varRB3DVals <- variablesRB3D(object)
+
+    if (all(varRB3DVals == "") & product(object) == "rb3D") return("No RB3D variables set.")
+
+    return()
+
+}
+
+.simFilterValidity_typeNums <- function(object) {
     typeNumVals <- typeNums(object)
 
     .typeNumErr <- function() {
         "'typeNum' is invalid. Should be '[numeric]_[character]' e.g. '2_Ground'"
     }
-
-    if (all(varRB3DVals == "")) return("No RB3D variables set.")
 
     for (i in 1:length(typeNumVals)) {
         if (typeNumVals[i] == "") next
@@ -197,8 +203,6 @@
         if (length(splitVars) < 2) return(paste(typeNumVals[i], .typeNumErr()))
         if (is.na(as.numeric(splitVars[1]))) return(paste(typeNumVals[i], .typeNumErr()))
     }
-
-    return()
 
 }
 
