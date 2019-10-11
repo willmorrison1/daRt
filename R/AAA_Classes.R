@@ -194,7 +194,9 @@
     typeNumVals <- typeNums(object)
 
     .typeNumErr <- function() {
-        "'typeNum' is invalid. Should be '[numeric]_[character]' e.g. '2_Ground'"
+        "'typeNum' is invalid. Should be '[numeric]_[character]' e.g. '2_Ground'. \n
+        See input/dart.typ for list of dart surface types e.g. 101_Default_Object if using
+        an imported 3D model with no grouping of triangles."
     }
 
     for (i in 1:length(typeNumVals)) {
