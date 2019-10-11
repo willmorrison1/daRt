@@ -247,6 +247,8 @@
     errors <- c(errors, .simFilterValidity_images(object))
     #allowed imageNos
     errors <- c(errors, .simFilterValidity_imageNos(object))
+    #allowed typeNums
+    errors <- c(errors, .simFilterValidity_typeNums(object))
 
     return(ifelse(test = length(errors) == 0,
                   yes = TRUE,
