@@ -225,6 +225,18 @@ setGeneric(name = "rb3DtoNc", def = function(x = "SimulationFiles", ...)
 setGeneric(name = "deleteFiles", def = function(x = "SimulationFiles", deleteSimulationFiles = "boolean", ...)
     standardGeneric("deleteFiles"))
 
+#' Convert Tapp to Radiance
+#' @title tappToRadiance
+#' @description Convert Tapp (K) to Radiance (W m2 sr-1 um-1) using Planck function at the equivalent Band wavelength
+#'
+#' @param x \link{SimulationData-class} type object.
+#'
+#' @return \link{SimulationData-class} type object.
+#' @export
+#'
+setGeneric(name = "tappToRadiance", def = function(x = "SimulationData")
+    standardGeneric("tappToRadiance"))
+
 setGeneric(name = "directions", def = function(x = "character", ...)
     standardGeneric("directions"))
 setGeneric(name = "directionsFiles", def = function(x = "character", sF = "SimulationFilter")
