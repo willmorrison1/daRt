@@ -31,7 +31,7 @@ setMethod(f = "removeRelief",
                       stop(paste("The extent (m) of the input DEM is smaller than that of the RB3D dataset.
                                  It needs to be the same size or larger."))
                   }
-                  #DART XY is switched for raster XY, so take DART "YX" wen doing difference (untested)
+                  #DART XY is switched for raster XY, so take DART "YX" when doing difference (untested)
                   cropOffset <- rasterSize - RB3Dsize[2:1]
                   DEMc <- raster::crop(DEM, extent(DEM) -
                                            (c(-cropOffset[1], cropOffset[1], -cropOffset[2], cropOffset[2]) / 2))
