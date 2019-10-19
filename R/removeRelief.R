@@ -1,7 +1,7 @@
 #' @export
 setMethod(f = "removeRelief",
           signature = signature(x = "RB3D", DEM = "RasterLayer"),
-          definition = function(x, DEM) {
+          definition = function(x, DEM, DARTmodelElevation) {
 
               xSize_simProperty <- getSimulationProperty(x, "cell.size.x")
               zSize_simProperty <- getSimulationProperty(x, "cell.size.z")
@@ -19,6 +19,7 @@ setMethod(f = "removeRelief",
               xyzDF <- do.call(rbind, xyzSize)
               xyzDF$simName <- names(xSize_simProperty)
 
+              #this transformation works for one RB3D resolution at a time
               for (i in 1:nrow(unique(xyzDF[c("xy", "z")]))) {
                   XYsize <- as.numeric(xyzDF[i, ]$xy)
                   Zsize <- as.numeric(xyzDF[i, ]$z)
@@ -46,14 +47,15 @@ setMethod(f = "removeRelief",
                   heightDiffDF <- reshape2::melt(raster::as.matrix(heightDiffRaster), varnames = c("X", "Y"),
                                                  value.name = "z") %>%
                       dplyr::mutate(z = as.integer(z))
+                  rm(heightDiffRaster);gc()
 
-                  #this transformation works for one RB3D resolution. index all simulations with this resolution
+                  #index all simulations with this resolution
                   RB3DresInd <- xyzDF$xy == xyzDF[i, ]$xy & xyzDF$z == xyzDF[i, ]$z
                   simind <-  d@data$simName %in% xyzDF$simName[RB3DresInd]
                   #apply the transformation to these simulations
                   d@data[simind, ] <- d@data[simind, ] %>%
                       dplyr::left_join(heightDiffDF, by = c("X", "Y")) %>%
-                      dplyr::mutate(Z = Z - z) %>%
+                      dplyr::mutate(Z = (Z - z) - DARTmodelElevation)  %>%
                       dplyr::select(-z)
                   rm(simind); gc()
               }

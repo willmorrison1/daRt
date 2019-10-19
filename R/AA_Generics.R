@@ -185,11 +185,12 @@ setGeneric(name = "sequenceParameters", def = function(x) standardGeneric("seque
 #'
 #' @param x \link{RB3D-class} type object.
 #' @param DSM \code{RasterLayer} type object with height above ground level (m) and - preferably - a finer
-#' horizontal reoslution than that of the radiative budget cells in x. The center of the DSM must be georeferenced
+#' @param ... `DARTmodelElevation` What is the elevation of the 3D model(s) set to in DART? Default 0.
+#' horizontal resolution than that of the radiative budget cells in x. The center of the DSM must be georeferenced
 #' to the center of the radiarive budget data in x. The DSM can have a larger extent than x.
 #' @export
 #'
-setGeneric(name = "removeRelief", def = function(x = "RB3D", DEM = "RasterLayer")
+setGeneric(name = "removeRelief", def = function(x = "RB3D", DEM = "RasterLayer", ...)
     standardGeneric("removeRelief"))
 
 
