@@ -8,7 +8,7 @@ setMethod("imagesToDirectionsDF", signature = signature(x = "Images", fun = "fun
               }
 
               aggData <- x@data %>%
-                  dplyr::group_by(band, variable, iter, typeNum, imageNo, VZ, VA, simName) %>%
+                  dplyr::group_by(band, variable, iter, typeNum, imageNum, VZ, VA, simName) %>%
                   dplyr::summarise(value = fun(value)) %>%
                   ungroup() %>%
                   as.data.frame()

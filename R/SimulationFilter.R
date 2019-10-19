@@ -9,7 +9,7 @@ setMethod(f = "simulationFilter",
                                 variablesRB3D = .defaultVariablesRB3D(),
                                 typeNums = .defaultTypeNums(),
                                 imageTypes = .defaultimageTypes(),
-                                imageNos = .defaultimageNos()){
+                                imageNums = .defaultimageNums()){
 
               s <- new("SimulationFilter",
                        bands = bands,
@@ -18,7 +18,7 @@ setMethod(f = "simulationFilter",
                        variablesRB3D = variablesRB3D,
                        typeNums = typeNums,
                        imageTypes = imageTypes,
-                       imageNos = imageNos,
+                       imageNums = imageNums,
                        product = product)
 
               validObject(s, complete = TRUE)
@@ -91,7 +91,7 @@ setMethod(f = "simulationFilter",
 
 }
 
-.defaultimageNos <- function(){
+.defaultimageNums <- function(){
 
     integer()
 

@@ -17,7 +17,7 @@ simulationFilter(product = "character", x, ...)
 \description{
 Function for creating the \linkS4class{SimulationFilter} class. Define a product, then
 Optional arguments of: `bands`, `variables`, `iterations`, `variablesRB3D`,
-`typeNums`, `imageTypes`, `imageNos`. See \link{SimulationFilter-class} for full
+`typeNums`, `imageTypes`, `imageNums`. See \link{SimulationFilter-class} for full
 description.
 }
 \examples{
@@ -25,7 +25,7 @@ sF <- daRt::simulationFilter(product = "images",
                              bands = as.integer(0:2),
                              iters = c("ITER1", "ITER2"),
                              variables = "BRF",
-                             imageNos = as.integer(c(5, 7)),
+                             imageNums = as.integer(c(5, 7)),
                              imageTypes = c("ima", "ima_transmittance"))
 
 }

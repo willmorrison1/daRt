@@ -10,7 +10,7 @@
 \alias{variables<-}
 \alias{typeNums<-}
 \alias{imageTypes<-}
-\alias{imageNos<-}
+\alias{imageNums<-}
 \title{SimulationFilter class.}
 \usage{
 product(x) <- value
@@ -27,7 +27,7 @@ typeNums(x) <- value
 
 imageTypes(x) <- value
 
-imageNos(x) <- value
+imageNums(x) <- value
 }
 \description{
 SimulationFilter class.
@@ -47,7 +47,7 @@ SimulationFilter class.
 
 \item{\code{imageTypes}}{character e.g. "ima".}
 
-\item{\code{imageNos}}{integer}
+\item{\code{imageNums}}{integer}
 
 \item{\code{product}}{character e.g. "directions".}
 }}

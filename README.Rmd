@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 <!-- badges: end -->
-The daRt package provides a very quick and flexible way to import data that is produced by the Discrete Anisotropic Radiative Transfer (DART) model. The data in daRt are formatted in a way that facilitates rapid data analysis. 
+The daRt package provides a very quick and flexible way to import data that is produced by the Discrete Anisotropic Radiative Transfer (DART) model. The data in daRt are formatted in a way that facilitates rapid data analysis. Formal documentation is available in the pdf manual.
 
 # Installation
 
@@ -126,14 +126,14 @@ plot(plotOut)
 This section provides further examples of package use.
 
 ## Defining data to load: SimulationFilter for images
-To look at images for `bands` 0, 1 and 2; `iters` (iterations) 1 and 2, and `imageNos` (image numbers) 5 and 7, create the relevant SimulationFilter then load the data 
+To look at images for `bands` 0, 1 and 2; `iters` (iterations) 1 and 2, and `imageNums` (image numbers) 5 and 7, create the relevant SimulationFilter then load the data 
 ```{r images example}
 #create SimulationFilter
 sF <- daRt::simulationFilter(product = "images", 
                        bands = as.integer(0:2),
                        iters = c("ITER1", "ITER2"),
                        variables = "BRF",
-                       imageNos = as.integer(c(5, 7)),
+                       imageNums = as.integer(c(5, 7)),
                        imageTypes = "ima")
 #load data - 'nCores' allows parallel processing of files.
 #It is useful for access to drives that have optimised paralell I/O.
@@ -142,7 +142,7 @@ simData <- daRt::getData(x = simulationDir, sF = sF, nCores = 2)
 #simple plot of data
 ggplot(as.data.frame(simData)) + 
     geom_raster(aes(x = x, y = y, fill = value)) +
-    facet_grid(band ~ imageNo + iter) +
+    facet_grid(band ~ imageNum + iter) +
     theme(aspect.ratio = 1) 
 ```
 
@@ -309,10 +309,11 @@ tmpFile <- paste0(files(filesToDelete)$fileName, "_TMP")
 file.copy(files(filesToDelete)$fileName, tmpFile)
 ```
 
-then delete the file
+then delete the file, where `deleteSimulationFiles` parameter makes the user sure to 
+know that they are deleting output data!
 
 ```{r}
-deleteFiles(x = filesToDelete)
+deleteFiles(x = filesToDelete, deleteSimulationFiles = TRUE)
 
 ```
 

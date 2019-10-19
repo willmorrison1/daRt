@@ -10,7 +10,7 @@
 \alias{variablesRB3D}
 \alias{typeNums}
 \alias{imageTypes}
-\alias{imageNos}
+\alias{imageNums}
 \title{Access object information}
 \usage{
 product(x)
@@ -31,7 +31,7 @@ typeNums(x)
 
 imageTypes(x)
 
-imageNos(x)
+imageNums(x)
 }
 \arguments{
 \item{x}{\linkS4class{SimulationFilter} or \linkS4class{SimulationFiles} class}

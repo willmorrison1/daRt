@@ -1,9 +1,8 @@
 setMethod(f = "deleteFiles",
-          signature = signature(x = "SimulationFiles", deleteSimulationFiles = "boolean"),
+          signature = signature(x = "SimulationFiles", deleteSimulationFiles = "logical"),
           definition = function(x, deleteSimulationFiles = FALSE,
                                 trianglesInput = FALSE, maketOutput = FALSE) {
               library(tools)
-              #here i am - sort out inputs for deleteFiles
 
               validObject(x, complete = TRUE)
               simDirs <- baseDir(x)

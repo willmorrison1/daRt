@@ -13,7 +13,7 @@ setGeneric(name = "typeNums<-", def = function(x, value) standardGeneric("typeNu
 #' @rdname SimulationFilter-class
 setGeneric(name = "imageTypes<-", def = function(x, value) standardGeneric("imageTypes<-"))
 #' @rdname SimulationFilter-class
-setGeneric(name = "imageNos<-", def = function(x, value) standardGeneric("imageNos<-"))
+setGeneric(name = "imageNums<-", def = function(x, value) standardGeneric("imageNums<-"))
 
 #' Access object information
 
@@ -56,7 +56,7 @@ setGeneric(name = "typeNums", def = function(x) standardGeneric("typeNums"))
 #' @rdname accessors
 setGeneric(name = "imageTypes", def = function(x) standardGeneric("imageTypes"))
 #' @rdname accessors
-setGeneric(name = "imageNos", def = function(x) standardGeneric("imageNos"))
+setGeneric(name = "imageNums", def = function(x) standardGeneric("imageNums"))
 
 
 #' @rdname SimulationFiles-class
@@ -77,7 +77,7 @@ setGeneric(name = "subDir", def = function(x)
 #' @name simulationFilter
 #' @description Function for creating the \linkS4class{SimulationFilter} class. Define a product, then
 #' Optional arguments of: `bands`, `variables`, `iterations`, `variablesRB3D`,
-#' `typeNums`, `imageTypes`, `imageNos`. See \link{SimulationFilter-class} for full
+#' `typeNums`, `imageTypes`, `imageNums`. See \link{SimulationFilter-class} for full
 #' description.
 #' @param product One of: `directions`, `rb3D`, `images`.
 #' @param x \link{SimulationFiles-class} object if product is missing.
@@ -90,7 +90,7 @@ setGeneric(name = "subDir", def = function(x)
 #'                              bands = as.integer(0:2),
 #'                              iters = c("ITER1", "ITER2"),
 #'                              variables = "BRF",
-#'                              imageNos = as.integer(c(5, 7)),
+#'                              imageNums = as.integer(c(5, 7)),
 #'                              imageTypes = c("ima", "ima_transmittance"))
 #'
 
@@ -217,14 +217,14 @@ setGeneric(name = "rb3DtoNc", def = function(x = "SimulationFiles", ...)
 #'
 #'
 #' @param x \link{SimulationFiles-class} type object.
-#' @param deleteSimulationFiles boolean. A hard check that you are happy to delete the files in x, shown by files(x).
+#' @param deleteSimulationFiles logical A hard check that you are happy to delete the files in x, shown by files(x).
 #' @param ... \code{trianglesInput} remove "triangles" input files? (bool)
 #' @param ... \code{maketOutput} remove "maket.txt" output file? (bool)
 #'
 #' @return NULL
 #' @export
 #'
-setGeneric(name = "deleteFiles", def = function(x = "SimulationFiles", deleteSimulationFiles = "boolean", ...)
+setGeneric(name = "deleteFiles", def = function(x = "SimulationFiles", deleteSimulationFiles = "logical", ...)
     standardGeneric("deleteFiles"))
 
 #' Convert Tapp to Radiance
