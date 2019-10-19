@@ -185,7 +185,8 @@ setGeneric(name = "sequenceParameters", def = function(x) standardGeneric("seque
 #'
 #' @param x \link{RB3D-class} type object.
 #' @param DSM \code{RasterLayer} type object with height above ground level (m) and - preferably - a finer
-#' @param ... `DARTmodelElevation` What is the elevation of the 3D model(s) set to in DART? Default 0.
+#' @param ... `DARTmodelElevation` Returned Z value has (Z - DARTmodelElevation) offset. What is the elevation of any
+#' 3D model(s) above the bottom of the DART scene? This is defined in DART. Default 0 (also the DART default).
 #' horizontal resolution than that of the radiative budget cells in x. The center of the DSM must be georeferenced
 #' to the center of the radiarive budget data in x. The DSM can have a larger extent than x.
 #' @export

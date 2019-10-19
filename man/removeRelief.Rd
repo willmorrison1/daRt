@@ -4,14 +4,17 @@
 \alias{removeRelief}
 \title{removeRelief}
 \usage{
-removeRelief(x = "RB3D", DEM = "RasterLayer")
+removeRelief(x = "RB3D", DEM = "RasterLayer", ...)
 }
 \arguments{
 \item{x}{\link{RB3D-class} type object.}
 
-\item{DSM}{\code{RasterLayer} type object with height above ground level (m) and - preferably - a finer
-horizontal reoslution than that of the radiative budget cells in x. The center of the DSM must be georeferenced
+\item{...}{`DARTmodelElevation` Returned Z value has (Z - DARTmodelElevation) offset. What is the elevation of any
+3D model(s) above the bottom of the DART scene? This is defined in DART. Default 0 (also the DART default).
+horizontal resolution than that of the radiative budget cells in x. The center of the DSM must be georeferenced
 to the center of the radiarive budget data in x. The DSM can have a larger extent than x.}
+
+\item{DSM}{\code{RasterLayer} type object with height above ground level (m) and - preferably - a finer}
 }
 \description{
 Remove underlying orography from a \link{RB3D-class} dataset using a digital elevation
