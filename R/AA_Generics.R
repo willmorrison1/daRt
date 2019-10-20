@@ -219,6 +219,7 @@ setGeneric(name = "rb3DtoNc", def = function(x = "SimulationFiles", ...)
 #' @param x \link{SimulationFiles-class} type object.
 #' @param deleteSimulationFiles logical A hard check that you are happy to delete the files in x, shown by files(x).
 #' @param ... \code{trianglesInput} remove "triangles" input files? (bool)
+#' @param ... \code{trianglesOutput} remove "triangles.txt" output file? (bool)
 #' @param ... \code{maketOutput} remove "maket.txt" output file? (bool)
 #'
 #' @return NULL

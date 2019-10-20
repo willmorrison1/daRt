@@ -14,6 +14,8 @@ deleteFiles(x = "SimulationFiles", deleteSimulationFiles = "logical",
 
 \item{...}{\code{trianglesInput} remove "triangles" input files? (bool)}
 
+\item{...}{\code{trianglesOutput} remove "triangles.txt" output file? (bool)}
+
 \item{...}{\code{maketOutput} remove "maket.txt" output file? (bool)}
 }
 \description{

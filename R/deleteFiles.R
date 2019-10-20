@@ -1,7 +1,8 @@
 setMethod(f = "deleteFiles",
           signature = signature(x = "SimulationFiles", deleteSimulationFiles = "logical"),
           definition = function(x, deleteSimulationFiles = FALSE,
-                                trianglesInput = FALSE, maketOutput = FALSE) {
+                                trianglesInput = FALSE, maketOutput = FALSE,
+                                trianglesOutput = FALSE) {
               library(tools)
 
               validObject(x, complete = TRUE)
@@ -12,6 +13,9 @@ setMethod(f = "deleteFiles",
                   }
                   if (maketOutput) {
                       .deleteMaketOutput(simDirs[i])
+                  }
+                  if (trianglesOutput) {
+                      .deleteTrianglesOutput(simDirs[i])
                   }
               }
 
@@ -33,6 +37,13 @@ setMethod(f = "deleteFiles",
 
     inputDir <- file.path(simulationDir, "input")
     unlink(file.path(inputDir, "triangles"), recursive = TRUE)
+
+}
+
+.deleteTrianglesOutput <- function(simulationDir) {
+
+    outputDir <- file.path(simulationDir, "output")
+    unlink(file.path(outputDir, "triangles.txt"))
 
 }
 
