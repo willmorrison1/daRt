@@ -5,7 +5,7 @@ setMethod(f = "deleteFiles",
                                 trianglesOutput = FALSE) {
               library(tools)
 
-              validObject(x, complete = TRUE)
+              validObject(x, complete = FALSE)
               simDirs <- baseDir(x)
               for (i in 1:length(simDirs)) {
                   if (trianglesInput) {
