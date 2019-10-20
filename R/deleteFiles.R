@@ -22,8 +22,9 @@ setMethod(f = "deleteFiles",
               if (deleteSimulationFiles) {
                   fileNamesToDelete <- files(x)$fileName
                   if (product(x) == "images") {
-                      fileNamesToDelete <- paste0(tools::file_path_sans_ext(fileNamesToDelete),
-                                                  c(".grf", ".mpr", ".gr#"))
+                      fileNamesToDelete <- apply(expand.grid(tools::file_path_sans_ext(fileNamesToDelete),
+                                                             c(".grf", ".mpr", ".gr#")), 1,
+                                                 function(x) paste0(x[1], ".", x[2]))
                   }
                   unlink(fileNamesToDelete, recursive = FALSE)
               }
