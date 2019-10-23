@@ -192,7 +192,7 @@ sF <- daRt::simulationFilter(product = "rb3D",
 simFiles <- daRt::getFiles(simulationDir, sF = sF)
 
 ```
-There are twelve files each with 6 variables and each as a 3D array - i.e. quite a lot of data. Load in the data all at once. It is relatively memory intensive
+There are twelve files each with 6 variables and each as a 3D array - i.e. quite a lot of data. Load in the data all at once.
 ```{r}
 simData <- daRt::getData(x = simFiles, nCores = 2)
 ```

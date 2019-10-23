@@ -27,7 +27,7 @@ daRt
 The daRt package provides a very quick and flexible way to import data
 that is produced by the Discrete Anisotropic Radiative Transfer (DART)
 model. The data in daRt are formatted in a way that facilitates rapid
-data analysis.
+data analysis. Formal documentation is available in the pdf manual.
 
 # Installation
 
@@ -325,8 +325,7 @@ simFiles <- daRt::getFiles(simulationDir, sF = sF)
 ```
 
 There are twelve files each with 6 variables and each as a 3D array -
-i.e. quite a lot of data. Load in the data all at once. It is relatively
-memory intensive
+i.e. quite a lot of data. Load in the data all at once.
 
 ``` r
 simData <- daRt::getData(x = simFiles, nCores = 2)
