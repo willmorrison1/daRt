@@ -111,7 +111,7 @@ setMethod(f = "rb3D",
     }
 
     for (i in 1:length(OUTDATA)) {
-        varRawVals <- ncdf4::ncvar_get(ncin, names(OUTDATA)[i])
+        varRawVals <- ncdf4::ncvar_get(ncin, .formatRB3DVarsForNcdf(names(OUTDATA)[i], fromNc = FALSE))
         varRawVals <- aperm(varRawVals, c(2, 1, 3))
         OUTDATA[[i]] <- varRawVals
     }
