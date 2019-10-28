@@ -29,8 +29,8 @@ setMethod(f = "rb3DFiles",
                       warning(paste("Found duplicate rb3D files in:", subDirs$dirName[i], "(different extensions).
                                     Cleaning duplicates. Run rb3DtoNcdf() if warning persists."))
                   }
-                  all3DrbFiles <- all3DrbFiles[!all3DrbFiles_duplicated]
                   file.remove(all3DrbFiles[all3DrbFiles_duplicated])
+                  all3DrbFiles <- all3DrbFiles[!all3DrbFiles_duplicated]
                   if (length(all3DrbFiles) == 0) {
                       stop(paste("No RB files in:", fileDir[i]))
                   }
