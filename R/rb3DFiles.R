@@ -7,7 +7,7 @@ setMethod(f = "rb3DFiles",
               simHandle <- simulationHandle(x)
               RB3DFiles <- as(object = simHandle, Class = "SimulationFiles")
               if (variables(sF) != "RADIATIVE_BUDGET") {
-                  warning("Forcing 'RADIATIVE_BUDGET' variable in 'simulationFilter' variables.")
+                  warning("Product is 'rb3D'. Forcing 'RADIATIVE_BUDGET' variable in 'simulationFilter' variables.")
                   variables(sF) <- "RADIATIVE_BUDGET"
               }
               simulationFilter(RB3DFiles) <- sF
