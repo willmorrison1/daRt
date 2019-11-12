@@ -69,8 +69,12 @@ predetermined file type(s).
 
 ``` r
 simData <- daRt::getData(x = simulationDir, sF = sF)
-#> Warning: The `printer` argument is deprecated as of rlang 0.3.0.
-#> This warning is displayed once per session.
+#> Warning: package 'dplyr' was built under R version 3.5.3
+#> Warning: package 'xml2' was built under R version 3.5.3
+#> Warning: package 'stringr' was built under R version 3.5.3
+#> Warning: package 'foreach' was built under R version 3.5.3
+#> Warning: package 'doParallel' was built under R version 3.5.3
+#> Warning: package 'iterators' was built under R version 3.5.3
 ```
 
 **`as.data.frame()`** releases the data object as a “long” format data
@@ -78,6 +82,7 @@ frame.
 
 ``` r
 DF <- as.data.frame(simData)
+#> Warning: package 'tibble' was built under R version 3.5.3
 head(DF, n = 3)
 #> # A tibble: 3 x 8
 #> # Groups:   band, iter, typeNum, simName [1]
@@ -202,6 +207,7 @@ data. Once you are ready to use the data, retrieve it using
 ``` r
 #plot using ggplot2
 library(ggplot2)
+#> Warning: package 'ggplot2' was built under R version 3.5.3
 DFdata <- as.data.frame(simData)
 plotOut <- ggplot(DFdata) +
     geom_point(aes(x = zenith, y = value, colour = azimuth)) +
@@ -234,6 +240,7 @@ sF <- daRt::simulationFilter(product = "images",
 #It is useful for access to drives that have optimised paralell I/O.
 #here load data using 2 cores.
 simData <- daRt::getData(x = simulationDir, sF = sF, nCores = 2)
+#> Warning: package 'data.table' was built under R version 3.5.3
 #simple plot of data
 ggplot(as.data.frame(simData)) + 
     geom_raster(aes(x = x, y = y, fill = value)) +
@@ -251,8 +258,8 @@ radiative budget `product`.
 ``` r
 product(sF) <- "rb3D"
 simData <- daRt::getData(x = simulationDir, sF = sF)
-#> Warning in filesFun(x = x[i], sF = sF): Forcing 'RADIATIVE_BUDGET' variable
-#> in 'simulationFilter' variables.
+#> Warning in filesFun(x = x[i], sF = sF): Product is 'rb3D'. Forcing
+#> 'RADIATIVE_BUDGET' variable in 'simulationFilter' variables.
 ```
 
 The 3D radiative budget data are stored with the X, Y and Z location of
@@ -433,6 +440,7 @@ Convert the .bin data to .nc. The .bin file will be deleted by
 
 ``` r
 simFiles_nc <- daRt::rb3DtoNc(simFiles_bin)
+#> Warning: package 'ncdf4' was built under R version 3.5.3
 simData_nc <- as.data.frame(daRt::getData(simFiles_nc))
 ```
 
@@ -449,7 +457,7 @@ The new .nc file is much smaller:
 ``` r
 fileSize_nc <- file.size(files(simFiles_nc)$fileName)
 fileSize_nc / fileSize_bin
-#> [1] 0.1244318
+#> [1] 0.127663
 ```
 
 and is much faster to read. It can also be read by third party NetCDF

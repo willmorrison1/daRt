@@ -54,19 +54,7 @@
             errors <- c(errors, msg)
         }
     }
-    filesMissing <- TRUE
-    nTries <- 0
-    while (any(filesMissing) && nTries < 5) {
-        filesMissing <- !file.exists(object@files$fileName)
-        Sys.sleep(0.5)
-        nTries <- nTries + 1
-    }
-    if (any(filesMissing)) {
-        msg <- paste("Missing files:",
-                     paste0(
-                         paste0("..", str_sub(object@files$fileName[filesMissing], -50)), collapse = "; "))
-        errors <- c(errors, msg)
-    }
+
 
     if (nrow(object@wavelengths) == 0) {
         errors <- c(errors, "No data in @wavelengths slot.
@@ -77,6 +65,7 @@
                   yes = TRUE,
                   no = errors))
 }
+
 
 .allowedVariables <- function() {
 
@@ -89,6 +78,7 @@
 
 }
 
+
 .allowedProducts <- function() {
 
     c(
@@ -97,6 +87,7 @@
         "images"
     )
 }
+
 
 .allowedImageTypes <- function() {
 
@@ -109,6 +100,7 @@
     )
 }
 
+
 .simFilterValidity_bands <- function(object) {
 
     .bandsErr <- function() paste("Invalid bands. Set as numeric e.g. 0:1 for bands 'BAND0' and 'BAND1'")
@@ -117,6 +109,7 @@
 
     return()
 }
+
 
 .simFilterValidity_variables <- function(object) {
 
@@ -137,6 +130,7 @@
 
 }
 
+
 .simFilterValidity_product <- function(object) {
 
     productVals <- product(object)
@@ -151,6 +145,7 @@
 
     return()
 }
+
 
 .simFilterValidity_iters <- function(object) {
 
@@ -180,6 +175,7 @@
 
 }
 
+
 .simFilterValidity_variablesRB3D <- function(object) {
 
     varRB3DVals <- variablesRB3D(object)
@@ -189,6 +185,7 @@
     return()
 
 }
+
 
 .simFilterValidity_typeNums <- function(object) {
     typeNumVals <- typeNums(object)
@@ -207,6 +204,7 @@
     }
 
 }
+
 
 .simFilterValidity_images <- function(object) {
     imageTypesVal <- imageTypes(object)
