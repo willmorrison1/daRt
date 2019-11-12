@@ -3,7 +3,7 @@
 \name{accessors}
 \alias{accessors}
 \alias{simname}
-\alias{files}
+\alias{fileName}
 \alias{bands}
 \alias{iters}
 \alias{variables}
@@ -17,7 +17,7 @@ product(x)
 
 simname(x)
 
-files(x)
+fileName(x)
 
 bands(x)
 

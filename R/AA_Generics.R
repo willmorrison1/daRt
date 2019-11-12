@@ -42,7 +42,7 @@ setGeneric(name = "product", def = function(x) standardGeneric("product"))
 #' @rdname accessors
 setGeneric(name = "simname", def = function(x) standardGeneric("simname"))
 #' @rdname accessors
-setGeneric(name = "files", def = function(x) standardGeneric("files"))
+setGeneric(name = "fileName", def = function(x) standardGeneric("fileName"))
 #' @rdname accessors
 setGeneric(name = "bands", def = function(x) standardGeneric("bands"))
 #' @rdname accessors

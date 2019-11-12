@@ -96,7 +96,8 @@ simFiles <- daRt::getFiles(x = simulationDir, sF = sF)
 ```
 Explore the output of this to check we happy to continue and load the data. `getFiles()` is essentially a 'dry-run' of the data extraction
 ```{r}
-files(simFiles)
+dataFiles <- fileName(simFiles)
+all(file.exists(dataFiles))
 ```
 
 ## Load data: SimulationData
@@ -256,12 +257,12 @@ sF <- daRt::simulationFilter(product = "rb3D",
 simFiles_bin <- daRt::getFiles(simulationDir, sF = sF)
 simData_bin <- as.data.frame(daRt::getData(simFiles_bin))
 #get the file size - for later comparison
-fileSize_bin <- file.size(files(simFiles_bin)$fileName)
+fileSize_bin <- file.size(fileName(simFiles_bin))
 ```
 
 ```{r, echo = FALSE, results = 'hide',message = FALSE}
 #crea te backup of the .bin file (it will be deleted by daRt::rb3DtoNc)
-file.copy(files(simFiles_bin)$fileName, "tmp.bin")
+file.copy(fileName(simFiles_bin), "tmp.bin")
 ```
 Convert the .bin data to .nc. The .bin file will be deleted by `rb3DtoNc`.
 ```{r}
@@ -278,7 +279,7 @@ max(abs(simData_nc$value - simData_bin$value))
 
 The new .nc file is much smaller:
 ```{r}
-fileSize_nc <- file.size(files(simFiles_nc)$fileName)
+fileSize_nc <- file.size(fileName(simFiles_nc))
 fileSize_nc / fileSize_bin
 ```
 
@@ -286,9 +287,9 @@ and is much faster to read. It can also be read by third party NetCDF browsers e
 
 ```{r, echo = FALSE, results = 'hide',message = FALSE}
 #cleanup the creation of .nc
-file.copy("tmp.bin", files(simFiles)$fileName)
+file.copy("tmp.bin", fileName(simFiles))
 unlink("tmp.bin")
-file.remove(files(simFiles_nc)$fileName)
+file.remove(fileName(simFiles_nc))
 ```
 
 ## Unwanted files: deletion
@@ -305,8 +306,8 @@ filesToDelete <- daRt::getFiles(x = simulationDir, sF = sF)
 
 ```{r, echo = FALSE, results = 'hide',message = FALSE}
 #copy output files to save place
-tmpFile <- paste0(files(filesToDelete)$fileName, "_TMP")
-file.copy(files(filesToDelete)$fileName, tmpFile)
+tmpFile <- paste0(fileName(filesToDelete), "_TMP")
+file.copy(fileName(filesToDelete), tmpFile)
 ```
 
 then delete the file, where `deleteSimulationFiles` parameter makes the user sure to 

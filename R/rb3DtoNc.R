@@ -8,20 +8,20 @@ setMethod(f = "rb3DtoNc",
               }
               #check which files are .bin
               #loop over bin files, else return all .nc with "no work to do"
-              RB3Dfiles <- files(x)
-              for (i in 1:nrow(RB3Dfiles)) {
-                  RBfileNameInfo <- .parse3DRBfileName(RB3Dfiles$fileName[i])
+              RB3DfileNames <- fileName(x)
+              for (i in 1:length(RB3DfileNames)) {
+                  RBfileNameInfo <- .parse3DRBfileName(RB3DfileNames[i])
                   if (RBfileNameInfo$fileExtension == "nc") next
-                  binRBdata <- .readBin3DRadiativeBudget(RB3Dfiles$fileName[i])
-                  oFile <- paste0(tools::file_path_sans_ext(RB3Dfiles$fileName[i]), ".nc")
+                  binRBdata <- .readBin3DRadiativeBudget(RB3DfileNames[i])
+                  oFile <- paste0(tools::file_path_sans_ext(RB3DfileNames[i]), ".nc")
                   .RB3DbinToNc(radiativeBudget3DData = binRBdata, outFile = oFile,
                                compressionFactor = ncCompressionFactor)
                   ncRBdata <- .readNcdf3DRadiativeBudget(fileName = oFile)
                   if (!all.equal(sapply(binRBdata, dim), sapply(ncRBdata, dim))) {
                       stop(paste("rb3DtoNc() reported that original .bin and created .nc files have different dims for:",
-                                 RB3Dfiles$fileName[i], "and", oFile))
+                                 RB3DfileNames[i], "and", oFile))
                   }
-                  file.remove(RB3Dfiles$fileName[i])
+                  file.remove(RB3DfileNames[i])
                   x@files$fileName[i] <- oFile
               }
               return(x)

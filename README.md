@@ -173,15 +173,9 @@ Explore the output of this to check we happy to continue and load the
 data. `getFiles()` is essentially a ‘dry-run’ of the data extraction
 
 ``` r
-files(simFiles)
-#>   band variable  iter typeNum                                    fileName
-#> 1    0      BRF ITER3         man/data/cesbio/output//BAND0/BRF/ITER3/brf
-#> 2    1      BRF ITER3         man/data/cesbio/output//BAND1/BRF/ITER3/brf
-#> 3    2      BRF ITER3         man/data/cesbio/output//BAND2/BRF/ITER3/brf
-#>   simName
-#> 1  cesbio
-#> 2  cesbio
-#> 3  cesbio
+dataFiles <- fileName(simFiles)
+all(file.exists(dataFiles))
+#> [1] TRUE
 ```
 
 ## Load data: SimulationData
@@ -432,7 +426,7 @@ sF <- daRt::simulationFilter(product = "rb3D",
 simFiles_bin <- daRt::getFiles(simulationDir, sF = sF)
 simData_bin <- as.data.frame(daRt::getData(simFiles_bin))
 #get the file size - for later comparison
-fileSize_bin <- file.size(files(simFiles_bin)$fileName)
+fileSize_bin <- file.size(fileName(simFiles_bin))
 ```
 
 Convert the .bin data to .nc. The .bin file will be deleted by
@@ -455,7 +449,7 @@ max(abs(simData_nc$value - simData_bin$value))
 The new .nc file is much smaller:
 
 ``` r
-fileSize_nc <- file.size(files(simFiles_nc)$fileName)
+fileSize_nc <- file.size(fileName(simFiles_nc))
 fileSize_nc / fileSize_bin
 #> [1] 0.127663
 ```

@@ -20,7 +20,7 @@ setMethod(f = "deleteFiles",
               }
 
               if (deleteSimulationFiles) {
-                  fileNamesToDelete <- files(x)$fileName
+                  fileNamesToDelete <- fileName(x)
                   if (product(x) == "images") {
                       fileNamesToDelete <- apply(expand.grid(tools::file_path_sans_ext(fileNamesToDelete),
                                                              c(".grf", ".mpr", ".gr#")), 1,

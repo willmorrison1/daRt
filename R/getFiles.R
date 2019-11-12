@@ -51,3 +51,4 @@ setMethod(f = "getFiles",
 
               return(simFilesStacked)
           })
+
