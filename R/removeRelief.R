@@ -51,32 +51,32 @@ setMethod(f = "removeRelief",
 
                   #index all simulations with this resolution
                   RB3DresInd <- xyzDF$xy == xyzDF[i, ]$xy & xyzDF$z == xyzDF[i, ]$z
-                  simind <-  d@data$simName %in% xyzDF$simName[RB3DresInd]
+                  simind <-  x@data$simName %in% xyzDF$simName[RB3DresInd]
                   #apply the transformation to these simulations
-                  d@data[simind, ] <- d@data[simind, ] %>%
+                  x@data[simind, ] <- x@data[simind, ] %>%
                       dplyr::left_join(heightDiffDF, by = c("X", "Y")) %>%
                       dplyr::mutate(Z = (Z - z) - DARTmodelElevation)  %>%
                       dplyr::select(-z)
                   rm(simind); gc()
               }
 
-              maxHorizontal <- d@data %>%
+              maxHorizontal <- x@data %>%
                   dplyr::group_by(X, Y, band, iter, typeNum, simName) %>%
                   dplyr::summarise(maxZ = max(Z)) %>%
                   dplyr::group_by(band, iter, typeNum, simName) %>%
                   dplyr::summarise(minZ_perArray = min(maxZ))
 
-              d@data <- d@data %>%
-                  dplyr::filter(Z >= -1)
+              # x@data <- x@data %>%
+              #     dplyr::filter(Z >= -1)
 
               gc()
 
-              d@data <- d@data %>%
+              x@data <- x@data %>%
                   dplyr::left_join(maxHorizontal, by = c("band", "iter", "typeNum", "simName")) %>%
                   dplyr::filter(Z <= minZ_perArray) %>%
                   dplyr::select(-minZ_perArray)
 
-              return(d)
+              return(x)
           }
 )
 
