@@ -11,9 +11,10 @@ setMethod(f = "rb3D",
 
               RB3d <- as(object = x, Class = "RB3D",
                          strict = TRUE)
-              cl <- parallel::makeCluster(nCores)
-              doParallel::registerDoParallel(cl)
-
+              if (nCores > 1) {
+                  cl <- parallel::makeCluster(nCores)
+                  doParallel::registerDoParallel(cl)
+              }
               listData <- foreach(i = 1:nrow(RB3d@files),
                                   .export = c(".readBin3DRadiativeBudget",
                                               ".parse3DRBfileName",
@@ -34,7 +35,7 @@ setMethod(f = "rb3D",
                                                   return(RBdata_melted)
                                               }
 
-              stopCluster(cl)
+              if (nCores > 1) stopCluster(cl)
               gc()
               RB3d@data <- data.table::rbindlist(listData, use.names = FALSE)
               rm(listData); gc()
