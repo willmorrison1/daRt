@@ -189,6 +189,10 @@ setGeneric(name = "sequenceParameters", def = function(x) standardGeneric("seque
 #' 3D model(s) above the bottom of the DART scene? This is defined in DART. Default 0 (also the DART default).
 #' horizontal resolution than that of the radiative budget cells in x. The center of the DSM must be georeferenced
 #' to the center of the radiarive budget data in x. The DSM can have a larger extent than x.
+#' @param `maxUndergroundCells` Integer. How many cells below the "ground" should be kept? I.e. the 3D RB array will
+#' be offset with Z=0 as the new ground level, and Z=-maxUndergroundCells as the lowest elevation to keep. Cells below
+#' -maxUndergroundCells are removed as this saves a lot of memory. If there is lots of small-scale variation in topography then
+#' this parameter should be relaxed at the expense of array size and memory usage.
 #' @export
 #'
 setGeneric(name = "removeRelief", def = function(x = "RB3D", DEM = "RasterLayer", ...)
