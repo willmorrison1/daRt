@@ -56,9 +56,8 @@ setMethod(f = "removeRelief",
                   x@data[simind, ] <- x@data[simind, ] %>%
                       dplyr::left_join(heightDiffDF, by = c("X", "Y")) %>%
                       dplyr::mutate(Z = (Z - z) - DARTmodelElevation)
-                  rm(simind); gc()
+                  rm(simind, heightDiffDF, RB3DresInd, DEMc, DEMr, simValsInd); gc()
               }
-              x@data <- x@data %>% dplyr::select(-z)
 
               maxHorizontal <- x@data %>%
                   dplyr::group_by(X, Y, band, iter, typeNum, simName) %>%
