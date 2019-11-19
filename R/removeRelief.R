@@ -53,10 +53,12 @@ setMethod(f = "removeRelief",
                   RB3DresInd <- xyzDF$xy == xyzDF[i, ]$xy & xyzDF$z == xyzDF[i, ]$z
                   simind <-  x@data$simName %in% xyzDF$simName[RB3DresInd]
                   #apply the transformation to these simulations
-                  x@data[simind, ] <- x@data[simind, ] %>%
+                  toJoin <- x@data[simind, ] %>%
                       dplyr::left_join(heightDiffDF, by = c("X", "Y")) %>%
-                      dplyr::mutate(Z = (Z - z) - DARTmodelElevation)
-                  rm(simind, heightDiffDF, RB3DresInd, DEMc, DEMr, simValsInd); gc()
+                      dplyr::mutate(Z = (Z - z) - DARTmodelElevation) %>%
+                      dplyr::select(-z)
+                  x@data[simind, ] <- toJoin
+                  rm(simind, heightDiffDF, RB3DresInd, DEMc, DEMr, simValsInd, toJoin); gc()
               }
 
               maxHorizontal <- x@data %>%
