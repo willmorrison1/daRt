@@ -1,7 +1,7 @@
 #' @export
 setMethod(f = "removeRelief",
           signature = signature(x = "RB3D", DEM = "RasterLayer"),
-          definition = function(x, DEM, DARTmodelElevation, maxUndergroundCells = 10) {
+          definition = function(x, DEM, DARTmodelElevation, maxUndergroundCells = 10, ...) {
 
               xSize_simProperty <- getSimulationProperty(x, "cell.size.x")
               zSize_simProperty <- getSimulationProperty(x, "cell.size.z")
@@ -37,7 +37,7 @@ setMethod(f = "removeRelief",
                   DEMc <- raster::crop(DEM, extent(DEM) -
                                            (c(-cropOffset[1], cropOffset[1], -cropOffset[2], cropOffset[2]) / 2))
                   #resample the DEM
-                  DEMr <- rasterNewRes(inR = DEMc, newRes_m = XYsize, method = "bilinear")
+                  DEMr <- rasterNewRes(inR = DEMc, newRes_m = XYsize, ...)
 
                   #how high are all the ground cells above the lowest point of ground?
                   #round this to the resolution of RB3D and floor it to integer values
@@ -90,7 +90,7 @@ rasterNewRes <- function(inR, newRes_m, ...){
     extent(requiredRaster) <- QOLfunctions::mround(extent(inR), newRes_m)
     dim(requiredRaster) <- round(c(dim(inR)[1:2] / (newRes_m/res(inR))[1:2], dim(inR)[3]))
     crs(requiredRaster) <- crs(inR)
-    outR <- raster::aggregate(inR, fact = res(requiredRaster) / res(inR), ...))
+    outR <- raster::aggregate(inR, fact = res(requiredRaster) / res(inR), ...)
 
     return(outR)
 }
