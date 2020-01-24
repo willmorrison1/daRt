@@ -2,7 +2,7 @@
 setMethod(f = "removeRelief",
           signature = signature(x = "RB3D", DEM = "RasterLayer"),
           definition = function(x, DEM, DARTmodelElevation, maxUndergroundCells = 10, ...) {
-
+browser()
               xSize_simProperty <- getSimulationProperty(x, "cell.size.x")
               zSize_simProperty <- getSimulationProperty(x, "cell.size.z")
               xyzSize <- list()
