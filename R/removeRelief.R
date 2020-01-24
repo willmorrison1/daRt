@@ -1,8 +1,10 @@
 #' @export
 setMethod(f = "removeRelief",
           signature = signature(x = "RB3D", DEM = "RasterLayer"),
-          definition = function(x, DEM, DARTmodelElevation, maxUndergroundCells = 10, ...) {
-browser()
+          definition = function(x, DEM, DARTmodelElevation, maxUndergroundCells = 10,
+                                BOAextrapolation = "extrapolate", ...) {
+
+              BOAextrapolation <- match.arg(BOAextrapolation, c("extrapolate", "clip"))
               xSize_simProperty <- getSimulationProperty(x, "cell.size.x")
               zSize_simProperty <- getSimulationProperty(x, "cell.size.z")
               xyzSize <- list()
@@ -61,21 +63,49 @@ browser()
                   rm(simind, heightDiffDF, RB3DresInd, DEMc, DEMr, simValsInd, toJoin); gc()
               }
 
-              maxHorizontal <- x@data %>%
-                  dplyr::group_by(X, Y, band, iter, typeNum, simName) %>%
-                  dplyr::summarise(maxZ = max(Z)) %>%
-                  dplyr::group_by(band, iter, typeNum, simName) %>%
-                  dplyr::summarise(minZ_perArray = min(maxZ))
-
               x@data <- x@data %>%
                   dplyr::filter(Z >= -maxUndergroundCells)
 
               gc()
 
-              x@data <- x@data %>%
-                  dplyr::left_join(maxHorizontal, by = c("band", "iter", "typeNum", "simName")) %>%
-                  dplyr::filter(Z <= minZ_perArray) %>%
-                  dplyr::select(-minZ_perArray)
+              if (BOAextrapolation == "clip") {
+
+                  maxHorizontal <- x@data %>%
+                      dplyr::group_by(X, Y, band, iter, typeNum, simName) %>%
+                      dplyr::summarise(maxZ = max(Z)) %>%
+                      dplyr::group_by(band, iter, typeNum, simName) %>%
+                      dplyr::summarise(minZ_perArray = min(maxZ))
+
+                  x@data <- x@data %>%
+                      dplyr::left_join(maxHorizontal,
+                                       by = c("band", "iter",
+                                              "typeNum", "simName")) %>%
+                      dplyr::filter(Z <= minZ_perArray) %>%
+                      dplyr::select(-minZ_perArray)
+
+              }
+browser()
+              if (BOAextrapolation == "extrapolate") {
+
+                  maxZlayer <- x@data %>%
+                      dplyr::group_by(X, Y, band, iter, typeNum, simName) %>%
+                      dplyr::filter(Z == max(Z))
+
+                  baseXYZ_top <- expand.grid(X = min(x@data$X):max(x@data$X),
+                                             Y = min(x@data$Y):max(x@data$Y),
+                                             Z = 0:max(x@data$Z))
+
+                  valuesXYZ_top <- baseXYZ_top %>%
+                      dplyr::left_join(maxZlayer %>% dplyr::select(-Z)) %>%
+                      dplyr::anti_join(x@data,
+                                       by = c("X", "Y", "Z",
+                                              "band", "iter", "typeNum",
+                                              "simName")) %>%
+                      dplyr::bind_rows(x@data)
+                  rm(maxZlayer, baseXYZ_top); gc()
+                  x@data <- valuesXYZ_top
+              }
+
 
               return(x)
           }
