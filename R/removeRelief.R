@@ -84,7 +84,7 @@ setMethod(f = "removeRelief",
                       dplyr::select(-minZ_perArray)
 
               }
-browser()
+
               if (BOAextrapolation == "extrapolate") {
 
                   maxZlayer <- x@data %>%
