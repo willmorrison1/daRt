@@ -1,7 +1,7 @@
 #' @export
 setMethod(f = "removeRelief",
           signature = signature(x = "RB3D", DEM = "RasterLayer"),
-          definition = function(x, DEM, DARTmodelElevation, maxUndergroundCells = 10,
+          definition = function(x, DEM, maxUndergroundCells = 10,
                                 BOAextrapolation = "extrapolate", ...) {
 
               BOAextrapolation <- match.arg(BOAextrapolation, c("extrapolate", "clip"))
@@ -57,7 +57,7 @@ setMethod(f = "removeRelief",
                   #apply the transformation to these simulations
                   toJoin <- x@data[simind, ] %>%
                       dplyr::left_join(heightDiffDF, by = c("X", "Y")) %>%
-                      dplyr::mutate(Z = (Z - z) - DARTmodelElevation) %>%
+                      dplyr::mutate(Z = (Z - z)) %>%
                       dplyr::select(-z)
                   x@data[simind, ] <- toJoin
                   rm(simind, heightDiffDF, RB3DresInd, DEMc, DEMr, simValsInd, toJoin); gc()
