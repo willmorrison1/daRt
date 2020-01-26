@@ -96,7 +96,7 @@ setMethod(f = "removeRelief",
                                              Z = 0:max(x@data$Z))
 
                   valuesXYZ_top <- baseXYZ_top %>%
-                      dplyr::left_join(maxZlayer %>% dplyr::select(-Z)) %>%
+                      dplyr::left_join(maxZlayer %>% dplyr::select(-Z), by = c("X", "Y")) %>%
                       dplyr::anti_join(x@data,
                                        by = c("X", "Y", "Z",
                                               "band", "iter", "typeNum",
