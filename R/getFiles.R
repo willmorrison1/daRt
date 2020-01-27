@@ -31,6 +31,7 @@ setMethod(f = "getFiles",
                                      isSequence = sapply(simFilesList, function(x) x@isSequence),
                                      sequenceInfo = sequenceInfoOut)
               simFilesStacked@sequenceInfoList <- sequenceInfoList
+              simFilesStacked@sequenceInfoDf <- .sequenceInfoListToDf(sequenceInfoList)
               simulationFilter(simFilesStacked) <- simFilesList[[1]]@simulationFilter
               simFilesStacked@softwareVersion <- versionInfo(simFilesStacked)
 
@@ -52,8 +53,16 @@ setMethod(f = "getFiles",
               return(simFilesStacked)
           })
 
-#merge sequence info list into something useful
-# tmp = reshape2::melt(allFiles@sequenceInfoList, id.vars = c("parameterFullName", "parameterNo"))
-# tmp1 = tmp %>% select(-parameterFullName) %>% dcast(L1~parameterNo, value.var = "value") %>%
-#     dplyr::rename(simName = L1)
+.sequenceInfoListToDf <- function(sequenceInfoList) {
+
+    sequenceInfoList_len <- sapply(sequenceInfoList, length)
+    if (all(sequenceInfoList_len == 0)) return(data.frame())
+    if (any(sequenceInfoList_len == 0)) stop("Cannot handle a mixture of sequenced (i.e. using DART sequencer) and non-sequenced simulations")
+    sequenceInfoMelted <- reshape2::melt(sequenceInfoList, id.vars = c("parameterFullName", "parameterNo"))
+    sequenceInfoDf <- sequenceInfoMelted %>% select(-parameterFullName) %>% dcast(L1~parameterNo, value.var = "value") %>%
+        dplyr::rename(simName = L1)
+
+    return(sequenceInfoDf)
+}
+
 

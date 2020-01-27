@@ -151,7 +151,7 @@ ggplot(as.data.frame(simData)) +
 Alter the `SimulationFilter` again to now look at files for the radiative budget `product`.
 ```{r RB3D example}
 product(sF) <- "rb3D"
-simData <- daRt::getData(x = simulationDir, sF = sF)
+simData <- daRt::getData(x = simulationDir, sF = sF, nCores = 2)
 ```
 
 The 3D radiative budget data are stored with the X, Y and Z location of each cell (conforming to DART coordinate system i.e. "the part of the scene that horizontally is 'top left' and vertically is at the bottom is: X = 1, Y = 1, Z = 1), stored in 3 columns.
@@ -224,7 +224,7 @@ allBands
 simDataList <- vector(mode = "list", length = length(allBands))
 for (i in 1:length(allBands)) {
     bands(sF) <- allBands[i]
-    simDataPiece  <- daRt::getData(x = simulationDir, sF = sF)
+    simDataPiece  <- daRt::getData(x = simulationDir, sF = sF, nCores = 2)
     simDataList[[i]] <- as.data.frame(simDataPiece) %>%
         dplyr::group_by(X, Y, variableRB3D, add = TRUE) %>%
         dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
@@ -255,7 +255,7 @@ sF <- daRt::simulationFilter(product = "rb3D",
                        typeNums = "",
                        variables = "RADIATIVE_BUDGET")
 simFiles_bin <- daRt::getFiles(simulationDir, sF = sF)
-simData_bin <- as.data.frame(daRt::getData(simFiles_bin))
+simData_bin <- as.data.frame(daRt::getData(simFiles_bin, nCores = 2))
 #get the file size - for later comparison
 fileSize_bin <- file.size(fileName(simFiles_bin))
 ```
@@ -267,7 +267,7 @@ file.copy(fileName(simFiles_bin), "tmp.bin")
 Convert the .bin data to .nc. The .bin file will be deleted by `rb3DtoNc`.
 ```{r}
 simFiles_nc <- daRt::rb3DtoNc(simFiles_bin)
-simData_nc <- as.data.frame(daRt::getData(simFiles_nc))
+simData_nc <- as.data.frame(daRt::getData(simFiles_nc, nCores = 2))
 ```
 
 There are some very minor differences in the two products - likely
@@ -324,3 +324,7 @@ deleteFiles(x = filesToDelete, deleteSimulationFiles = TRUE)
 file.copy(tmpFile, gsub(pattern = "_TMP", replacement = "", tmpFile))
 unlink(tmpFile)
 ```
+
+## Parallelisation issues
+
+Under windows especially, there are some issues with paralellisation. When running `getData()` you may get "invalid connection" error. In this case you will always need to run with nCores > 1 e.g.  `getData(..., nCores = 2)`.

@@ -17,6 +17,7 @@ daRt
       - [Radiative budget files:
         compression](#radiative-budget-files-compression)
       - [Unwanted files: deletion](#unwanted-files-deletion)
+      - [Parallelisation issues](#parallelisation-issues)
 
 <!-- README.md is generated from README.Rmd. Please edit and run README.Rmd file to regenerate README.md -->
 
@@ -69,12 +70,8 @@ predetermined file type(s).
 
 ``` r
 simData <- daRt::getData(x = simulationDir, sF = sF)
-#> Warning: package 'dplyr' was built under R version 3.5.3
-#> Warning: package 'xml2' was built under R version 3.5.3
-#> Warning: package 'stringr' was built under R version 3.5.3
-#> Warning: package 'foreach' was built under R version 3.5.3
-#> Warning: package 'doParallel' was built under R version 3.5.3
-#> Warning: package 'iterators' was built under R version 3.5.3
+#> Warning: package 'foreach' was built under R version 3.6.2
+#> Warning: package 'doParallel' was built under R version 3.6.2
 ```
 
 **`as.data.frame()`** releases the data object as a “long” format data
@@ -82,7 +79,6 @@ frame.
 
 ``` r
 DF <- as.data.frame(simData)
-#> Warning: package 'tibble' was built under R version 3.5.3
 head(DF, n = 3)
 #> # A tibble: 3 x 8
 #> # Groups:   band, iter, typeNum, simName [1]
@@ -201,7 +197,6 @@ data. Once you are ready to use the data, retrieve it using
 ``` r
 #plot using ggplot2
 library(ggplot2)
-#> Warning: package 'ggplot2' was built under R version 3.5.3
 DFdata <- as.data.frame(simData)
 plotOut <- ggplot(DFdata) +
     geom_point(aes(x = zenith, y = value, colour = azimuth)) +
@@ -234,7 +229,6 @@ sF <- daRt::simulationFilter(product = "images",
 #It is useful for access to drives that have optimised paralell I/O.
 #here load data using 2 cores.
 simData <- daRt::getData(x = simulationDir, sF = sF, nCores = 2)
-#> Warning: package 'data.table' was built under R version 3.5.3
 #simple plot of data
 ggplot(as.data.frame(simData)) + 
     geom_raster(aes(x = x, y = y, fill = value)) +
@@ -251,7 +245,7 @@ radiative budget `product`.
 
 ``` r
 product(sF) <- "rb3D"
-simData <- daRt::getData(x = simulationDir, sF = sF)
+simData <- daRt::getData(x = simulationDir, sF = sF, nCores = 2)
 #> Warning in filesFun(x = x[i], sF = sF): Product is 'rb3D'. Forcing
 #> 'RADIATIVE_BUDGET' variable in 'simulationFilter' variables.
 ```
@@ -375,7 +369,7 @@ allBands
 simDataList <- vector(mode = "list", length = length(allBands))
 for (i in 1:length(allBands)) {
     bands(sF) <- allBands[i]
-    simDataPiece  <- daRt::getData(x = simulationDir, sF = sF)
+    simDataPiece  <- daRt::getData(x = simulationDir, sF = sF, nCores = 2)
     simDataList[[i]] <- as.data.frame(simDataPiece) %>%
         dplyr::group_by(X, Y, variableRB3D, add = TRUE) %>%
         dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
@@ -424,7 +418,7 @@ sF <- daRt::simulationFilter(product = "rb3D",
                        typeNums = "",
                        variables = "RADIATIVE_BUDGET")
 simFiles_bin <- daRt::getFiles(simulationDir, sF = sF)
-simData_bin <- as.data.frame(daRt::getData(simFiles_bin))
+simData_bin <- as.data.frame(daRt::getData(simFiles_bin, nCores = 2))
 #get the file size - for later comparison
 fileSize_bin <- file.size(fileName(simFiles_bin))
 ```
@@ -434,8 +428,7 @@ Convert the .bin data to .nc. The .bin file will be deleted by
 
 ``` r
 simFiles_nc <- daRt::rb3DtoNc(simFiles_bin)
-#> Warning: package 'ncdf4' was built under R version 3.5.3
-simData_nc <- as.data.frame(daRt::getData(simFiles_nc))
+simData_nc <- as.data.frame(daRt::getData(simFiles_nc, nCores = 2))
 ```
 
 There are some very minor differences in the two products - likely due
@@ -443,7 +436,7 @@ to the ncdf compression algorithm and/or rounding.
 
 ``` r
 max(abs(simData_nc$value - simData_bin$value))
-#> [1] 9.187445e-08
+#> [1] 0
 ```
 
 The new .nc file is much smaller:
@@ -451,7 +444,7 @@ The new .nc file is much smaller:
 ``` r
 fileSize_nc <- file.size(fileName(simFiles_nc))
 fileSize_nc / fileSize_bin
-#> [1] 0.127663
+#> [1] 1
 ```
 
 and is much faster to read. It can also be read by third party NetCDF
@@ -479,3 +472,10 @@ user sure to know that they are deleting output data\!
 deleteFiles(x = filesToDelete, deleteSimulationFiles = TRUE)
 #> NULL
 ```
+
+## Parallelisation issues
+
+Under windows especially, there are some issues with paralellisation.
+When running `getData()` you may get “invalid connection” error. In this
+case you will always need to run with nCores \> 1 e.g. `getData(...,
+nCores = 2)`.

@@ -338,6 +338,8 @@ setValidity("SimulationHandle", .simHandleValidity)
 #' @slot simulationFilter contains \link{SimulationFilter-class} object
 #' @slot files a data.frame, with each row describing the file
 #' @slot sequenceInfoList a list, with each list element showing the variable permutation(s) within this specific simulation sequence.
+#' @slot sequenceInfoDf a data frame, with each row containing one simulation, and each column a parameter ('parametre') specific to the sequence.
+#' A condensed version of sequenceInfoList.
 #' @slot wavelengths a data frame containing spectral information on each band for each simulation
 #'
 #' @export
@@ -347,6 +349,7 @@ setClass(
     slots = list(simulationFilter = "SimulationFilter",
                  files = "data.frame",
                  sequenceInfoList = "list",
+                 sequenceInfoDf = "data.frame",
                  wavelengths = "data.frame"))
 setValidity("SimulationFiles", .simFilesValidity)
 
