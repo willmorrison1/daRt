@@ -52,3 +52,8 @@ setMethod(f = "getFiles",
               return(simFilesStacked)
           })
 
+#merge sequence info list into something useful
+# tmp = reshape2::melt(allFiles@sequenceInfoList, id.vars = c("parameterFullName", "parameterNo"))
+# tmp1 = tmp %>% select(-parameterFullName) %>% dcast(L1~parameterNo, value.var = "value") %>%
+#     dplyr::rename(simName = L1)
+
