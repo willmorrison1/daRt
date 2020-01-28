@@ -56,10 +56,18 @@ setMethod(f = "getFiles",
 .sequenceInfoListToDf <- function(sequenceInfoList) {
 
     sequenceInfoList_len <- sapply(sequenceInfoList, length)
-    if (all(sequenceInfoList_len == 0)) return(data.frame())
-    if (any(sequenceInfoList_len == 0)) stop("Cannot handle a mixture of sequenced (i.e. using DART sequencer) and non-sequenced simulations")
+
+    if (all(sequenceInfoList_len == 0))
+        return(data.frame())
+
+    if (any(sequenceInfoList_len == 0))
+        stop("Cannot handle a mixture of sequenced (i.e. using DART sequencer) and non-sequenced simulations")
+
     sequenceInfoMelted <- reshape2::melt(sequenceInfoList, id.vars = c("parameterFullName", "parameterNo"))
-    sequenceInfoDf <- sequenceInfoMelted %>% select(-parameterFullName) %>% dcast(L1~parameterNo, value.var = "value") %>%
+
+    sequenceInfoDf <- sequenceInfoMelted %>%
+        dplyr::select(-parameterFullName) %>%
+        reshape2::dcast(L1 ~ parameterNo, value.var = "value") %>%
         dplyr::rename(simName = L1)
 
     return(sequenceInfoDf)
