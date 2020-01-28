@@ -55,10 +55,11 @@ setMethod(f = "rb3DFiles",
               }
               RB3DFiles@files <-  dplyr::bind_rows(OUT)
               if (nProcessed != expectedFiles) {
-                  stop(paste0("RB3DFiles() couldn't find all expected files for the given simFilter.\n",
+                  stop(paste0("RB3DFiles() couldn't find all expected files for the given simFilter combination.\n",
+                              "One or more files contains none of the chosen filters:\n",
                               "TypeNums found     : '", paste0(typeNumsFound, collapse = ","), "'\n",
                               "variablesRB3D found: '", paste0(variablesRB3DFound, collapse = ","), "'\n",
-                              "Use this information to adjust your 'simulationFilter'"))
+                              "Use this information to adjust your 'simulationFilter'."))
               }
               varRB3DnotFound <- !variablesRB3D(sF) %in% variablesRB3DFound
               if (any(varRB3DnotFound)) {
