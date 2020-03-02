@@ -50,6 +50,11 @@ setMethod(f = "removeRelief",
                   DEMr_zDiff_mround <- mround(DEMr_zDiff, Zsize)
                   #convert to the resolution of the RB3D
                   heightDiffRaster <- DEMr_zDiff_mround / Zsize
+                  #get the offset for the minHeight in RB3D units
+                  #the offset is to put the lowest height at z = 0 in RB3D
+                  minHeight_mround <- mround(minHeight, Zsize)
+                  #convert to the resolution of the RB3D
+                  minHeight_mround_RB3D <- minHeight_mround / Zsize
 
                   #convert from raster to data frame
                   heightDiffDF <- reshape2::melt(raster::as.matrix(heightDiffRaster), varnames = c("X", "Y"),
@@ -63,7 +68,7 @@ setMethod(f = "removeRelief",
                   #apply the transformation to these simulations
                   toJoin <- x@data[simind, ] %>%
                       dplyr::left_join(heightDiffDF, by = c("X", "Y")) %>%
-                      dplyr::mutate(Z = (Z - z)) %>%
+                      dplyr::mutate(Z = (Z - z) + minHeight_mround_RB3D) %>%
                       dplyr::select(-z)
                   x@data[simind, ] <- toJoin
                   rm(simind, heightDiffDF, RB3DresInd, DEMc, DEMr, simValsInd, toJoin); gc()
