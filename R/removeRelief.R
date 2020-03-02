@@ -41,10 +41,16 @@ setMethod(f = "removeRelief",
                   #resample the DEM
                   DEMr <- rasterNewRes(inR = DEMc, newRes_m = XYsize, ...)
 
-                  #how high are all the ground cells above the lowest point of ground?
-                  #round this to the resolution of RB3D and floor it to integer values
-                  #using the resolution of the RB3D
-                  heightDiffRaster <- mround(DEMr - raster::cellStats(DEMr, min), Zsize) / Zsize
+                  #height adjustment
+                  #get the lowest height above ground
+                  minHeight <- raster::cellStats(DEMr, min)
+                  #get the difference between the lowest height and all heights
+                  DEMr_zDiff <- DEMr - minHeight
+                  #round this to the nearest RB3D height
+                  DEMr_zDiff_mround <- mround(DEMr_zDiff, Zsize)
+                  #convert to the resolution of the RB3D
+                  heightDiffRaster <- DEMr_zDiff_mround / Zsize
+
                   #convert from raster to data frame
                   heightDiffDF <- reshape2::melt(raster::as.matrix(heightDiffRaster), varnames = c("X", "Y"),
                                                  value.name = "z") %>%
