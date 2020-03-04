@@ -36,8 +36,9 @@ You can install the development version from
 [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("willmorrison1/daRt")
+# install.packages("remotes")
+# devtools::install_github doesn't like my github package dependencies 
+remotes::install_github("willmorrison1/daRt")
 ```
 
 Load the package
@@ -157,7 +158,7 @@ directory. For this example, `simulationDir` is a relative directory
 simulationDir <- "man/data/cesbio"
 ```
 
-If you install the package using devtools::install\_github then the
+If you install the package using remotes::install\_github then the
 “cesbio” simulation files will not be available automatically. To use
 these files, get them from github manually or use your own ‘cesbio’
 simulation which is shipped with the DART model by default.

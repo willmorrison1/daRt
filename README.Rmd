@@ -29,8 +29,9 @@ The daRt package provides a very quick and flexible way to import data that is p
 You can install the development version from [GitHub](https://github.com/) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("willmorrison1/daRt")
+# install.packages("remotes")
+# devtools::install_github doesn't like my github package dependencies 
+remotes::install_github("willmorrison1/daRt")
 ```
 Load the package
 ```{r load the package}
@@ -84,7 +85,7 @@ First define the simulation directory. For this example, `simulationDir` is a re
 #define the simulation directory
 simulationDir <- "man/data/cesbio"
 ```
-If you install the package using devtools::install_github then the "cesbio" simulation files will not be available automatically. To use these files, get them from github manually or use your own 'cesbio' simulation which is shipped with the DART model by default. 
+If you install the package using remotes::install_github then the "cesbio" simulation files will not be available automatically. To use these files, get them from github manually or use your own 'cesbio' simulation which is shipped with the DART model by default. 
 
 The simulation directory should be the base directory of the simulation. E.g. within `simulationDir` there should be the simulation 'input' and 'output' directories.
 ```{r}
