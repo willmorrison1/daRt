@@ -1,5 +1,5 @@
 .simHandleValidity <- function(object){
-    require(dplyr)
+
     errors <- character()
     allPathsDF <- expand.grid(baseDir(object), c("input", "output"))
     allPaths <- apply(allPathsDF, 1, function(x) file.path(x[1], x[2]))
@@ -40,7 +40,6 @@
 
 .simFilesValidity <- function(object){
 
-    require(stringr)
     errors <- character()
     nFiles <- nrow(object@files)
     if (length(nFiles) == 0) {

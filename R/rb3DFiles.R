@@ -90,8 +90,6 @@ setMethod(f = "rb3DFiles",
 
 .parse3DRBfileName <- function(RB3DfileName){
 
-    require(tools)
-
     RB3DfileName <- basename(RB3DfileName)
     if (grepl("_TypeNum=|Ground", RB3DfileName)) {
         isTypeNum <- TRUE

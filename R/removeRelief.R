@@ -125,9 +125,8 @@ setMethod(f = "removeRelief",
 rasterNewRes <- function(inR, newRes_m, ...){
     #resample a raster to a new resolution
     #... passed to raster::aggregate
-    require(QOLfunctions)
 
-    requiredRaster <- raster(res = newRes_m)
+    requiredRaster <- raster::raster(res = newRes_m)
     extent(requiredRaster) <- QOLfunctions::mround(extent(inR), newRes_m)
     dim(requiredRaster) <- round(c(dim(inR)[1:2] / (newRes_m/res(inR))[1:2], dim(inR)[3]))
     crs(requiredRaster) <- crs(inR)

@@ -4,12 +4,20 @@
 \alias{plotDirections}
 \title{plotDirections}
 \usage{
-plotDirections(azimuth, zenith, value, azimuthOffsetVal = 0,
-  outerRadius = max(zenith) + max(zenith) * 0.01, zenithLabPch = 20,
-  zenithLabCol = "darkgrey", zenithLabCex = 1, brks = seq(min(value),
-  max(value), length.out = 10), cols = c("dark grey",
-  colorRampPalette(c("purple", "blue3", "yellow", "red"))(length(brks) -
-  3), "firebrick4"), ...)
+plotDirections(
+  azimuth,
+  zenith,
+  value,
+  azimuthOffsetVal = 0,
+  outerRadius = max(zenith) + max(zenith) * 0.01,
+  zenithLabPch = 20,
+  zenithLabCol = "darkgrey",
+  zenithLabCex = 1,
+  brks = seq(min(value), max(value), length.out = 10),
+  cols = c("dark grey", colorRampPalette(c("purple", "blue3", "yellow",
+    "red"))(length(brks) - 3), "firebrick4"),
+  ...
+)
 }
 \arguments{
 \item{azimuth}{Numeric. Azimuth angle with DART conventions}

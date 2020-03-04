@@ -11,6 +11,7 @@
 \alias{typeNums<-}
 \alias{imageTypes<-}
 \alias{imageNums<-}
+\alias{subDir}
 \title{SimulationFilter class.}
 \usage{
 product(x) <- value
@@ -28,6 +29,8 @@ typeNums(x) <- value
 imageTypes(x) <- value
 
 imageNums(x) <- value
+
+subDir(x)
 }
 \description{
 SimulationFilter class.

@@ -22,12 +22,6 @@ setMethod(f = "images",
           signature = signature(x = "SimulationFiles"),
           definition = function(x, nCores = 1){
 
-              require(foreach)
-              require(parallel)
-              require(doParallel)
-              require(tools)
-              require(reshape2)
-              require(data.table)
               imagesData <- as(object = x, Class = "Images",
                                strict = TRUE)
               filesWithoutExt <- tools::file_path_sans_ext(imagesData@files$fileName)

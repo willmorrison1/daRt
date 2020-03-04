@@ -3,8 +3,6 @@ setMethod(f = "tappToRadiance",
           signature = signature(x = "SimulationData"),
           definition = function(x){
 
-              require(dplyr)
-
               if (!"Tapp" %in% variables(x)) {
                   warning("Tapp is not in SimulationData variables")
                   return(x)

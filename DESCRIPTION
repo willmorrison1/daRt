@@ -1,11 +1,29 @@
 Package: daRt
 Type: Package
 Title: Read DART Model Outputs
-Version: 0.6.1
+Version: 0.7.0
 Author: William T. J. Morrison
 Maintainer: William T. J. Morrison <willmorrison661@gmail.com>
-Description: For reading outputs from the Discrete Anisotropic Radiative Transfer (DART) model, formatted in a "long" dplyr-ready format suitable for efficient analysis.
+Description: Easily read output data from the Discrete Anisotropic Radiative Transfer (DART) model and return in a "long" dplyr-ready format suitable for efficient analysis.
 Github: https://github.com/willmorrison1/daRt
 License: GPL-3
 Encoding: UTF-8
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.0
+Depends: 
+  dplyr (>= 0.8.3),
+  stringr (>= 1.4.0),
+  tibble (>= 2.1.3),
+  data.table (>= 1.12.6),
+  foreach (>= 1.4.7),
+  doParallel (>= 1.0.15),
+  reshape2 (>= 1.4.3),
+  shadowtext (>= 0.0.7),
+  fields (>= 10.0),
+  ncdf4 (>= 1.17),
+  chron (>= 2.3),
+  xml2 (>= 1.2.2),
+  tidyr (>= 1.0.0),
+  parallel,
+  tools,
+  raster (>= 3.0.0)
+Remotes: git::https://github.com/willmorrison1/QOLfuns.git

@@ -4,17 +4,12 @@
 \alias{deleteFiles}
 \title{deleteFiles}
 \usage{
-deleteFiles(x = "SimulationFiles", deleteSimulationFiles = "logical",
-  ...)
+deleteFiles(x = "SimulationFiles", deleteSimulationFiles = "logical", ...)
 }
 \arguments{
 \item{x}{\link{SimulationFiles-class} type object.}
 
 \item{deleteSimulationFiles}{logical A hard check that you are happy to delete the files in x, shown by files(x).}
-
-\item{...}{\code{trianglesInput} remove "triangles" input files? (bool)}
-
-\item{...}{\code{trianglesOutput} remove "triangles.txt" output file? (bool)}
 
 \item{...}{\code{maketOutput} remove "maket.txt" output file? (bool)}
 }

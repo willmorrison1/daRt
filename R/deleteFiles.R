@@ -3,7 +3,6 @@ setMethod(f = "deleteFiles",
           definition = function(x, deleteSimulationFiles = FALSE,
                                 trianglesInput = FALSE, maketOutput = FALSE,
                                 trianglesOutput = FALSE) {
-              library(tools)
 
               validObject(x, complete = FALSE)
               simDirs <- baseDir(x)

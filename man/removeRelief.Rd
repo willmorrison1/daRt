@@ -9,12 +9,19 @@ removeRelief(x = "RB3D", DEM = "RasterLayer", ...)
 \arguments{
 \item{x}{\link{RB3D-class} type object.}
 
-\item{...}{`DARTmodelElevation` Returned Z value has (Z - DARTmodelElevation) offset. What is the elevation of any
-3D model(s) above the bottom of the DART scene? This is defined in DART. Default 0 (also the DART default).
-horizontal resolution than that of the radiative budget cells in x. The center of the DSM must be georeferenced
-to the center of the radiarive budget data in x. The DSM can have a larger extent than x.}
-
 \item{DSM}{\code{RasterLayer} type object with height above ground level (m) and - preferably - a finer}
+
+\item{BOAextrapolation}{Character. When the 3D radiative budget is height-adjusted, the BOA layer is no longer
+plane-parallel with the ground. How to make the BOA layer plane-parallel with the ground? One of "extrapolate" or "clip".
+Extrapolate: the highest BOA cell with a recorded value is the new BOA layer. Other cells in this horizontal layer
+may be empty and are filled using values from lower vertical layers (most accurate, most cells, most memory).
+Clip: the first BOA cell where all cells in its horizontal layer have a recorded value is the new BOA layer.
+All cells above this layer are removed. (Least accurate, least cells, least memory).}
+
+\item{`maxUndergroundCells`}{Integer. How many cells below the "ground" should be kept? I.e. the 3D RB array will
+be offset with Z=0 as the new ground level, and Z=-maxUndergroundCells as the lowest elevation to keep. Cells below
+-maxUndergroundCells are removed as this saves a lot of memory. If there is lots of small-scale variation in topography then
+this parameter should be relaxed at the expense of array size and memory usage.}
 }
 \description{
 Remove underlying orography from a \link{RB3D-class} dataset using a digital elevation

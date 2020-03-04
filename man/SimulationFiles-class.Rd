@@ -5,14 +5,11 @@
 \alias{SimulationFiles-class}
 \alias{baseDir}
 \alias{simulationFilter<-}
-\alias{subDir}
 \title{SimulationFiles class}
 \usage{
 baseDir(x)
 
 simulationFilter(x) <- value
-
-subDir(x)
 }
 \description{
 An S4 class to represent the files within a simulation or simulations.
@@ -27,6 +24,9 @@ by the object with class \link{SimulationFilter-class}
 \item{\code{files}}{a data.frame, with each row describing the file}
 
 \item{\code{sequenceInfoList}}{a list, with each list element showing the variable permutation(s) within this specific simulation sequence.}
+
+\item{\code{sequenceInfoDf}}{a data frame, with each row containing one simulation, and each column a parameter ('parametre') specific to the sequence.
+A condensed version of sequenceInfoList.}
 
 \item{\code{wavelengths}}{a data frame containing spectral information on each band for each simulation}
 }}

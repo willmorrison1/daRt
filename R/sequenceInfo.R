@@ -26,7 +26,6 @@ sequenceInfo <- function(simDir){
         return(data.frame())
     }
 
-    require(dplyr)
     sequencePropertiesFileName <- sequencerFilename(simDir)
     rawLines <- readLines(sequencePropertiesFileName)[-1]
     rawSplit_names <- strsplit(rawLines[seq(1, length(rawLines) - 1, by = 2)], "[.]")

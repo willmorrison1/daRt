@@ -1,8 +1,7 @@
 #' @export
 setMethod("resourceUse", "SimulationFiles",
           function(x){
-              require(dplyr)
-              require(chron)
+
               dartTxtFiles <- getDartTxtFileName(x)
               outList <- vector("list", length = length(dartTxtFiles))
               simNames <- simname(x)

@@ -28,7 +28,6 @@ polarImageInterpolate <- function(x, y, z, outer.radius = 1,
                                   axes = TRUE, circle.rads = pretty(c(0, outer.radius)),
                                   northUp = TRUE, titleStr = NULL, ...){
 
-    require(shadowtext)
     par(mar = c(6.5, 3.75, 5, 3.75))
     minitics <- seq(-outer.radius, outer.radius, length.out = 1000)
     # interpolate the data
@@ -120,7 +119,6 @@ polarImageInterpolate <- function(x, y, z, outer.radius = 1,
 
     # add legend
     if (legend) {
-        require(fields)
         fields::image.plot(x = minitics, y = minitics, t(Mat), add = TRUE,
                            breaks = breaks, col = col, legend.only = TRUE,
                            horizontal = TRUE, legend.width = 0.8, legend.mar = 2.2, lwd = 0.25,

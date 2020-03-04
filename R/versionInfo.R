@@ -2,8 +2,6 @@
 setMethod(f = "versionInfo", signature = signature(x = "character"),
           definition = function(x){
 
-              require(xml2)
-              require(dplyr)
               if (any(!dir.exists(x))) return(data.frame())
               OUTlist <- vector("list", length(x))
               for (i in 1:length(x)) {

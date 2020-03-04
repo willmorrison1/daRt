@@ -11,8 +11,6 @@ setMethod(f = "as.data.frame",
 
               DF <- x@data
               if (as.tibble) {
-                  require(tibble)
-                  require(dplyr)
                   DF <- DF %>%
                       dplyr::group_by(band, iter, typeNum, simName)
               }

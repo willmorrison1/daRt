@@ -1,8 +1,8 @@
 .readOutputDirections <- function(fileName){
 
-    require(data.table)
     rawDirectionsData <- data.table::fread(fileName, data.table = FALSE)
     colnames(rawDirectionsData) <- c("zenith", "azimuth", "value")
+
     return(rawDirectionsData)
 }
 
@@ -10,9 +10,6 @@ setMethod(f = "directions",
           signature = signature(x = "SimulationFiles"),
           definition = function(x, nCores = 1){
 
-              require(foreach)
-              require(parallel)
-              require(doParallel)
               cl <- parallel::makeCluster(nCores)
               doParallel::registerDoParallel(cl)
               #use "as" functionality
@@ -33,6 +30,7 @@ setMethod(f = "directions",
               stopCluster(cl)
               directionsData@data <- dplyr::bind_rows(dirDataRaw)
               validObject(directionsData)
+
               return(directionsData)
           }
 )

@@ -3,9 +3,6 @@ setMethod(f = "imageFiles",
           signature = signature(x = "character", sF = "SimulationFilter"),
           definition = function(x, sF){
 
-              require(tools)
-              require(dplyr)
-
               simHandle <- simulationHandle(x)
               imageFiles <- as(object = simHandle, Class = "SimulationFiles")
               simulationFilter(imageFiles) <- sF

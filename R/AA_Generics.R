@@ -67,7 +67,6 @@ setGeneric(name = "baseDir", def = function(x) standardGeneric("baseDir"))
 setGeneric(name = "simulationFilter<-", def = function(x, value)
     standardGeneric("simulationFilter<-"))
 
-#' @rdname SimulationFiles-class
 #' @rdname SimulationFilter-class
 setGeneric(name = "subDir", def = function(x)
     standardGeneric("subDir"))
@@ -186,11 +185,11 @@ setGeneric(name = "sequenceParameters", def = function(x) standardGeneric("seque
 #' @param x \link{RB3D-class} type object.
 #' @param DSM \code{RasterLayer} type object with height above ground level (m) and - preferably - a finer
 #' @param BOAextrapolation Character. When the 3D radiative budget is height-adjusted, the BOA layer is no longer
-#' plane-parallel with the ground. How to make the BOA layer plane-parallel with the grund? One of "extrapolate" or "clip".
+#' plane-parallel with the ground. How to make the BOA layer plane-parallel with the ground? One of "extrapolate" or "clip".
 #' Extrapolate: the highest BOA cell with a recorded value is the new BOA layer. Other cells in this horizontal layer
-#' may be empty. Empty cells are filed using values from lower vertical layers (most accurate, most cells).
+#' may be empty and are filled using values from lower vertical layers (most accurate, most cells, most memory).
 #' Clip: the first BOA cell where all cells in its horizontal layer have a recorded value is the new BOA layer.
-#' All cells above this layer are removed. (Least accurate, least cells).
+#' All cells above this layer are removed. (Least accurate, least cells, least memory).
 #' @param `maxUndergroundCells` Integer. How many cells below the "ground" should be kept? I.e. the 3D RB array will
 #' be offset with Z=0 as the new ground level, and Z=-maxUndergroundCells as the lowest elevation to keep. Cells below
 #' -maxUndergroundCells are removed as this saves a lot of memory. If there is lots of small-scale variation in topography then

@@ -2,13 +2,6 @@ setMethod(f = "rb3D",
           signature = signature(x = "SimulationFiles"),
           definition = function(x, nCores = 1){
 
-              require(data.table)
-              require(reshape2)
-              require(foreach)
-              require(parallel)
-              require(doParallel)
-              require(tools)
-
               RB3d <- as(object = x, Class = "RB3D",
                          strict = TRUE)
               if (nCores > 1) {

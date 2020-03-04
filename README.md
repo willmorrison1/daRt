@@ -44,6 +44,23 @@ Load the package
 
 ``` r
 library(daRt)
+#> Warning: package 'dplyr' was built under R version 3.5.3
+#> Warning: package 'stringr' was built under R version 3.5.3
+#> Warning: package 'tibble' was built under R version 3.5.3
+#> Warning: package 'data.table' was built under R version 3.5.3
+#> Warning: package 'foreach' was built under R version 3.5.3
+#> Warning: package 'doParallel' was built under R version 3.5.3
+#> Warning: package 'iterators' was built under R version 3.5.3
+#> Warning: package 'shadowtext' was built under R version 3.5.3
+#> Warning: package 'fields' was built under R version 3.5.3
+#> Warning: package 'spam' was built under R version 3.5.3
+#> Warning: package 'dotCall64' was built under R version 3.5.3
+#> Warning: package 'maps' was built under R version 3.5.3
+#> Warning: package 'ncdf4' was built under R version 3.5.3
+#> Warning: package 'chron' was built under R version 3.5.3
+#> Warning: package 'xml2' was built under R version 3.5.3
+#> Warning: package 'tidyr' was built under R version 3.5.3
+#> Warning: package 'raster' was built under R version 3.5.3
 ```
 
 # Overview
@@ -70,8 +87,6 @@ predetermined file type(s).
 
 ``` r
 simData <- daRt::getData(x = simulationDir, sF = sF)
-#> Warning: package 'foreach' was built under R version 3.6.2
-#> Warning: package 'doParallel' was built under R version 3.6.2
 ```
 
 **`as.data.frame()`** releases the data object as a “long” format data
@@ -112,14 +127,12 @@ List the ‘setter’ and ‘accessor’ methods available
 
 ``` r
 methods(class = "SimulationFilter")
-#>  [1] bands              bands<-            getData           
-#>  [4] getFiles           imageFiles         imageNums         
-#>  [7] imageNums<-        imageTypes         imageTypes<-      
-#> [10] iters              iters<-            product           
-#> [13] product<-          show               simulationFilter<-
-#> [16] subDir             typeNums           typeNums<-        
-#> [19] variables          variables<-        variablesRB3D     
-#> [22] variablesRB3D<-   
+#>  [1] bands              bands<-            getData            getFiles          
+#>  [5] imageFiles         imageNums          imageNums<-        imageTypes        
+#>  [9] imageTypes<-       iters              iters<-            product           
+#> [13] product<-          show               simulationFilter<- subDir            
+#> [17] typeNums           typeNums<-         variables          variables<-       
+#> [21] variablesRB3D      variablesRB3D<-   
 #> see '?methods' for accessing help and source code
 ```
 
@@ -197,6 +210,7 @@ data. Once you are ready to use the data, retrieve it using
 ``` r
 #plot using ggplot2
 library(ggplot2)
+#> Warning: package 'ggplot2' was built under R version 3.5.3
 DFdata <- as.data.frame(simData)
 plotOut <- ggplot(DFdata) +
     geom_point(aes(x = zenith, y = value, colour = azimuth)) +
@@ -436,7 +450,7 @@ to the ncdf compression algorithm and/or rounding.
 
 ``` r
 max(abs(simData_nc$value - simData_bin$value))
-#> [1] 0
+#> [1] 9.187445e-08
 ```
 
 The new .nc file is much smaller:
@@ -444,7 +458,7 @@ The new .nc file is much smaller:
 ``` r
 fileSize_nc <- file.size(fileName(simFiles_nc))
 fileSize_nc / fileSize_bin
-#> [1] 1
+#> [1] 0.127663
 ```
 
 and is much faster to read. It can also be read by third party NetCDF

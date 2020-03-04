@@ -1,7 +1,7 @@
 setMethod(f = "rb3DtoNc",
           signature = signature(x = "SimulationFiles"),
           definition = function(x, ncCompressionFactor = 5){
-              require(tools)
+
               if (product(x) != "rb3D") {
                   warning("rb3DtoNc needs rb3D product. Nothing to do.")
                   return(x)
@@ -34,7 +34,6 @@ setMethod(f = "rb3DtoNc",
                          fillValue = -999,
                          compressionFactor = 4){
 
-    require(ncdf4)
     #clean up old file, else sometimes won't write
     if (file.exists(outFile)) {
         file.remove(outFile)

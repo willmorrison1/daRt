@@ -2,7 +2,6 @@
 setMethod("imagesToDirectionsDF", signature = signature(x = "Images", fun = "function"),
           definition = function(x, fun = function(x) mean(x[x != -1])){
 
-              require(dplyr)
               if (any(x@data$imgType != "ima")) {
                   stop("imagesToDirections() only valid with the orthograpic 'ima' image type")
               }
