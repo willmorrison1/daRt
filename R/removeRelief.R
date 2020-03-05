@@ -60,7 +60,7 @@ setMethod(f = "removeRelief",
                   heightDiffDF <- reshape2::melt(raster::as.matrix(heightDiffRaster), varnames = c("X", "Y"),
                                                  value.name = "z") %>%
                       dplyr::mutate(z = as.integer(z))
-                  rm(heightDiffRaster);gc()
+                  rm(heightDiffRaster); gc()
 
                   #index all simulations with this resolution
                   RB3DresInd <- xyzDF$xy == xyzDF[i, ]$xy & xyzDF$z == xyzDF[i, ]$z
@@ -68,7 +68,7 @@ setMethod(f = "removeRelief",
                   #apply the transformation to these simulations
                   toJoin <- x@data[simind, ] %>%
                       dplyr::left_join(heightDiffDF, by = c("X", "Y")) %>%
-                      dplyr::mutate(Z = (Z - z) + minHeight_mround_RB3D) %>%
+                      dplyr::mutate(Z = (Z - z) - minHeight_mround_RB3D) %>%
                       dplyr::select(-z)
                   x@data[simind, ] <- toJoin
                   rm(simind, heightDiffDF, RB3DresInd, DEMc, DEMr, simValsInd, toJoin); gc()
