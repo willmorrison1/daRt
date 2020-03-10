@@ -181,7 +181,7 @@ ggplot(simData_filtered) +
 # Miscellaneous
 
 ## Memory management: tips
-When performing analysis on a relatively large set of files, memory management is important. `getData()` loads all data to memory which is problematic when loading many large files (e.g. Radiative Budget). It is assumed that the user will perform some analysis on subsets of the raw data in a way that reduces the overall size of the data in memory. To demonstrate meory management, files in this section are loaded in two different scenarios: scenario 1 uses the default `getData()` to load and then analyse all data at once. Scenario 2 loads and analyses the data in pieces, which has a much smaller memory footprint (but may be slower). Both scenarios give the same result with different memory usage.
+Loading many files/variables may require memory management. `getData()` loads all requested data to memory which can be problematic for large files (e.g. Radiative Budget). It is assumed that the user will perform some analysis on subsets of the raw data in a way that reduces the overall memory footprint. To demonstrate memory management, files in this section are loaded in two different scenarios: scenario 1 uses the default `getData()` to load and then analyse all data at once. Scenario 2 loads and analyses the data in pieces, which has a much smaller memory footprint (but may be slower). Both scenarios give the same result.
 
 ### Scenario 1: Load data all at once
 Load all radiative budget products at once into memory and take the mean of each horizontal layer. 

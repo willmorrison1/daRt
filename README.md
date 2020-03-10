@@ -45,6 +45,23 @@ Load the package
 
 ``` r
 library(daRt)
+#> Warning: package 'dplyr' was built under R version 3.5.3
+#> Warning: package 'stringr' was built under R version 3.5.3
+#> Warning: package 'tibble' was built under R version 3.5.3
+#> Warning: package 'data.table' was built under R version 3.5.3
+#> Warning: package 'foreach' was built under R version 3.5.3
+#> Warning: package 'doParallel' was built under R version 3.5.3
+#> Warning: package 'iterators' was built under R version 3.5.3
+#> Warning: package 'shadowtext' was built under R version 3.5.3
+#> Warning: package 'fields' was built under R version 3.5.3
+#> Warning: package 'spam' was built under R version 3.5.3
+#> Warning: package 'dotCall64' was built under R version 3.5.3
+#> Warning: package 'maps' was built under R version 3.5.3
+#> Warning: package 'ncdf4' was built under R version 3.5.3
+#> Warning: package 'chron' was built under R version 3.5.3
+#> Warning: package 'xml2' was built under R version 3.5.3
+#> Warning: package 'tidyr' was built under R version 3.5.3
+#> Warning: package 'raster' was built under R version 3.5.3
 ```
 
 # Overview
@@ -71,8 +88,6 @@ predetermined file type(s).
 
 ``` r
 simData <- daRt::getData(x = simulationDir, sF = sF)
-#> Warning: package 'foreach' was built under R version 3.6.2
-#> Warning: package 'doParallel' was built under R version 3.6.2
 ```
 
 **`as.data.frame()`** releases the data object as a “long” format data
@@ -113,14 +128,12 @@ List the ‘setter’ and ‘accessor’ methods available
 
 ``` r
 methods(class = "SimulationFilter")
-#>  [1] bands              bands<-            getData           
-#>  [4] getFiles           imageFiles         imageNums         
-#>  [7] imageNums<-        imageTypes         imageTypes<-      
-#> [10] iters              iters<-            product           
-#> [13] product<-          show               simulationFilter<-
-#> [16] subDir             typeNums           typeNums<-        
-#> [19] variables          variables<-        variablesRB3D     
-#> [22] variablesRB3D<-   
+#>  [1] bands              bands<-            getData            getFiles          
+#>  [5] imageFiles         imageNums          imageNums<-        imageTypes        
+#>  [9] imageTypes<-       iters              iters<-            product           
+#> [13] product<-          show               simulationFilter<- subDir            
+#> [17] typeNums           typeNums<-         variables          variables<-       
+#> [21] variablesRB3D      variablesRB3D<-   
 #> see '?methods' for accessing help and source code
 ```
 
@@ -295,16 +308,15 @@ ggplot(simData_filtered) +
 
 ## Memory management: tips
 
-When performing analysis on a relatively large set of files, memory
-management is important. `getData()` loads all data to memory which is
-problematic when loading many large files (e.g. Radiative Budget). It is
-assumed that the user will perform some analysis on subsets of the raw
-data in a way that reduces the overall size of the data in memory. To
-demonstrate meory management, files in this section are loaded in two
-different scenarios: scenario 1 uses the default `getData()` to load and
-then analyse all data at once. Scenario 2 loads and analyses the data in
-pieces, which has a much smaller memory footprint (but may be slower).
-Both scenarios give the same result with different memory usage.
+Loading many files/variables may require memory management. `getData()`
+loads all requested data to memory which can be problematic for large
+files (e.g. Radiative Budget). It is assumed that the user will perform
+some analysis on subsets of the raw data in a way that reduces the
+overall memory footprint. To demonstrate memory management, files in
+this section are loaded in two different scenarios: scenario 1 uses the
+default `getData()` to load and then analyse all data at once. Scenario
+2 loads and analyses the data in pieces, which has a much smaller memory
+footprint (but may be slower). Both scenarios give the same result.
 
 ### Scenario 1: Load data all at once
 
@@ -445,7 +457,7 @@ The new .nc file is much smaller:
 ``` r
 fileSize_nc <- file.size(fileName(simFiles_nc))
 fileSize_nc / fileSize_bin
-#> [1] 0.1244318
+#> [1] 0.127663
 ```
 
 and is much faster to read. It can also be read by third party NetCDF
