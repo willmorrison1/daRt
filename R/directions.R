@@ -10,11 +10,14 @@ setMethod(f = "directions",
           signature = signature(x = "SimulationFiles"),
           definition = function(x, nCores = 1){
 
-              cl <- parallel::makeCluster(nCores)
-              doParallel::registerDoParallel(cl)
               #use "as" functionality
               directionsData <- as(object = x, Class = "Directions",
                                    strict = TRUE)
+              if (nrow(directionsData@files) < nCores) nCores <- nrow(directionsData@files)
+              if (nCores > 1) {
+                  cl <- parallel::makeCluster(nCores)
+                  doParallel::registerDoParallel(cl)
+              }
               dirDataRaw <- foreach(i = 1:nrow(directionsData@files), .export = ".readOutputDirections",
                       .packages = "data.table") %dopar% {
                           fileRow <- directionsData@files[i, ]
@@ -27,7 +30,7 @@ setMethod(f = "directions",
                           return(dirDataRaw)
                       }
               gc()
-              stopCluster(cl)
+              if (nCores > 1) stopCluster(cl)
               directionsData@data <- dplyr::bind_rows(dirDataRaw)
               validObject(directionsData)
 

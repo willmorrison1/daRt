@@ -4,6 +4,7 @@ setMethod(f = "rb3D",
 
               RB3d <- as(object = x, Class = "RB3D",
                          strict = TRUE)
+              if (nrow(RB3d@files) < nCores) nCores <- nrow(RB3d@files)
               if (nCores > 1) {
                   cl <- parallel::makeCluster(nCores)
                   doParallel::registerDoParallel(cl)

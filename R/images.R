@@ -25,8 +25,11 @@ setMethod(f = "images",
               imagesData <- as(object = x, Class = "Images",
                                strict = TRUE)
               filesWithoutExt <- tools::file_path_sans_ext(imagesData@files$fileName)
-              cl <- parallel::makeCluster(nCores)
-              doParallel::registerDoParallel(cl)
+              if (nrow(imagesData@files) < nCores) nCores <- nrow(imagesData@files)
+              if (nCores > 1) {
+                  cl <- parallel::makeCluster(nCores)
+                  doParallel::registerDoParallel(cl)
+              }
               imagesDataRaw <- foreach(i = 1:nrow(imagesData@files), .export = c(".readILWIS", ".getILWISsize"),
                                        .packages = "reshape2") %dopar% {
                                            imgDat <- reshape2::melt(.readILWIS(filesWithoutExt[i]), varnames = c("x", "y"))
@@ -46,7 +49,7 @@ setMethod(f = "images",
                                            return(imgDat)
                                        }
               gc()
-              stopCluster(cl)
+              if (nCores > 1) stopCluster(cl)
               imagesData@data <- as.data.frame(data.table::rbindlist(imagesDataRaw, use.names = FALSE))
 
               return(imagesData)
