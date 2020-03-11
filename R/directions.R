@@ -17,6 +17,8 @@ setMethod(f = "directions",
               if (nCores > 1) {
                   cl <- parallel::makeCluster(nCores)
                   doParallel::registerDoParallel(cl)
+              } else{
+                  registerDoSEQ()
               }
               dirDataRaw <- foreach(i = 1:nrow(directionsData@files), .export = ".readOutputDirections",
                       .packages = "data.table") %dopar% {

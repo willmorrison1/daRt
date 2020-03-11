@@ -29,6 +29,8 @@ setMethod(f = "images",
               if (nCores > 1) {
                   cl <- parallel::makeCluster(nCores)
                   doParallel::registerDoParallel(cl)
+              } else{
+                  registerDoSEQ()
               }
               imagesDataRaw <- foreach(i = 1:nrow(imagesData@files), .export = c(".readILWIS", ".getILWISsize"),
                                        .packages = "reshape2") %dopar% {

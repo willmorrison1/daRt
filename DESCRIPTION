@@ -1,7 +1,7 @@
 Package: daRt
 Type: Package
 Title: Read DART Model Outputs
-Version: 0.7.0
+Version: 0.7.1
 Author: William T. J. Morrison
 Maintainer: William T. J. Morrison <willmorrison661@gmail.com>
 Description: Easily read output data from the Discrete Anisotropic Radiative Transfer (DART) model and return in a "long" dplyr-ready format suitable for efficient analysis.

@@ -8,6 +8,8 @@ setMethod(f = "rb3D",
               if (nCores > 1) {
                   cl <- parallel::makeCluster(nCores)
                   doParallel::registerDoParallel(cl)
+              } else{
+                  registerDoSEQ()
               }
               listData <- foreach(i = 1:nrow(RB3d@files),
                                   .export = c(".readBin3DRadiativeBudget",

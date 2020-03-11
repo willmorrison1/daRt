@@ -328,4 +328,10 @@ unlink(tmpFile)
 
 ## Parallelisation issues
 
-Under windows especially, there are some issues with paralellisation. When running `getData()` you may get "invalid connection" error. In this case you will always need to run with nCores > 1 e.g.  `getData(..., nCores = 2)`.
+Under windows especially, there may be some issues with paralellisation. When running `getData()` you may get "invalid connection" error. I may have sorted the issue but if it reappears then this function seems to help:
+```{r}
+unregister <- function() {
+  env <- foreach:::.foreachGlobals
+  rm(list = ls(name = env), pos = env)
+}
+```
