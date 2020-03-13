@@ -12,6 +12,7 @@ setMethod(f = "rb3D",
                   registerDoSEQ()
               }
               listData <- foreach(i = 1:nrow(RB3d@files),
+                                  .packages = "bitops",
                                   .export = c(".readBin3DRadiativeBudget",
                                               ".parse3DRBfileName",
                                               ".readNcdf3DRadiativeBudget",

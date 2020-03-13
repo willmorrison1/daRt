@@ -21,7 +21,7 @@ setMethod(f = "directions",
                   registerDoSEQ()
               }
               dirDataRaw <- foreach(i = 1:nrow(directionsData@files), .export = ".readOutputDirections",
-                      .packages = "data.table") %dopar% {
+                      .packages = c("bitops", "data.table")) %dopar% {
                           fileRow <- directionsData@files[i, ]
                           dirDataRaw <- .readOutputDirections(fileRow$fileName)
                           dirDataRaw$band <- fileRow$band

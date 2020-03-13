@@ -33,7 +33,7 @@ setMethod(f = "images",
                   registerDoSEQ()
               }
               imagesDataRaw <- foreach(i = 1:nrow(imagesData@files), .export = c(".readILWIS", ".getILWISsize"),
-                                       .packages = "reshape2") %dopar% {
+                                       .packages = c("bitops", "reshape2")) %dopar% {
                                            imgDat <- reshape2::melt(.readILWIS(filesWithoutExt[i]), varnames = c("x", "y"))
                                            nrowsData <- nrow(imgDat)
                                            fileRow <- imagesData@files[i, ]
