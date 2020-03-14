@@ -170,7 +170,7 @@ setGeneric(name = "resourceUse", def = function(x = "SimulationFiles") standardG
 #' Get data frame of all sequence parameters
 #' @title sequenceParameters
 #' @description Return a data frame where rows describe a parameter (parametre*) for a simulation (simName).
-#' @param   \link{SimulationFiles-class} or \link{SimulationData-class} class object
+#' @param   \link{SimulationFiles-class} or \link{SimulationData-class} class object or character string of simulation directories
 #'
 #' @return data frame
 #' @export
