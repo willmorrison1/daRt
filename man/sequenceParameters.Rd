@@ -7,7 +7,7 @@
 sequenceParameters(x)
 }
 \arguments{
-\item{\link{SimulationFiles-class}}{or \link{SimulationData-class} class object}
+\item{\link{SimulationFiles-class}}{or \link{SimulationData-class} class object or character string of simulation directories}
 }
 \value{
 data frame
