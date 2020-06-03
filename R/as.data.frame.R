@@ -5,6 +5,7 @@
 #'
 #' @return data.frame or tibble
 #' @export
+#' @exportClass SimulationData
 setMethod(f = "as.data.frame",
           signature = signature(x = "SimulationData"),
           definition = function(x, as.tibble = TRUE){
