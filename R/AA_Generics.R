@@ -259,4 +259,6 @@ setGeneric(name = "rb3DFiles", def = function(x = "character", sF = "SimulationF
     standardGeneric("rb3DFiles"))
 setGeneric(name = "simulationHandle",  def = function(x = "character")
     standardGeneric("simulationHandle"))
-
+if (!isGeneric("as.data.frame")) {
+    setGeneric("as.data.frame", function(x, row.names = NULL, optional = FALSE, ...){standardGeneric("as.data.frame")})
+}
