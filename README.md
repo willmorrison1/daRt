@@ -12,6 +12,7 @@ daRt
       - [Defining data to load: SimulationFilter for
         images](#defining-data-to-load-simulationfilter-for-images)
       - [Working with output data: radiative budget](#RB)
+      - [Extract simulation meta data](#extract-simulation-meta-data)
   - [Miscellaneous](#miscellaneous)
       - [Memory management: tips](#memory-management-tips)
       - [Radiative budget files:
@@ -303,6 +304,33 @@ ggplot(simData_filtered) +
 ```
 
 <img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" />
+
+## Extract simulation meta data
+
+``` r
+
+wavelengths(simData)
+#>   simName band lambdamin lambdamid lambdamax equivalentWavelength
+#> 1  cesbio    0    0.6200    0.6850    0.7500                   NA
+#> 2  cesbio    1    0.2500    0.5785    0.9070                   NA
+#> 3  cesbio    2    0.4495    0.4720    0.4945                   NA
+
+sunAngles(simData)
+#>   simName   sunPhi sunTheta
+#> 1  cesbio 136.3097  132.839
+
+versionInfo(simData)
+#>   version buildFull buildNumber
+#> 1   5.7.4     v1091        1091
+
+resourceUse(simData)
+#> Warning in searchDartTxtVal(rawFileDATA, searchQuote = "Processing time"): Could
+#> not get ' Processing time ' info from dart.txt
+#> Warning in searchDartTxtVal(rawFileDATA, searchQuote = "Memory usage"): Could
+#> not get ' Memory usage ' info from dart.txt
+#>   simName timeTaken memUsage
+#> 1  cesbio        NA       NA
+```
 
 # Miscellaneous
 

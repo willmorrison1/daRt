@@ -54,7 +54,6 @@
         }
     }
 
-
     if (nrow(object@wavelengths) == 0) {
         errors <- c(errors, "No data in @wavelengths slot.
                     A SimulationFiles method has not set the 'wavelengths' slot.")
@@ -340,6 +339,7 @@ setValidity("SimulationHandle", .simHandleValidity)
 #' @slot sequenceInfoDf a data frame, with each row containing one simulation, and each column a parameter ('parametre') specific to the sequence.
 #' A condensed version of sequenceInfoList.
 #' @slot wavelengths a data frame containing spectral information on each band for each simulation
+#' @slot sunAngles a data frame containing sun angles straight from simulation.properties.txt
 #'
 #' @export
 #'
@@ -349,7 +349,9 @@ setClass(
                  files = "data.frame",
                  sequenceInfoList = "list",
                  sequenceInfoDf = "data.frame",
-                 wavelengths = "data.frame"))
+                 wavelengths = "data.frame",
+                 sunAngles = "data.frame"))
+
 setValidity("SimulationFiles", .simFilesValidity)
 
 

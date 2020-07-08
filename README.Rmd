@@ -178,6 +178,20 @@ ggplot(simData_filtered) +
        theme(aspect.ratio = 1)
 ```
 
+## Extract simulation meta data
+
+```{r}
+
+wavelengths(simData)
+
+sunAngles(simData)
+
+versionInfo(simData)
+
+resourceUse(simData)
+
+```
+
 # Miscellaneous
 
 ## Memory management: tips

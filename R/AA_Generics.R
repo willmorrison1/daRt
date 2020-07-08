@@ -133,6 +133,15 @@ setGeneric(name = "getData", signature = c("x", "sF"), def = function(x, sF, ...
 setGeneric(name = "wavelengths", def = function(x = "SimulationFiles")
     standardGeneric("wavelengths"))
 
+#' sunAngles
+#' @description Get sun angles for each simulation
+#' @param x sF \link{SimulationFiles-class}
+#' @return data frame
+#' @export
+#'
+setGeneric(name = "sunAngles", def = function(x = "SimulationFiles")
+    standardGeneric("sunAngles"))
+
 
 
 

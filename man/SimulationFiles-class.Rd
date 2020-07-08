@@ -29,5 +29,7 @@ by the object with class \link{SimulationFilter-class}
 A condensed version of sequenceInfoList.}
 
 \item{\code{wavelengths}}{a data frame containing spectral information on each band for each simulation}
+
+\item{\code{sunAngles}}{a data frame containing sun angles straight from simulation.properties.txt}
 }}
 

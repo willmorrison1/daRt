@@ -46,6 +46,7 @@ setMethod(f = "getFiles",
 
               simFilesStacked@files <- dplyr::bind_rows(lapply(simFilesList, function(x) x@files))
               simFilesStacked@wavelengths <- wavelengths(simFilesStacked)
+              simFilesStacked@sunAngles <- sunAngles(simFilesStacked)
               validObject(simFilesStacked, complete = TRUE, test = TRUE)
 
               return(simFilesStacked)
