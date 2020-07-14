@@ -189,7 +189,7 @@
     typeNumVals <- typeNums(object)
 
     .typeNumErr <- function() {
-        "'typeNum' is invalid. Should be '[numeric]_[character]' e.g. '2_Ground'. \n
+        "'typeNum' is invalid. Should be unique vector of '[numeric]_[character]' e.g. '2_Ground'. \n
         See input/dart.typ for list of dart surface types e.g. 101_Default_Object if using
         an imported 3D model with no grouping of triangles."
     }
@@ -200,6 +200,8 @@
         if (length(splitVars) < 2) return(paste(typeNumVals[i], .typeNumErr()))
         if (is.na(as.numeric(splitVars[1]))) return(paste(typeNumVals[i], .typeNumErr()))
     }
+
+    if (length(typeNumVals) != length(unique(typeNumVals))) return(.typeNumErr())
 
 }
 

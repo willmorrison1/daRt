@@ -46,23 +46,18 @@ Load the package
 
 ``` r
 library(daRt)
-#> Warning: package 'dplyr' was built under R version 3.5.3
-#> Warning: package 'stringr' was built under R version 3.5.3
-#> Warning: package 'tibble' was built under R version 3.5.3
-#> Warning: package 'data.table' was built under R version 3.5.3
-#> Warning: package 'foreach' was built under R version 3.5.3
-#> Warning: package 'doParallel' was built under R version 3.5.3
-#> Warning: package 'iterators' was built under R version 3.5.3
-#> Warning: package 'shadowtext' was built under R version 3.5.3
-#> Warning: package 'fields' was built under R version 3.5.3
-#> Warning: package 'spam' was built under R version 3.5.3
-#> Warning: package 'dotCall64' was built under R version 3.5.3
-#> Warning: package 'maps' was built under R version 3.5.3
-#> Warning: package 'ncdf4' was built under R version 3.5.3
-#> Warning: package 'chron' was built under R version 3.5.3
-#> Warning: package 'xml2' was built under R version 3.5.3
-#> Warning: package 'tidyr' was built under R version 3.5.3
-#> Warning: package 'raster' was built under R version 3.5.3
+#> Warning: package 'data.table' was built under R version 3.6.3
+#> Warning: package 'foreach' was built under R version 3.6.3
+#> Warning: package 'doParallel' was built under R version 3.6.3
+#> Warning: package 'iterators' was built under R version 3.6.3
+#> Warning: package 'shadowtext' was built under R version 3.6.3
+#> Warning: package 'fields' was built under R version 3.6.3
+#> Warning: package 'spam' was built under R version 3.6.3
+#> Warning: package 'dotCall64' was built under R version 3.6.3
+#> Warning: package 'maps' was built under R version 3.6.3
+#> Warning: package 'chron' was built under R version 3.6.3
+#> Warning: package 'raster' was built under R version 3.6.3
+#> Warning: package 'sp' was built under R version 3.6.3
 ```
 
 # Overview
@@ -214,9 +209,9 @@ data. Once you are ready to use the data, retrieve it using
 library(ggplot2)
 DFdata <- as.data.frame(simData)
 plotOut <- ggplot(DFdata) +
-    geom_point(aes(x = zenith, y = value, colour = azimuth)) +
-    facet_wrap(~ band) +
-    theme(aspect.ratio = 1)
+  geom_point(aes(x = zenith, y = value, colour = azimuth)) +
+  facet_wrap(~ band) +
+  theme(aspect.ratio = 1)
 plot(plotOut)
 ```
 
@@ -235,20 +230,20 @@ SimulationFilter then load the data
 ``` r
 #create SimulationFilter
 sF <- daRt::simulationFilter(product = "images", 
-                       bands = as.integer(0:2),
-                       iters = c("ITER1", "ITER2"),
-                       variables = "BRF",
-                       imageNums = as.integer(c(5, 7)),
-                       imageTypes = "ima") 
+                             bands = as.integer(0:2),
+                             iters = c("ITER1", "ITER2"),
+                             variables = "BRF",
+                             imageNums = as.integer(c(5, 7)),
+                             imageTypes = "ima") 
 #load data - 'nCores' allows parallel processing of files.
 #It is useful for access to drives that have optimised paralell I/O.
 #here load data using 2 cores.
 simData <- daRt::getData(x = simulationDir, sF = sF, nCores = 2)
 #simple plot of data
-ggplot(as.data.frame(simData)) + 
-    geom_raster(aes(x = x, y = y, fill = value)) +
-    facet_grid(band ~ imageNum + iter) +
-    theme(aspect.ratio = 1) 
+ggplot(simData %>% as.data.frame()) + 
+  geom_raster(aes(x = x, y = y, fill = value)) +
+  facet_grid(band ~ imageNum + iter) +
+  theme(aspect.ratio = 1) 
 ```
 
 <img src="man/figures/README-images example-1.png" width="100%" />
@@ -289,18 +284,19 @@ the lowest horizontal layer of each 3D radiative budget array (i.e. Z =
 library(dplyr)
 
 #filter lowest horizontal cross section of the radiative budget
-simData_filtered <- as.data.frame(simData) %>%
-    dplyr::filter(Z == 1)
+simData_filtered <- simData %>%
+  as.data.frame() %>%
+  dplyr::filter(Z == 1)
 
 ggplot(simData_filtered) + 
-    geom_raster(aes(x = X, y = Y, fill = value)) +
-    facet_grid(band ~ variableRB3D) +
-    theme_bw() +
-    theme(panel.spacing = unit(0, "cm"), 
-          strip.text = element_text(size = 6, 
-                                    margin = margin(0.05, 0.05, 0.05, 0.05, unit = "cm"))) +
-    scale_fill_distiller(palette = "Spectral") +
-       theme(aspect.ratio = 1)
+  geom_raster(aes(x = X, y = Y, fill = value)) +
+  facet_grid(band ~ variableRB3D) +
+  theme_bw() +
+  theme(panel.spacing = unit(0, "cm"), 
+        strip.text = element_text(size = 6, 
+                                  margin = margin(0.05, 0.05, 0.05, 0.05, unit = "cm"))) +
+  scale_fill_distiller(palette = "Spectral") +
+  theme(aspect.ratio = 1)
 ```
 
 <img src="man/figures/README-unnamed-chunk-14-1.png" width="100%" />
@@ -353,10 +349,10 @@ of each horizontal layer.
 
 ``` r
 sF <- daRt::simulationFilter(product = "rb3D", 
-                       bands = as.integer(0:2), 
-                       iters = c("ITER1", "ITER2", "ILLUDIFF", "ILLUDIR"),
-                       typeNums = "",
-                       variables = "RADIATIVE_BUDGET")
+                             bands = as.integer(0:2), 
+                             iters = c("ITER1", "ITER2", "ILLUDIFF", "ILLUDIR"),
+                             typeNums = "",
+                             variables = "RADIATIVE_BUDGET")
 simFiles <- daRt::getFiles(simulationDir, sF = sF)
 ```
 
@@ -389,8 +385,8 @@ grouped) according to the above column names
 
 ``` r
 statVals <- DFdata %>%
-    dplyr::group_by(X, Y, variableRB3D, add = TRUE) %>%
-    dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
+  dplyr::group_by(X, Y, variableRB3D, add = TRUE) %>%
+  dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
 ```
 
 ### Scenario 2: Load data in sections and process each section
@@ -400,20 +396,21 @@ separately to save on memory usage.
 
 ``` r
 sF <- daRt::simulationFilter(product = "rb3D", 
-                       bands = as.integer(0:2), 
-                       iters = c("ITER1", "ITER2", "ILLUDIFF", "ILLUDIR"),
-                       typeNums = "",
-                       variables = "RADIATIVE_BUDGET")
+                             bands = as.integer(0:2), 
+                             iters = c("ITER1", "ITER2", "ILLUDIFF", "ILLUDIR"),
+                             typeNums = "",
+                             variables = "RADIATIVE_BUDGET")
 allBands <- bands(simData)
 allBands
 #> [1] 0 1 2
 simDataList <- vector(mode = "list", length = length(allBands))
 for (i in 1:length(allBands)) {
-    bands(sF) <- allBands[i]
-    simDataPiece  <- daRt::getData(x = simulationDir, sF = sF, nCores = 2)
-    simDataList[[i]] <- as.data.frame(simDataPiece) %>%
-        dplyr::group_by(X, Y, variableRB3D, add = TRUE) %>%
-        dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
+  bands(sF) <- allBands[i]
+  simDataPiece  <- daRt::getData(x = simulationDir, sF = sF, nCores = 2)
+  simDataList[[i]] <- simDataPiece %>%
+    as.data.frame() %>%
+    dplyr::group_by(X, Y, variableRB3D, add = TRUE) %>%
+    dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
 }
 ```
 
@@ -454,10 +451,10 @@ Get some DART radiative budget binary data (the default data)
 ``` r
 simulationDir <- "man/data/cesbio"
 sF <- daRt::simulationFilter(product = "rb3D",
-                       bands = as.integer(1), 
-                       iters = "ITER1",
-                       typeNums = "",
-                       variables = "RADIATIVE_BUDGET")
+                             bands = as.integer(1), 
+                             iters = "ITER1",
+                             typeNums = "",
+                             variables = "RADIATIVE_BUDGET")
 simFiles_bin <- daRt::getFiles(simulationDir, sF = sF)
 simData_bin <- as.data.frame(daRt::getData(simFiles_bin, nCores = 2))
 #get the file size - for later comparison
@@ -501,8 +498,8 @@ Define the file for deletion
 
 ``` r
 sF <- daRt::simulationFilter(product = "directions", 
-                       bands = 1L, 
-                       iters = "ITER1")
+                             bands = 1L, 
+                             iters = "ITER1")
 filesToDelete <- daRt::getFiles(x = simulationDir, sF = sF)
 ```
 
