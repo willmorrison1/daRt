@@ -28,7 +28,7 @@ polarImageInterpolate <- function(x, y, z, outer.radius = 1,
                                   axes = TRUE, circle.rads = pretty(c(0, outer.radius)),
                                   northUp = TRUE, titleStr = NULL, ...){
 
-    par(mar = c(6.5, 3.75, 5, 3.75))
+    par(mar = c(2, 1.75, 1, 1.75))
     minitics <- seq(-outer.radius, outer.radius, length.out = 1000)
     # interpolate the data
     Interp <- akima:::interp(x = x, y = y, z = z,
