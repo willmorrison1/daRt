@@ -9,14 +9,14 @@ title: daRt
 <!-- README.md is generated from README.Rmd. Please edit and run README.Rmd file to regenerate README.md -->
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-    collapse = TRUE,
-    comment = "#>",
-    fig.path = "man/figures/README-",
-    out.width = "100%",
-    fig.width = 8,
-    fig.height = 3,
-    dpi = 200,
-    message = FALSE
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%",
+  fig.width = 8,
+  fig.height = 3,
+  dpi = 200,
+  message = FALSE
 )
 ```
 
@@ -118,9 +118,9 @@ By having data in a "long" format, it is easy to perform analysis on the data. O
 library(ggplot2)
 DFdata <- as.data.frame(simData)
 plotOut <- ggplot(DFdata) +
-    geom_point(aes(x = zenith, y = value, colour = azimuth)) +
-    facet_wrap(~ band) +
-    theme(aspect.ratio = 1)
+  geom_point(aes(x = zenith, y = value, colour = azimuth)) +
+  facet_wrap(~ band) +
+  theme(aspect.ratio = 1)
 plot(plotOut)
 ```
 
@@ -132,20 +132,20 @@ To look at images for `bands` 0, 1 and 2; `iters` (iterations) 1 and 2, and `ima
 ```{r images example}
 #create SimulationFilter
 sF <- daRt::simulationFilter(product = "images", 
-                       bands = as.integer(0:2),
-                       iters = c("ITER1", "ITER2"),
-                       variables = "BRF",
-                       imageNums = as.integer(c(5, 7)),
-                       imageTypes = "ima") 
+                             bands = as.integer(0:2),
+                             iters = c("ITER1", "ITER2"),
+                             variables = "BRF",
+                             imageNums = as.integer(c(5, 7)),
+                             imageTypes = "ima") 
 #load data - 'nCores' allows parallel processing of files.
 #It is useful for access to drives that have optimised paralell I/O.
 #here load data using 2 cores.
 simData <- daRt::getData(x = simulationDir, sF = sF, nCores = 2)
 #simple plot of data
-ggplot(as.data.frame(simData)) + 
-    geom_raster(aes(x = x, y = y, fill = value)) +
-    facet_grid(band ~ imageNum + iter) +
-    theme(aspect.ratio = 1) 
+ggplot(simData %>% as.data.frame()) + 
+  geom_raster(aes(x = x, y = y, fill = value)) +
+  facet_grid(band ~ imageNum + iter) +
+  theme(aspect.ratio = 1) 
 ```
 
 ## Working with output data: radiative budget {#RB}
@@ -164,18 +164,19 @@ The below example uses "dplyr" to work with this data. Here we look at the lowes
 library(dplyr)
 
 #filter lowest horizontal cross section of the radiative budget
-simData_filtered <- as.data.frame(simData) %>%
-    dplyr::filter(Z == 1)
+simData_filtered <- simData %>%
+  as.data.frame() %>%
+  dplyr::filter(Z == 1)
 
 ggplot(simData_filtered) + 
-    geom_raster(aes(x = X, y = Y, fill = value)) +
-    facet_grid(band ~ variableRB3D) +
-    theme_bw() +
-    theme(panel.spacing = unit(0, "cm"), 
-          strip.text = element_text(size = 6, 
-                                    margin = margin(0.05, 0.05, 0.05, 0.05, unit = "cm"))) +
-    scale_fill_distiller(palette = "Spectral") +
-       theme(aspect.ratio = 1)
+  geom_raster(aes(x = X, y = Y, fill = value)) +
+  facet_grid(band ~ variableRB3D) +
+  theme_bw() +
+  theme(panel.spacing = unit(0, "cm"), 
+        strip.text = element_text(size = 6, 
+                                  margin = margin(0.05, 0.05, 0.05, 0.05, unit = "cm"))) +
+  scale_fill_distiller(palette = "Spectral") +
+  theme(aspect.ratio = 1)
 ```
 
 ## Extract simulation meta data
@@ -201,10 +202,10 @@ Loading many files/variables may require memory management. `getData()` loads al
 Load all radiative budget products at once into memory and take the mean of each horizontal layer. 
 ```{r}
 sF <- daRt::simulationFilter(product = "rb3D", 
-                       bands = as.integer(0:2), 
-                       iters = c("ITER1", "ITER2", "ILLUDIFF", "ILLUDIR"),
-                       typeNums = "",
-                       variables = "RADIATIVE_BUDGET")
+                             bands = as.integer(0:2), 
+                             iters = c("ITER1", "ITER2", "ILLUDIFF", "ILLUDIR"),
+                             typeNums = "",
+                             variables = "RADIATIVE_BUDGET")
 simFiles <- daRt::getFiles(simulationDir, sF = sF)
 
 ```
@@ -222,27 +223,28 @@ Do some analysis on the data. Get the mean of non-zero values across
 each vertical layer of each `variablesRB3D`, `bands`, `iters` (already grouped) according to the above column names
 ```{r}
 statVals <- DFdata %>%
-    dplyr::group_by(X, Y, variableRB3D, add = TRUE) %>%
-    dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
+  dplyr::group_by(X, Y, variableRB3D, add = TRUE) %>%
+  dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
 ```
 
 ### Scenario 2: Load data in sections and process each section
 Do 'scenario 1' analysis but with data processed for each band separately to save on memory usage.
 ```{r}
 sF <- daRt::simulationFilter(product = "rb3D", 
-                       bands = as.integer(0:2), 
-                       iters = c("ITER1", "ITER2", "ILLUDIFF", "ILLUDIR"),
-                       typeNums = "",
-                       variables = "RADIATIVE_BUDGET")
+                             bands = as.integer(0:2), 
+                             iters = c("ITER1", "ITER2", "ILLUDIFF", "ILLUDIR"),
+                             typeNums = "",
+                             variables = "RADIATIVE_BUDGET")
 allBands <- bands(simData)
 allBands
 simDataList <- vector(mode = "list", length = length(allBands))
 for (i in 1:length(allBands)) {
-    bands(sF) <- allBands[i]
-    simDataPiece  <- daRt::getData(x = simulationDir, sF = sF, nCores = 2)
-    simDataList[[i]] <- as.data.frame(simDataPiece) %>%
-        dplyr::group_by(X, Y, variableRB3D, add = TRUE) %>%
-        dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
+  bands(sF) <- allBands[i]
+  simDataPiece  <- daRt::getData(x = simulationDir, sF = sF, nCores = 2)
+  simDataList[[i]] <- simDataPiece %>%
+    as.data.frame() %>%
+    dplyr::group_by(X, Y, variableRB3D, add = TRUE) %>%
+    dplyr::summarise(meanVal = mean(value[value != 0], na.rm = TRUE))
 }
 ```
 Now put together the list of data. As each list element is a summary of the raw data, it has a much smaller memory footprint. As the summary was performed on one band at a time, the amount of data loaded at once is less than if `getData()` was executed for all bands at once (scenario 1). By loading one band at a time as opposed to all three at once, the memory footprint is around 1/3 of scenario 1. 
@@ -265,10 +267,10 @@ Get some DART radiative budget binary data (the default data)
 ```{r}
 simulationDir <- "man/data/cesbio"
 sF <- daRt::simulationFilter(product = "rb3D",
-                       bands = as.integer(1), 
-                       iters = "ITER1",
-                       typeNums = "",
-                       variables = "RADIATIVE_BUDGET")
+                             bands = as.integer(1), 
+                             iters = "ITER1",
+                             typeNums = "",
+                             variables = "RADIATIVE_BUDGET")
 simFiles_bin <- daRt::getFiles(simulationDir, sF = sF)
 simData_bin <- as.data.frame(daRt::getData(simFiles_bin, nCores = 2))
 #get the file size - for later comparison
@@ -314,8 +316,8 @@ Define the file for deletion
 
 ```{r}
 sF <- daRt::simulationFilter(product = "directions", 
-                       bands = 1L, 
-                       iters = "ITER1")
+                             bands = 1L, 
+                             iters = "ITER1")
 filesToDelete <- daRt::getFiles(x = simulationDir, sF = sF)
 ```
 
