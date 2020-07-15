@@ -67,7 +67,7 @@ polarImageInterpolate <- function(x, y, z, outer.radius = 1,
           xlab = "", ylab = "", col = col, breaks = breaks, ...)
 
     if (exists("titleStr")) {
-        title(titleStr, line = 0.35, cex.main = 0.5)
+        title(titleStr, line = 0.35, ...)
     }
 
     # add radial axes if desired
@@ -110,8 +110,8 @@ polarImageInterpolate <- function(x, y, z, outer.radius = 1,
             }
 
             par("xpd" = TRUE)
-            text(x = endpointsText[1], y = endpointsText[2], label = lab1, vfont = c("serif","bold"), cex = 0.5)
-            text(x = endpointsText[3], y = endpointsText[4], label = lab2, vfont = c("serif","bold"), cex = 0.5)
+            text(x = endpointsText[1], y = endpointsText[2], label = lab1, vfont = c("serif","bold"), ...)
+            text(x = endpointsText[3], y = endpointsText[4], label = lab2, vfont = c("serif","bold"), ...)
             par("xpd" = FALSE)
         }
 
