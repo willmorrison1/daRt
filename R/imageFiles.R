@@ -20,7 +20,7 @@ setMethod(f = "imageFiles",
                           subDirFull <- file.path(baseDir(imageFiles), subDirs$dirName[i])
                       }
                       if (!dir.exists(subDirFull)) {
-                          stop(paste("No image files in", subDirs$dirName[i]))
+                          stop(paste("No image files in", subDirFull))
                       }
                       allImagesFull <- list.files(subDirFull, pattern = ".mpr", full.names = TRUE)
                       imgInfoDFList[[iterTrack]] <- dplyr::bind_rows(lapply(allImagesFull, .imgInfo))
