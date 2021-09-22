@@ -28,7 +28,7 @@ daRt
 
 The daRt package provides a very quick and flexible way to import data
 that is produced by the Discrete Anisotropic Radiative Transfer (DART)
-model. The data in daRt are formatted in a way that facilitates rapid
+model (CESBIO). The data in daRt are formatted in a way that facilitates rapid
 data analysis. Formal documentation is available in the pdf manual.
 
 # Installation
