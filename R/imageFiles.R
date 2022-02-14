@@ -1,7 +1,7 @@
 #' @export
 setMethod(f = "imageFiles",
           signature = signature(x = "character", sF = "SimulationFilter"),
-          definition = function(x, sF, HorizontalProjection = FALSE){
+          definition = function(x, sF){
 
               simHandle <- simulationHandle(x)
               imageFiles <- as(object = simHandle, Class = "SimulationFiles")
@@ -16,9 +16,6 @@ setMethod(f = "imageFiles",
                       if (imgTypeDF$isTransmittance[v]) {
                           subDirFull <- file.path(baseDir(imageFiles), subDirs$dirName[i],
                                                   "Transmittance")
-                      } else if (HorizontalProjection) {
-                          subDirFull <- file.path(baseDir(imageFiles), subDirs$dirName[i],
-                                                  "HorizontalProjection")
                       } else {
                           subDirFull <- file.path(baseDir(imageFiles), subDirs$dirName[i])
                       }

@@ -105,10 +105,10 @@ setGeneric(name = "simulationFilter", def = function(product = "character", x, .
 #'
 #' @param x simulation directory or directories (character)
 #' @param sF \link{SimulationFilter-class} object
-#' @param ... Optional arguments of: \code{nCores}: number of cores to use when loading data; `HorizontalProjection` images? (bool)
+#' @param ... Optional arguments of: \code{nCores}: number of cores to use when loading data
 #' @export
 #'
-setGeneric(name = "getFiles", def = function(x = "character", sF = "SimulationFilter", ...)
+setGeneric(name = "getFiles", def = function(x = "character", sF = "SimulationFilter")
     standardGeneric("getFiles"))
 
 #' Main function: get DART data
@@ -260,7 +260,7 @@ setGeneric(name = "directionsFiles", def = function(x = "character", sF = "Simul
     standardGeneric("directionsFiles"))
 setGeneric(name = "images", def = function(x = "character", ...)
     standardGeneric("images"))
-setGeneric(name = "imageFiles", def = function(x = "character", sF = "SimulationFilter", ...)
+setGeneric(name = "imageFiles", def = function(x = "character", sF = "SimulationFilter")
     standardGeneric("imageFiles"))
 setGeneric(name = "rb3D",  def = function(x = "character", ...)
     standardGeneric("rb3D"))
